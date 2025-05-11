@@ -1,0 +1,30 @@
+[
+    {
+        "id": "0001",
+        "tanaman": "mawar",
+        "supplier": "Hermawan",
+        "stok": 20,
+        "tanggal_suplai": "1-10-2025 19:30"
+    },
+    {
+        "id": "0002",
+        "tanaman": "melati",
+        "supplier": "Hermawan",
+        "stok": 25,
+        "tanggal_suplai": "9-11-2025 20:02"
+    },
+    {
+        "id": "0003",
+        "tanaman": "sirih gading",
+        "supplier": "Dante",
+        "stok": 15,
+        "tanggal_suplai": "13-9-2024 20:15"
+    },
+    {
+        "id": "0004",
+        "tanaman": "suplir",
+        "supplier": "penjual1",
+        "stok": 15,
+        "tanggal_suplai": "14-10-2024 19:30"
+    }
+]

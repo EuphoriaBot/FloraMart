@@ -1,0 +1,39 @@
+[
+    {
+        "id": "0001",
+        "tanaman": "mawar",
+        "supplier": "Hermawan",
+        "harga": 0,
+        "min_suhu": 0,
+        "max_suhu": 0,
+        "media_tanam": 0
+    },
+    {
+        "id": "0002",
+        "tanaman": "melati",
+        "supplier": "Hermawan",
+        "harga": 0,
+        "min_suhu": 0,
+        "max_suhu": 0,
+        "media_tanam": 0
+    },
+    {
+        "id": "0003",
+        "tanaman": "sirih gading",
+        "supplier": "Dante",
+        "harga": 0,
+        "min_suhu": 0,
+        "max_suhu": 0,
+        "media_tanam": 0
+
+    },
+    {
+        "id": "0004",
+        "tanaman": "suplir",
+        "supplier": "penjual1",
+        "harga": 0,
+        "min_suhu": 0,
+        "max_suhu": 0,
+        "media_tanam": 0
+    }
+]

@@ -1,0 +1,20 @@
+[
+    {
+        "username": "Hermawan",
+        "password": "060",
+        "role": "supplier",
+        "status": "aktif"
+    },
+    {
+        "username": "Dante",
+        "password": "061",
+        "role": "supplier",
+        "status": "aktif"
+    },
+    {
+        "username": "supplier1",
+        "password": "supplier1",
+        "role": "supplier",
+        "status": "aktif"
+    }
+]

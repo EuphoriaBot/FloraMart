@@ -1,0 +1,38 @@
+[
+    {
+        "id": "0001",
+        "id_tanaman": "0001",
+        "jumlah": 10,
+        "metode_bayar": "qris",
+        "tanggal_transaksi": "14-11-2025 19:30",
+        "tanggal_pembayaran": "14-11-2025 20:30",
+        "status": "sudah dibayarkan"
+    },
+    {
+        "id": "0002",
+        "id_tanaman": "0002",
+        "jumlah": 10,
+        "metode_bayar": "qris",
+        "tanggal_transaksi": "13-11-2025 20:02",
+        "tanggal_pembayaran": "13-11-2025 21:02",
+        "status": "sudah dibayarkan"
+    },
+    {
+        "id": "0003",
+        "id_tanaman": "0003",
+        "jumlah": 5,
+        "metode_bayar": "qris",
+        "tanggal_transaksi": "13-11-2024 20:15",
+        "tanggal_pembayaran": "13-11-2024 21:15",
+        "status": "sudah dibayarkan"
+    },
+    {
+        "id": "0004",
+        "id_tanaman": "0004",
+        "jumlah": 5,
+        "metode_bayar": "qris",
+        "tanggal_transaksi": "14-11-2024 19:30",
+        "tanggal_pembayaran": "",
+        "status": "pembayaran"
+    }
+]

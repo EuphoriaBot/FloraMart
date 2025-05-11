@@ -1,0 +1,20 @@
+[
+    {
+        "username": "pembeli1",
+        "password": "pembeli1",
+        "role": "pembeli",
+        "status": "aktif"
+    },
+    {
+        "username": "pembeli2",
+        "password": "pembeli2",
+        "role": "pembeli",
+        "status": "aktif"
+    },
+    {
+        "username": "pembeli3",
+        "password": "pembeli3",
+        "role": "pembeli",
+        "status": "aktif"
+    }
+]

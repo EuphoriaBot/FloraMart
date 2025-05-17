@@ -1,20 +1,23 @@
 [
     {
+        "id": "0001",
         "username": "Hermawan",
         "password": "060",
-        "role": "supplier",
+        "metode_tersedia": ["0001", "0002"],
         "status": "aktif"
     },
     {
+        "id": "0002",
         "username": "Dante",
         "password": "061",
-        "role": "supplier",
+        "metode_tersedia": ["0001"],
         "status": "aktif"
     },
     {
+        "id": "0003",
         "username": "supplier1",
         "password": "supplier1",
-        "role": "supplier",
+        "metode_tersedia": ["0001"],
         "status": "aktif"
     }
 ]

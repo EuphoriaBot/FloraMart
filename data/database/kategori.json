@@ -1,0 +1,23 @@
+[
+    {
+        "id": "0001",
+        "nama_kategori": "Bunga",
+        "min_suhu": 0,
+        "max_suhu": 0,
+        "media_tanam": ""
+    },
+    {
+        "id": "0002",
+        "nama_kategori": "Merambat",
+        "min_suhu": 0,
+        "max_suhu": 0,
+        "media_tanam": ""
+    },
+    {
+        "id": "0003",
+        "nama_kategori": "Tumbuhan Paku",
+        "min_suhu": 0,
+        "max_suhu": 0,
+        "media_tanam": ""
+    }
+]

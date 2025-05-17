@@ -1,0 +1,34 @@
+[
+    {
+        "id": "0001",
+        "nama_tanaman": "mawar",
+        "id_supplier": "0001",
+        "jumlah": 20,
+        "tanggal_suplai": "1-10-2025 19:30",
+        "status_validasi": true
+    },
+    {
+        "id": "0002",
+        "nama_tanaman": "melati",
+        "id_supplier": "0001",
+        "jumlah": 25,
+        "tanggal_suplai": "9-11-2025 20:02",
+        "status_validasi": true
+    },
+    {
+        "id": "0003",
+        "nama_tanaman": "sirih gading",
+        "id_supplier": "0002",
+        "jumlah": 15,
+        "tanggal_suplai": "13-9-2024 20:15",
+        "status_validasi": true
+    },
+    {
+        "id": "0004",
+        "nama_tanaman": "suplir",
+        "id_supplier": "0003",
+        "jumlah": 15,
+        "tanggal_suplai": "14-10-2024 19:30",
+        "status_validasi": false
+    }
+]

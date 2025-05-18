@@ -21,19 +21,6 @@ int main()
 
     RefreshDataUtama(data);
 
-    // Contoh Membaca Data
-    // for (int i = 0; i < data.sizeDataSupplier; i++)
-    // {
-    //     cout << i + 1 << ". ";
-    //     cout << "\tUsername: " << data.dataSupplier[i].username << endl;
-    //     cout << "\tMetode Tersedia: ";
-    //     for (int j = 0; j < data.dataSupplier[i].sizeMetodeTersedia; j++)
-    //     {
-    //         cout << j + 1 << ". " << data.dataSupplier[i].metodeTersedia[j].metode << " ";
-    //     }
-    //     cout << endl;
-    // }
-
     while (!dataMenu.keluar)
     {
         if (!CekLogin(infoLogin))
@@ -64,144 +51,157 @@ int main()
 
 void MenuAwal(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
 {
-    try
+    RefreshDataUtama(data);
+
+    cout << "=== Menu Awal ===" << endl;
+    cout << "1. Login" << endl;
+    cout << "2. Registrasi Pembeli" << endl;
+    cout << "3. Registrasi Supplier" << endl;
+    cout << "4. Keluar" << endl;
+    cout << "Pilih menu: ";
+    string pilihan;
+    getline(cin, pilihan);
+
+    if (pilihan == "1")
     {
-        // Menu Awal
-        
-        // Note: Disarankan untuk Refresh Data Utama di awal Fungsi
-        RefreshDataUtama(data);
-        
-        // Menu Awal
-        // 1. Login
-        // 2. Registrasi Pembeli
-        // 3. Registrasi Penjual
-        //
-        // string pilihan
-        // 
-        // input pilihan
-        //
-        // if pilihan == "1"
-        //    form_login()
-        // else if pilihan == "2"
-        //    form_registrasi_pembeli()
-        // else if pilihan == "3"
-        //    form_registrasi_supplier()
+        FormLogin(data, infoLogin);
     }
-    catch (invalid_argument &e)
+    else if (pilihan == "2")
     {
-        cout << e.what() << '\n';
+        FormRegistrasiPembeli(data);
     }
-    catch (exception &e)
+    else if (pilihan == "3")
     {
-        cout << e.what() << '\n';
+        FormRegistrasiSupplier(data);
+    }
+    else if (pilihan == "4")
+    {
+        dataMenu.keluar = true;
+    }
+    else
+    {
+        cout << "Pilihan tidak valid!" << endl;
     }
 }
 
 void FormLogin(DataUtama &data, InfoLogin &infoLogin)
 {
-    try
-    {
-        // Form Login
-        
-        // Note: Disarankan untuk Refresh Data Utama di awal Fungsi
-        RefreshDataUtama(data);
+    RefreshDataUtama(data);
 
-        // string input_username, input_password
-        // 
-        // input input_username
-        // input input_password
-        //
-        // for i:data.data_admin
-        //     if data_admin[i].username == input_username && data.data_admin[i].password == input_password:
-        //         infoLogin.id = data_admin[i].id
-        //         infoLogin.username = data_admin[i].username
-        //         infoLogin.role = "admin"
-        //
-        // for i:data.data_pembeli
-        //     if data_pembeli[i].username == input_username && data.data_pembeli[i].password == input_password:
-        //         infoLogin.id = data_pembeli[i].id
-        //         infoLogin.username = data_pembeli[i].username
-        //         infoLogin.role = "pembeli"
-        //
-        // for i:data.data_supplier
-        //     if data.data_supplier[i] == input_username && data.data_supplier[i].password == input_password:
-        //         infoLogin.id = data_supplier[i].id
-        //         infoLogin.username = data_supplier[i].username
-        //         infoLogin.role = "supplier"
-        //
-    }
-    catch (invalid_argument &e)
+    cout << "=== Form Login ===" << endl;
+    cout << "Username: ";
+    string input_username;
+    getline(cin, input_username);
+
+    cout << "Password: ";
+    string input_password;
+    getline(cin, input_password);
+
+    for (int i = 0; i < data.sizeDataAdmin; i++)
     {
-        cout << e.what() << '\n';
+        if (data.dataAdmin[i].username == input_username && data.dataAdmin[i].password == input_password)
+        {
+            infoLogin.id = data.dataAdmin[i].id;
+            infoLogin.username = data.dataAdmin[i].username;
+            infoLogin.role = "admin";
+            cout << "Login sebagai admin berhasil." << endl;
+            return;
+        }
     }
-    catch (exception &e)
+
+    for (int i = 0; i < data.sizeDataPembeli; i++)
     {
-        cout << e.what() << '\n';
+        if (data.dataPembeli[i].username == input_username && data.dataPembeli[i].password == input_password)
+        {
+            infoLogin.id = data.dataPembeli[i].id;
+            infoLogin.username = data.dataPembeli[i].username;
+            infoLogin.role = "pembeli";
+            cout << "Login sebagai pembeli berhasil." << endl;
+            return;
+        }
     }
+
+    for (int i = 0; i < data.sizeDataSupplier; i++)
+    {
+        if (data.dataSupplier[i].username == input_username && data.dataSupplier[i].password == input_password)
+        {
+            infoLogin.id = data.dataSupplier[i].id;
+            infoLogin.username = data.dataSupplier[i].username;
+            infoLogin.role = "supplier";
+            cout << "Login sebagai supplier berhasil." << endl;
+            return;
+        }
+    }
+
+    cout << "Username atau password salah!" << endl;
 }
 
 void FormRegistrasiPembeli(DataUtama &data)
 {
-    try
-    {
-        // Form Registrasi Pembeli
-        
-        // Note: Disarankan untuk Refresh Data Utama di awal Fungsi
-        RefreshDataUtama(data);
+    RefreshDataUtama(data);
 
-        // string input_username, input_password
-        // Pembeli pembeli_baru
-        // 
-        // input input_username
-        // input input_password
-        //
-        // pembeli_baru.id = get_free_pembeli_id()
-        // pembeli_baru.username = input_username
-        // pembeli_baru.password = input_password
-        //
-        // tambah_pembeli(pembeli)
-        //
-        // print("berhasil membuat akun pembeli")
-    }
-    catch (invalid_argument &e)
+    cout << "=== Registrasi Pembeli ===" << endl;
+    cout << "Username: ";
+    string input_username;
+    getline(cin, input_username);
+
+    cout << "Password: ";
+    string input_password;
+    getline(cin, input_password);
+
+    if (input_username.empty() || input_password.empty())
     {
-        cout << e.what() << '\n';
+        cout << "Username dan password tidak boleh kosong" << endl;
+        return;
     }
-    catch (exception &e)
+
+    for (int i = 0; i < data.sizeDataPembeli; i++)
     {
-        cout << e.what() << '\n';
+        if (data.dataPembeli[i].username == input_username)
+        {
+            cout << "Username sudah digunakan, coba yang lain." << endl;
+            return;
+        }
     }
+
+    Pembeli pembeli_baru;
+    pembeli_baru.id = GetFreePembeliId(data.dataPembeli, data.sizeDataPembeli);
+    pembeli_baru.username = input_username;
+    pembeli_baru.password = input_password;
+
+    TambahPembeli(data.dataPembeli, data.sizeDataPembeli, pembeli_baru);
+
+    cout << "Berhasil membuat akun pembeli." << endl;
 }
 
 void FormRegistrasiSupplier(DataUtama &data)
 {
-    try
-    {
-        // Form Registrasi Pembeli
-        
-        // Note: Disarankan untuk Refresh Data Utama di awal Fungsi
-        RefreshDataUtama(data);
+    RefreshDataUtama(data);
 
-        // string input_username, input_password
-        // Pembeli pembeli_baru
-        // 
-        // input input_username
-        // input input_password
-        //
-        // pembeli_baru.id = get_free_supplier_id()
-        // pembeli_baru.username = input_username
-        // pembeli_baru.password = input_password
-        //
-        // tambah_pembeli(pembeli)
-        //
-        // print("berhasil membuat akun supplier")
-    }
-    catch (invalid_argument &e)
+    cout << "=== Registrasi Supplier ===" << endl;
+    cout << "Username: ";
+    string input_username;
+    getline(cin, input_username);
+
+    cout << "Password: ";
+    string input_password;
+    getline(cin, input_password);
+
+    for (int i = 0; i < data.sizeDataSupplier; i++)
     {
-        cout << e.what() << '\n';
+        if (data.dataSupplier[i].username == input_username)
+        {
+            cout << "Username sudah digunakan, coba yang lain." << endl;
+            return;
+        }
     }
-    catch (exception &e)
-    {
-        cout << e.what() << '\n';
-    }
+
+    Supplier supplier_baru;
+    supplier_baru.id = GetFreeSupplierId(data.dataSupplier, data.sizeDataSupplier);
+    supplier_baru.username = input_username;
+    supplier_baru.password = input_password;
+
+    TambahSupplier(data.dataSupplier, data.sizeDataSupplier, supplier_baru);
+
+    cout << "Berhasil membuat akun supplier." << endl;
 }

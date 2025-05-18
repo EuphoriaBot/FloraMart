@@ -105,7 +105,7 @@ struct DataUtama
 
     Tanaman dataTanaman[MAX_SIZE];
     int sizeDataTanaman;
-    
+
     Kategori dataKategori[MAX_SIZE];
     int sizeDataKategori;
 
@@ -144,7 +144,7 @@ void ReadJson(json &jsonData, int &sizeData, string fileName)
         cout << endl
              << e.what() << endl;
     }
-    
+
     delete curPath;
     curPath = nullptr;
 }
@@ -170,7 +170,7 @@ void WriteJson(json &jsonData, string fileName)
         cout << endl
              << e.what() << endl;
     }
-    
+
     delete curPath;
     curPath = nullptr;
 }

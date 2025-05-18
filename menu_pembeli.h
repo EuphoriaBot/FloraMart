@@ -3,11 +3,15 @@
 
 #include "menu_utilities.h"
 
-void MenuUtamaPembeli()
+void MenuUtamaPembeli(DataUtama &data, InfoLogin infoLogin, DataMenu dataMenu)
 {
     try
     {
+        // Menu Utama Pembeli
         
+        // Note: Disarankan untuk Refresh Data Utama di awal Fungsi
+        RefreshDataUtama(data);
+
     }
     catch(invalid_argument& e)
     {

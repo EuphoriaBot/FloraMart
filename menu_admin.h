@@ -3,11 +3,14 @@
 
 #include "menu_utilities.h"
 
-void MenuUtamaAdmin()
+void MenuUtamaAdmin(DataUtama &data, InfoLogin infoLogin, DataMenu dataMenu)
 {
     try
     {
+        // Menu Utama Admin
 
+        // Note: Disarankan untuk Refresh Data Utama di awal Fungsi
+        RefreshDataUtama(data);
     }
     catch(invalid_argument& e)
     {
@@ -19,11 +22,14 @@ void MenuUtamaAdmin()
     }
 }
 
-void MenuManajemenTanaman()
+void MenuManajemenTanaman(DataUtama &data, InfoLogin infoLogin, DataMenu dataMenu)
 {
     try
     {
-        
+        // Menu Manajmene Tanaman
+
+        // Note: Disarankan untuk Refresh Data Utama di awal Fungsi
+        RefreshDataUtama(data);
     }
     catch(invalid_argument& e)
     {

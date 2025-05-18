@@ -3,11 +3,14 @@
 
 #include "menu_utilities.h"
 
-void MenuUtamaSupplier()
+void MenuUtamaSupplier(DataUtama &data, InfoLogin infoLogin, DataMenu dataMenu)
 {
     try
     {
-        
+        // Menu Utama Supplier
+
+        // Note: Disarankan untuk Refresh Data Utama di awal Fungsi
+        RefreshDataUtama(data);   
     }
     catch(invalid_argument& e)
     {

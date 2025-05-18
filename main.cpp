@@ -38,32 +38,23 @@ int main()
     {
         if (!CekLogin(infoLogin))
         {
-            // Menampilkan halaman jika user belum login
-
             MenuAwal(data, infoLogin, dataMenu);
         }
         else if (infoLogin.role == "pembeli")
         {
-            // Menampilkan halaman Pembeli
-
-            MenuUtamaPembeli();
+            MenuUtamaPembeli(data, infoLogin, dataMenu);
         }
         else if (infoLogin.role == "supplier")
         {
-            // Menampilkan halaman Supplier
-
-            MenuUtamaSupplier();
+            MenuUtamaSupplier(data, infoLogin, dataMenu);
         }
         else if (infoLogin.role == "admin")
         {
-            // Menampilkan halaman Admin
-
-            MenuUtamaAdmin();
+            MenuUtamaAdmin(data, infoLogin, dataMenu);
         }
         else
         {
             // Menghapus info login jika role tidak valid
-
             infoLogin = {};
         }
     }
@@ -75,13 +66,17 @@ void MenuAwal(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
 {
     try
     {
-        cout << "Menu Awal" << endl;
-        // string pilihan
-        //
+        // Menu Awal
+        
+        // Note: Disarankan untuk Refresh Data Utama di awal Fungsi
+        RefreshDataUtama(data);
+        
         // Menu Awal
         // 1. Login
         // 2. Registrasi Pembeli
         // 3. Registrasi Penjual
+        //
+        // string pilihan
         // 
         // input pilihan
         //
@@ -107,6 +102,9 @@ void FormLogin(DataUtama &data, InfoLogin &infoLogin)
     try
     {
         // Form Login
+        
+        // Note: Disarankan untuk Refresh Data Utama di awal Fungsi
+        RefreshDataUtama(data);
 
         // string input_username, input_password
         // 
@@ -147,7 +145,10 @@ void FormRegistrasiPembeli(DataUtama &data)
     try
     {
         // Form Registrasi Pembeli
-        //
+        
+        // Note: Disarankan untuk Refresh Data Utama di awal Fungsi
+        RefreshDataUtama(data);
+
         // string input_username, input_password
         // Pembeli pembeli_baru
         // 
@@ -177,7 +178,10 @@ void FormRegistrasiSupplier(DataUtama &data)
     try
     {
         // Form Registrasi Pembeli
-        //
+        
+        // Note: Disarankan untuk Refresh Data Utama di awal Fungsi
+        RefreshDataUtama(data);
+
         // string input_username, input_password
         // Pembeli pembeli_baru
         // 

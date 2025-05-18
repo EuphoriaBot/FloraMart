@@ -72,7 +72,7 @@ int main()
     _indexKategori--;   // Menurunkan 1 angka untuk menyesuaikan offset index
 
     Tanaman dataTanamanBaru;
-    dataTanamanBaru.id = GetFreeTanamanId(dataTanaman, sizeDataTanaman);
+    dataTanamanBaru.id = GetFreeTanamanId();
     dataTanamanBaru.namaTanaman = "Kipli";
     dataTanamanBaru.supplier = dataSupplier[_indexSupplier];
     dataTanamanBaru.kategori = dataKategori[_indexKategori];

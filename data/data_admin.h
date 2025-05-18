@@ -37,19 +37,14 @@ void from_json(json &j, Admin &admin)
 }
 
 // Mengubah nilai dari admin ke json per data
-void to_json(json &j, json &oldJsonData, Admin &admin)
+void to_json(json &j, Admin &admin)
 {
-    string *newPassword = new string();
     try
     {
-        *newPassword = admin.password;
-        if (*newPassword == "")
-            *newPassword = oldJsonData.at("password");
-
         j = json{
             {"id", admin.id},
             {"username", admin.username},
-            {"password", *newPassword}};
+            {"password", admin.password}};
     }
     catch (const invalid_argument &e)
     {
@@ -61,9 +56,6 @@ void to_json(json &j, json &oldJsonData, Admin &admin)
         cout << endl
              << e.what() << endl;
     }
-    
-    delete newPassword;
-    newPassword = nullptr;
 }
 
 // Mengambil semua data admin (Admin[])
@@ -72,7 +64,7 @@ void GetAllAdmin(Admin *dataAdmin, int &sizeData)
     json *_jsonData = new json();
     try
     {
-        ReadJson(*_jsonData, sizeData, "admin.json");
+        ReadJson(*_jsonData, sizeData, DATA_NAME);
         for (int i = 0; i < sizeData; i++)
             from_json((*_jsonData)[i], dataAdmin[i]);
     }
@@ -124,31 +116,24 @@ void GetAdmin(Admin &admin, string targetId)
 }
 
 // Menyimpan Data di program saat ini ke JSON
-void SimpanAdmin(Admin *dataAdmin, int &sizeData)
+void SimpanAdmin(Admin *dataAdmin, int sizeData)
 {
-    json *_oldJsonData = new json();
     json *_newJsonData = new json();
-
     try
     {
-        ifstream readOldFile("./database/admin.json");
-        *_oldJsonData = json::parse(readOldFile);
-        *_newJsonData = json::array();
-
         for (int i = 0; i < sizeData; i++)
         {
-            json j;
-            to_json(j, (*_oldJsonData)[i], dataAdmin[i]);
+            json *j = new json();
+            to_json(*j,  dataAdmin[i]);
 
             // Menambah 1 elemen (data json) array ke belakang
-            (*_newJsonData).push_back(j);
+            (*_newJsonData).push_back(*j);
+
+            delete j;
+            j = nullptr;
         }
 
-        ofstream writeFile("./database/admin.json");
-        writeFile << (*_newJsonData);
-
-        readOldFile.close();
-        writeFile.close();
+        WriteJson((*_newJsonData), DATA_NAME);
     }
     catch (const invalid_argument &e)
     {
@@ -161,9 +146,7 @@ void SimpanAdmin(Admin *dataAdmin, int &sizeData)
              << e.what() << endl;
     }
 
-    delete _oldJsonData;
     delete _newJsonData;
-    _oldJsonData = nullptr;
     _newJsonData = nullptr;
 }
 

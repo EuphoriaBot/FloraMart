@@ -13,7 +13,9 @@
 using json = nlohmann::json;
 using namespace std;
 
+#ifdef DATA_NAME
 #undef DATA_NAME
+#endif
 #define DATA_NAME "transaksi.json"
 
 // Mengubah nilai dari json ke tanaman per data
@@ -104,7 +106,7 @@ void GetAllTransaksi(Transaksi *dataTanaman, int &sizeData)
     json *_jsonData = new json();
     try
     {
-        ReadJson(*_jsonData, sizeData, "transaksi.json");
+        ReadJson(*_jsonData, sizeData, DATA_NAME);
 
         for (int i = 0; i < sizeData; i++)
             from_json((*_jsonData)[i], dataTanaman[i]);
@@ -156,7 +158,7 @@ void GetTransaksi(Transaksi &transaksi, string targetId)
 }
 
 // Menyimpan Data di program saat ini ke JSON
-void SimpanTransaksi(Transaksi *dataTransaksi, int &sizeData)
+void SimpanTransaksi(Transaksi *dataTransaksi, int sizeData)
 {
     json *_newJsonData = new json{json::array()};
     try
@@ -191,15 +193,17 @@ void SimpanTransaksi(Transaksi *dataTransaksi, int &sizeData)
 }
 
 // Mencari ID otomatis yang belum digunakan
-string GetFreeTransaksiId(Transaksi *dataTransaksi, int &sizeData)
+string GetFreeTransaksiId()
 {
+    Transaksi *dataTransaksi = new Transaksi[MAX_SIZE];
+    int *sizeData = new int{0};
     stringstream *freeStreamId = new stringstream();
     int *maxId = new int{0};
     try
     {
-        GetAllTransaksi(dataTransaksi, sizeData);
+        GetAllTransaksi(dataTransaksi, *sizeData);
         
-        for (int i = 0; i < sizeData; i++)
+        for (int i = 0; i < *sizeData; i++)
         {
             if ((*maxId) < (stoi(dataTransaksi[i].id)))
                 *maxId = (stoi(dataTransaksi[i].id));
@@ -218,8 +222,12 @@ string GetFreeTransaksiId(Transaksi *dataTransaksi, int &sizeData)
         cout << endl
              << e.what() << endl;
     }
+    delete[] dataTransaksi;
+    delete sizeData;
     delete freeStreamId;
     delete maxId;
+    dataTransaksi = nullptr;
+    sizeData = nullptr;
     freeStreamId = nullptr;
     maxId = nullptr;
 

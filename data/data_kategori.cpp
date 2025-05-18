@@ -31,12 +31,12 @@ int main()
     }
 
     // -- (CREATE) Menambahkan Data Baru --
-    Kategori dataKategoriBaru;                                               // Deklarasi Data Kategori baru
-    dataKategoriBaru.id = GetFreeKategoriId(dataKategori, sizeDataKategori); // Isi ID secara otomatis
-    dataKategoriBaru.namaKategori = "Ini Kategori Baru";                     // Input Manual: getline(cin, dataKategori.namaKategori);
-    dataKategoriBaru.minSuhu = -1;                                           // Input Manual: getline(cin, dataKategori.minSuhu);
-    dataKategoriBaru.maxSuhu = 39.39;                                        // Input Manual: getline(cin, dataKategori.maxSuhu);
-    dataKategoriBaru.mediaTanam = "Air Coy";                                 // Input Manual: getline(cin, dataKategori.mediaTanam);
+    Kategori dataKategoriBaru;                           // Deklarasi Data Kategori baru
+    dataKategoriBaru.id = GetFreeKategoriId();           // Isi ID secara otomatis
+    dataKategoriBaru.namaKategori = "Ini Kategori Baru"; // Input Manual: getline(cin, dataKategori.namaKategori);
+    dataKategoriBaru.minSuhu = -1;                       // Input Manual: getline(cin, dataKategori.minSuhu);
+    dataKategoriBaru.maxSuhu = 39.39;                    // Input Manual: getline(cin, dataKategori.maxSuhu);
+    dataKategoriBaru.mediaTanam = "Air Coy";             // Input Manual: getline(cin, dataKategori.mediaTanam);
 
     TambahKategori(dataKategori, sizeDataKategori, dataKategoriBaru);
 

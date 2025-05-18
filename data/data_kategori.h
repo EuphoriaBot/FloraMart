@@ -96,7 +96,7 @@ void GetKategori(Kategori &kategori, string targetId)
 }
 
 // Menyimpan Data di program saat ini ke JSON
-void SimpanKategori(Kategori *dataKategori, int &sizeData)
+void SimpanKategori(Kategori *dataKategori, int sizeData)
 {
     json *_newJsonData = new json{json::array()};
     try
@@ -131,15 +131,17 @@ void SimpanKategori(Kategori *dataKategori, int &sizeData)
 }
 
 // Mencari ID otomatis yang belum digunakan
-string GetFreeKategoriId(Kategori *dataKategori, int &sizeData)
+string GetFreeKategoriId()
 {
+    Kategori *dataKategori = new Kategori[MAX_SIZE];
+    int *sizeData = new int{0};
     stringstream *freeStreamId = new stringstream();
     int *maxId = new int{0};
     try
     {
-        GetAllKategori(dataKategori, sizeData);
+        GetAllKategori(dataKategori, *sizeData);
 
-        for (int i = 0; i < sizeData; i++)
+        for (int i = 0; i < *sizeData; i++)
         {
             if ((*maxId) < (stoi(dataKategori[i].id)))
                 *maxId = (stoi(dataKategori[i].id));
@@ -159,8 +161,12 @@ string GetFreeKategoriId(Kategori *dataKategori, int &sizeData)
              << e.what() << endl;
     }
     
+    delete[] dataKategori;
+    delete sizeData;
     delete freeStreamId;
     delete maxId;
+    dataKategori = nullptr;
+    sizeData = nullptr;
     freeStreamId = nullptr;
     maxId = nullptr;
 

@@ -165,7 +165,7 @@ void FormRegistrasiPembeli(DataUtama &data)
     }
 
     Pembeli pembeli_baru;
-    pembeli_baru.id = GetFreePembeliId(data.dataPembeli, data.sizeDataPembeli);
+    pembeli_baru.id = GetFreePembeliId();
     pembeli_baru.username = input_username;
     pembeli_baru.password = input_password;
 
@@ -197,7 +197,7 @@ void FormRegistrasiSupplier(DataUtama &data)
     }
 
     Supplier supplier_baru;
-    supplier_baru.id = GetFreeSupplierId(data.dataSupplier, data.sizeDataSupplier);
+    supplier_baru.id = GetFreeSupplierId();
     supplier_baru.username = input_username;
     supplier_baru.password = input_password;
 

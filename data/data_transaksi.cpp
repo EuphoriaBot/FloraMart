@@ -81,7 +81,7 @@ int main()
 
     // Mengisi data tanaman baru dan validasi (Form)
     Transaksi transaksiBaru;
-    transaksiBaru.id = GetFreeTransaksiId(dataTransaksi, sizeDataTransaksi);
+    transaksiBaru.id = GetFreeTransaksiId();
     transaksiBaru.tanaman = dataTanaman[_indexTanaman];
     transaksiBaru.pembeli = dataPembeli[0]; // Membeli dengan akun pembeli1
     transaksiBaru.jumlahTanaman = 5; // Jumlah Pembelian Tanaman

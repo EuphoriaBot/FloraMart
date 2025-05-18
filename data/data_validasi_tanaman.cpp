@@ -79,13 +79,13 @@ int main()
     _indexKategori--;
 
     // Mengisi data tanaman baru dan validasi (Form)
-    tanamanBaru.id = GetFreeTanamanId(dataTanaman, sizeDataTanaman);
+    tanamanBaru.id = GetFreeTanamanId();
     tanamanBaru.namaTanaman = "Lidah Buaya";
     tanamanBaru.kategori = dataKategori[_indexKategori];
     tanamanBaru.harga = 4000;
     tanamanBaru.supplier = suplaiBelumDivalidasi[_indexValidasi].supplier; // Otomatis menetapkan supllier dari data suplai
 
-    validasiBaru.id = GetFreeValidasiId(dataValidasi, sizeDataValidasi);
+    validasiBaru.id = GetFreeValidasiId();
     validasiBaru.tanaman = tanamanBaru;
     validasiBaru.suplai = suplaiBelumDivalidasi[_indexValidasi];
     validasiBaru.stok_diterima = 5;
@@ -105,7 +105,7 @@ int main()
     _indexTanaman = 4; // Memilih kategori nomor 2
     _indexTanaman--;   // Menurunkan 1 angka untuk menyesuaikan offset index
 
-    validasiBaru.id = GetFreeValidasiId(dataValidasi, sizeDataValidasi);
+    validasiBaru.id = GetFreeValidasiId();
     validasiBaru.suplai = suplaiBelumDivalidasi[_indexValidasi];
     validasiBaru.tanaman = dataTanaman[_indexTanaman];
     validasiBaru.stok_diterima = 5;

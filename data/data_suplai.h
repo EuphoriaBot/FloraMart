@@ -82,7 +82,7 @@ void GetAllSuplai(Suplai *dataSuplai, int &sizeData)
     json *_jsonData = new json();
     try
     {
-        ReadJson(*_jsonData, sizeData, "suplai.json");
+        ReadJson(*_jsonData, sizeData, DATA_NAME);
         
         for (int i = 0; i < sizeData; i++)
             from_json((*_jsonData)[i], dataSuplai[i]);
@@ -135,7 +135,7 @@ void GetSuplai(Suplai &suplai, string targetId)
 }
 
 // Menyimpan Data di program saat ini ke JSON
-void SimpanSuplai(Suplai *dataSuplai, int &sizeData)
+void SimpanSuplai(Suplai *dataSuplai, int sizeData)
 {
     json *_newJsonData = new json{json::array()};
     try
@@ -170,14 +170,16 @@ void SimpanSuplai(Suplai *dataSuplai, int &sizeData)
 }
 
 // Mencari ID otomatis yang belum digunakan
-string GetFreeSuplaiId(Suplai *dataSuplai, int &sizeData)
+string GetFreeSuplaiId()
 {
+    Suplai *dataSuplai = new Suplai[MAX_SIZE];
+    int *sizeData = new int{0};
     stringstream *freeStreamId = new stringstream();
     int *maxId = new int{0};
     try
     {
-        GetAllSuplai(dataSuplai, sizeData);
-        for (int i = 0; i < sizeData; i++)
+        GetAllSuplai(dataSuplai, *sizeData);
+        for (int i = 0; i < *sizeData; i++)
         {
             if ((*maxId) < (stoi(dataSuplai[i].id)))
                 *maxId = (stoi(dataSuplai[i].id));
@@ -196,8 +198,12 @@ string GetFreeSuplaiId(Suplai *dataSuplai, int &sizeData)
         cout << endl
              << e.what() << endl;
     }
+    delete dataSuplai;
+    delete sizeData;
     delete freeStreamId;
     delete maxId;
+    dataSuplai = nullptr;
+    sizeData = nullptr;
     freeStreamId = nullptr;
     maxId = nullptr;
 

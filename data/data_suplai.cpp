@@ -57,7 +57,7 @@ int main()
     _indexSupplier--;   // Menurunkan 1 angka untuk menyesuaikan offset index
 
     Suplai dataSuplaiBaru;
-    dataSuplaiBaru.id = GetFreeSuplaiId(dataSuplai, sizeDataSuplai);
+    dataSuplaiBaru.id = GetFreeSuplaiId();
     dataSuplaiBaru.namaTanaman = "Hawktus";
     dataSuplaiBaru.supplier = dataSupplier[_indexSupplier];
     dataSuplaiBaru.jumlah = 10;

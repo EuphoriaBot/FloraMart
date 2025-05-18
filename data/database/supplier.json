@@ -1,23 +1,30 @@
 [
     {
         "id": "0001",
-        "username": "Hermawan",
+        "metode_tersedia": [
+            "0001",
+            "0002"
+        ],
         "password": "060",
-        "metode_tersedia": ["0001", "0002"],
-        "status": "aktif"
+        "status": "aktif",
+        "username": "Hermawan"
     },
     {
         "id": "0002",
-        "username": "Dante",
+        "metode_tersedia": [
+            "0001"
+        ],
         "password": "061",
-        "metode_tersedia": ["0001"],
-        "status": "aktif"
+        "status": "aktif",
+        "username": "Dante"
     },
     {
         "id": "0003",
-        "username": "supplier1",
+        "metode_tersedia": [
+            "0001"
+        ],
         "password": "supplier1",
-        "metode_tersedia": ["0001"],
-        "status": "aktif"
+        "status": "aktif",
+        "username": "supplier1"
     }
 ]

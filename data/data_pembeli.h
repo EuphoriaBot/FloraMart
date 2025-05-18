@@ -41,19 +41,14 @@ void from_json(json &j, Pembeli &p)
 }
 
 // Mengubah nilai dari pembeli ke json per data
-void to_json(json &j, json &oldJsonData, Pembeli &p)
+void to_json(json &j, Pembeli &p)
 {
-    string* newPassword = new string();
     try
     {
-        *newPassword = p.password;
-        if (*newPassword == "")
-            *newPassword = oldJsonData.at("password");
-
         j = json{
             {"id", p.id},
             {"username", p.username},
-            {"password", *newPassword}};
+            {"password", p.password}};
     }
     catch (const invalid_argument &e)
     {
@@ -65,9 +60,6 @@ void to_json(json &j, json &oldJsonData, Pembeli &p)
         cout << endl
              << e.what() << endl;
     }
-
-    delete newPassword;
-    newPassword = nullptr;
 }
 
 // Mengambil semua data pembeli (Pembeli[])
@@ -76,7 +68,7 @@ void GetAllPembeli(Pembeli *dataPembeli, int &sizeData)
     json *_jsonData = new json();
     try
     {
-        ReadJson(*_jsonData, sizeData, "pembeli.json");
+        ReadJson(*_jsonData, sizeData, DATA_NAME);
         
         for (int i = 0; i < sizeData; i++)
             from_json((*_jsonData)[i], dataPembeli[i]);
@@ -128,15 +120,17 @@ void GetPembeli(Pembeli &pembeli, string targetId)
 }
 
 // Mencari ID otomatis yang belum digunakan
-string GetFreePembeliId(Pembeli *dataPembeli, int &sizeData)
+string GetFreePembeliId()
 {
+    Pembeli *dataPembeli = new Pembeli[MAX_SIZE];
+    int *sizeData = new int{0};
     stringstream *freeStreamId = new stringstream();
     int *maxId = new int{0};
     try
     {
-        GetAllPembeli(dataPembeli, sizeData);
+        GetAllPembeli(dataPembeli, *sizeData);
 
-        for (int i = 0; i < sizeData; i++)
+        for (int i = 0; i < *sizeData; i++)
         {
             if ((*maxId) < (stoi(dataPembeli[i].id)))
                 *maxId = (stoi(dataPembeli[i].id));
@@ -156,8 +150,12 @@ string GetFreePembeliId(Pembeli *dataPembeli, int &sizeData)
              << e.what() << endl;
     }
 
+    delete[] dataPembeli;
+    delete sizeData;
     delete freeStreamId;
     delete maxId;
+    dataPembeli = nullptr;
+    sizeData = nullptr;
     freeStreamId = nullptr;
     maxId = nullptr;
 
@@ -165,20 +163,15 @@ string GetFreePembeliId(Pembeli *dataPembeli, int &sizeData)
 }
 
 // Menyimpan Data di program saat ini ke JSON
-void SimpanPembeli(Pembeli *dataPembeli, int &sizeData)
+void SimpanPembeli(Pembeli *dataPembeli, int sizeData)
 {
-    json *_oldJsonData = new json();
     json *_newJsonData = new json();
     try
     {
-        ifstream readOldFile("./database/pembeli.json");
-        *_oldJsonData = json::parse(readOldFile);
-        *_newJsonData = json::array();
-
         for (int i = 0; i < sizeData; i++)
         {
             json *j = new json();
-            to_json(*j, (*_oldJsonData)[i], dataPembeli[i]);
+            to_json(*j, dataPembeli[i]);
 
             // Menambah 1 elemen (data json) array ke belakang
             (*_newJsonData).push_back(*j);
@@ -187,11 +180,7 @@ void SimpanPembeli(Pembeli *dataPembeli, int &sizeData)
             j = nullptr;
         }
 
-        ofstream writeFile("./database/pembeli.json");
-        writeFile << *_newJsonData;
-
-        readOldFile.close();
-        writeFile.close();
+        WriteJson((*_newJsonData), DATA_NAME);
     }
     catch (const invalid_argument &e)
     {
@@ -204,9 +193,7 @@ void SimpanPembeli(Pembeli *dataPembeli, int &sizeData)
              << e.what() << endl;
     }
     
-    delete _oldJsonData;
     delete _newJsonData;
-    _oldJsonData = nullptr;
     _newJsonData = nullptr;
 }
 
@@ -220,7 +207,7 @@ void TambahPembeli(Pembeli *dataPembeli, int &sizeData, Pembeli pembeliBaru)
         if (pembeliBaru.password == "")
             throw invalid_argument("Password tidak bisa kosong!");
 
-        dataPembeli[sizeData].id = GetFreePembeliId(dataPembeli, sizeData);
+        dataPembeli[sizeData].id = pembeliBaru.id;
         dataPembeli[sizeData].username = pembeliBaru.username;
         dataPembeli[sizeData].password = pembeliBaru.password;
         sizeData++;

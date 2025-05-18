@@ -156,7 +156,7 @@ void WriteJson(json &jsonData, string fileName)
     {
         *curPath = ((filesystem::absolute(__FILE__)).remove_filename()).string();
         ofstream writeFile((*curPath) + "\\database\\" + fileName);
-        writeFile << jsonData;
+        writeFile << (jsonData);
 
         writeFile.close();
     }

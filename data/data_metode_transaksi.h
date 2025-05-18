@@ -36,7 +36,7 @@ void GetAllMetodeTransaksi(MetodeTransaksi *dataMetodeTransaksi, int &sizeData)
     json *_jsonData = new json();
     try
     {
-        ReadJson(*_jsonData, sizeData, "metode_transaksi.json");
+        ReadJson(*_jsonData, sizeData, DATA_NAME);
         for (int i = 0; i < sizeData; i++)
             from_json((*_jsonData)[i], dataMetodeTransaksi[i]);
     }
@@ -89,7 +89,7 @@ void GetMetodeTransaksi(MetodeTransaksi &metodeTransaksi, string targetId)
 }
 
 // Menyimpan Data di program saat ini ke JSON
-void SimpanValidasiTanaman(MetodeTransaksi *dataMetodeTransaksi, int &sizeData)
+void SimpanValidasiTanaman(MetodeTransaksi *dataMetodeTransaksi, int sizeData)
 {
     json *_newJsonData = new json{json::array()};
     try
@@ -124,15 +124,17 @@ void SimpanValidasiTanaman(MetodeTransaksi *dataMetodeTransaksi, int &sizeData)
 }
 
 // Mencari ID otomatis yang belum digunakan
-string GetFreeMetodeTransaksiId(MetodeTransaksi *dataMetodeTransaksi, int &sizeData)
+string GetFreeMetodeTransaksiId()
 {
+    MetodeTransaksi *dataMetodeTransaksi = new MetodeTransaksi[MAX_SIZE];
+    int *sizeData = new int{0};
     stringstream *freeStreamId = new stringstream();
     int *maxId = new int{0};
     try
     {
-        GetAllMetodeTransaksi(dataMetodeTransaksi, sizeData);
+        GetAllMetodeTransaksi(dataMetodeTransaksi, *sizeData);
         
-        for (int i = 0; i < sizeData; i++)
+        for (int i = 0; i < *sizeData; i++)
         {
             if ((*maxId) < (stoi(dataMetodeTransaksi[i].id)))
                 *maxId = (stoi(dataMetodeTransaksi[i].id));
@@ -152,8 +154,12 @@ string GetFreeMetodeTransaksiId(MetodeTransaksi *dataMetodeTransaksi, int &sizeD
              << e.what() << endl;
     }
 
+    delete[] dataMetodeTransaksi;
+    delete sizeData;
     delete freeStreamId;
     delete maxId;
+    dataMetodeTransaksi = nullptr;
+    sizeData = nullptr;
     freeStreamId = nullptr;
     maxId = nullptr;
 

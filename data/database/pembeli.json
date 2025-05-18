@@ -1,20 +1,17 @@
 [
     {
         "id": "0001",
-        "username": "pembeli1",
         "password": "pembeli1",
-        "status": "aktif"
+        "username": "pembeli1"
     },
     {
         "id": "0002",
-        "username": "pembeli2",
         "password": "pembeli2",
-        "status": "aktif"
+        "username": "pembeli2"
     },
     {
         "id": "0003",
-        "username": "pembeli3",
         "password": "pembeli3",
-        "status": "aktif"
+        "username": "pembeli3"
     }
 ]

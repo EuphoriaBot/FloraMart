@@ -91,7 +91,7 @@ void GetAllTanaman(Tanaman *dataTanaman, int &sizeData)
     json *_jsonData = new json();
     try
     {
-        ReadJson(*_jsonData, sizeData, "tanaman.json");
+        ReadJson(*_jsonData, sizeData, DATA_NAME);
 
         for (int i = 0; i < sizeData; i++)
             from_json((*_jsonData)[i], dataTanaman[i]);
@@ -143,7 +143,7 @@ void GetTanaman(Tanaman &tanaman, string targetId)
 }
 
 // Menyimpan Data di program saat ini ke JSON
-void SimpanTanaman(Tanaman *dataTanaman, int &sizeData)
+void SimpanTanaman(Tanaman *dataTanaman, int sizeData)
 {
     json *_newJsonData = new json{json::array()};
     try
@@ -178,14 +178,16 @@ void SimpanTanaman(Tanaman *dataTanaman, int &sizeData)
 }
 
 // Mencari ID otomatis yang belum digunakan
-string GetFreeTanamanId(Tanaman *dataTanaman, int &sizeData)
+string GetFreeTanamanId()
 {
+    Tanaman *dataTanaman = new Tanaman[MAX_SIZE];
+    int *sizeData = new int{0};
     stringstream *freeStreamId = new stringstream();
     int *maxId = new int{0};
     try
     {
-        GetAllTanaman(dataTanaman, sizeData);
-        for (int i = 0; i < sizeData; i++)
+        GetAllTanaman(dataTanaman, *sizeData);
+        for (int i = 0; i < *sizeData; i++)
         {
             if ((*maxId) < (stoi(dataTanaman[i].id)))
                 *maxId = (stoi(dataTanaman[i].id));
@@ -204,8 +206,12 @@ string GetFreeTanamanId(Tanaman *dataTanaman, int &sizeData)
         cout << endl
              << e.what() << endl;
     }
+    delete[] dataTanaman;
+    delete sizeData;
     delete freeStreamId;
     delete maxId;
+    dataTanaman = nullptr;
+    sizeData = nullptr;
     freeStreamId = nullptr;
     maxId = nullptr;
 

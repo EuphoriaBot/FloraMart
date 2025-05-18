@@ -40,6 +40,7 @@ int main()
 
     // -- (CREATE) Register Supplier Baru --
     Supplier dataSupplierBaru;
+    dataSupplierBaru.id = GetFreeSupplierId();
     dataSupplierBaru.username = "MTHermawan";
     dataSupplierBaru.password = "pointerko-cak";
 

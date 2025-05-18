@@ -60,6 +60,7 @@ void from_json(json &j, Supplier &s)
         j.at("id").get_to(s.id);
         j.at("username").get_to(s.username);
         j.at("password").get_to(s.password);
+        j.at("status").get_to(s.status);
         for (int i = 0; i < j.at("metode_tersedia").size(); i++)
             (j.at("metode_tersedia")[i]).get_to(_tempArr[i]);
     
@@ -81,10 +82,8 @@ void from_json(json &j, Supplier &s)
 }
 
 // Mengubah nilai dari supplier ke json per data
-void to_json(json &j, json &oldJsonData, Supplier &s)
+void to_json(json &j, Supplier &s)
 {
-    string *newPassword = new string();
-    string *newStatus = new string();
     json *dataMetode = new json();
 
     try
@@ -95,20 +94,12 @@ void to_json(json &j, json &oldJsonData, Supplier &s)
             (*dataMetode).push_back(s.metodeTersedia[i].id);
         }
 
-        *newPassword = s.password;
-        if (*newPassword == "")
-            *newPassword = oldJsonData.at("password");
-
-        *newStatus = s.status;
-        if (*newStatus == "")
-            *newStatus = oldJsonData.at("status");
-
         j = json{
             {"id", s.id},
             {"username", s.username},
-            {"password", *newPassword},
+            {"password", s.password},
             {"metode_tersedia", *dataMetode},
-            {"status", *newStatus}};
+            {"status", s.status}};
     }
     catch (const invalid_argument &e)
     {
@@ -121,11 +112,7 @@ void to_json(json &j, json &oldJsonData, Supplier &s)
              << e.what() << endl;
     }
 
-    delete newPassword;
-    delete newStatus;
     delete dataMetode;
-    newPassword = nullptr;
-    newStatus = nullptr;
     dataMetode = nullptr;
 }
 
@@ -135,7 +122,7 @@ void GetAllSupplier(Supplier *dataSupplier, int &sizeData)
     json* _jsonData = new json();
     try
     {
-        ReadJson(*_jsonData, sizeData, "supplier.json");
+        ReadJson(*_jsonData, sizeData, DATA_NAME);
     
         for (int i = 0; i < sizeData; i++)
             from_json((*_jsonData)[i], dataSupplier[i]);
@@ -188,33 +175,24 @@ void GetSupplier(Supplier &supplier, string targetId)
 }
 
 // Menyimpan Data di program saat ini ke JSON
-void SimpanSupplier(Supplier *dataSupplier, int &sizeData)
+void SimpanSupplier(Supplier *dataSupplier, int sizeData)
 {
-    json *_oldJsonData = new json();
     json *_newJsonData = new json();
     try
     {
-        ifstream readOldFile("./database/supplier.json");
-        *_oldJsonData = json::parse(readOldFile);
-        *_newJsonData = json::array();
-    
         for (int i = 0; i < sizeData; i++)
         {
             json *j = new json();
-            to_json(*j, (*_oldJsonData)[i], dataSupplier[i]);
-    
+            to_json(*j, dataSupplier[i]);
+
             // Menambah 1 elemen (data json) array ke belakang
             (*_newJsonData).push_back(*j);
-            
+
             delete j;
             j = nullptr;
         }
-    
-        ofstream writeFile("./database/supplier.json");
-        writeFile << *_newJsonData;
-    
-        readOldFile.close();
-        writeFile.close();
+
+        WriteJson((*_newJsonData), DATA_NAME);
     }
     catch (const invalid_argument &e)
     {
@@ -227,21 +205,21 @@ void SimpanSupplier(Supplier *dataSupplier, int &sizeData)
              << e.what() << endl;
     }
 
-    delete _oldJsonData;
     delete _newJsonData;
-    _oldJsonData = nullptr;
     _newJsonData = nullptr;
 }
 
 // Mencari ID otomatis yang belum digunakan
-string GetFreeSupplierId(Supplier *dataSupplier, int &sizeData)
+string GetFreeSupplierId()
 {
+    Supplier *dataSupplier = new Supplier[MAX_SIZE];
+    int *sizeData = new int{0};
     stringstream* freeStreamId = new stringstream();
     int *maxId = new int{0};
     try
     {
-        GetAllSupplier(dataSupplier, sizeData);
-        for (int i = 0; i < sizeData; i++)
+        GetAllSupplier(dataSupplier, *sizeData);
+        for (int i = 0; i < *sizeData; i++)
         {
             if ((*maxId) < (stoi(dataSupplier[i].id)))
                 *maxId = (stoi(dataSupplier[i].id));
@@ -261,8 +239,12 @@ string GetFreeSupplierId(Supplier *dataSupplier, int &sizeData)
              << e.what() << endl;
     }
 
+    delete[] dataSupplier;
+    delete sizeData;
     delete freeStreamId;
     delete maxId;
+    dataSupplier = nullptr;
+    sizeData = nullptr;
     freeStreamId = nullptr;
     maxId = nullptr;
 
@@ -279,7 +261,7 @@ void TambahSupplier(Supplier *dataSupplier, int &sizeData, Supplier supplierBaru
         if (supplierBaru.password == "")
             throw invalid_argument("Password tidak bisa kosong!");
 
-        dataSupplier[sizeData].id = GetFreeSupplierId(dataSupplier, sizeData);
+        dataSupplier[sizeData].id = supplierBaru.id;
         dataSupplier[sizeData].username = supplierBaru.username;
         dataSupplier[sizeData].password = supplierBaru.password;
         dataSupplier[sizeData].status = "aktif";

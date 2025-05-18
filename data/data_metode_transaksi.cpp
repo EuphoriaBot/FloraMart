@@ -28,8 +28,8 @@ int main()
     }
 
     // -- (CREATE) Menambahkan Data Baru --
-    MetodeTransaksi dataMetodeBaru;                            // Input Manual: getline(cin, dataMetodeBaru.metode);
-    dataMetodeBaru.id = GetFreeMetodeTransaksiId(dataMetodeTransaksi, sizeDataMetodeTransaksi);
+    MetodeTransaksi dataMetodeBaru; // Input Manual: getline(cin, dataMetodeBaru.metode);
+    dataMetodeBaru.id = GetFreeMetodeTransaksiId();
     cout << "Masukkan Nama Metode Baru:";
     getline(cin, dataMetodeBaru.metode);
     cout << endl;
@@ -62,7 +62,7 @@ int main()
     {
         dataMetodeDiperbarui->metode = _updateTemp;
     }
-    
+
     SimpanValidasiTanaman(dataMetodeTransaksi, sizeDataMetodeTransaksi); // Note: Simpan dengan menggunakan data utama, jangan data yang diperbarui
 
     // -- (DELETE) Menghapus Data --
@@ -78,9 +78,9 @@ int main()
         cout << endl;
     }
 
-    getline(cin, _deleteTemp); // Input Data
+    getline(cin, _deleteTemp);       // Input Data
     deleteIndex = stoi(_deleteTemp); // Konversi ke integer
-    deleteIndex--; // Kurangkan sesuai offset index (-1)
+    deleteIndex--;                   // Kurangkan sesuai offset index (-1)
 
     MetodeTransaksi dataMetodeDihapus = dataMetodeTransaksi[deleteIndex];
     HapusMetodeTransaksi(dataMetodeTransaksi, sizeDataMetodeTransaksi, dataMetodeDihapus); // (Data Utama, Size Data Utama, Data Utama Indeks Dihapus)

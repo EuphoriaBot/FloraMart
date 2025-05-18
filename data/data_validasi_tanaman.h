@@ -86,7 +86,7 @@ void GetAllValidasiTanaman(ValidasiTanaman *dataValidasi, int &sizeData)
     json *_jsonData = new json();
     try
     {
-        ReadJson(*_jsonData, sizeData, "validasi_tanaman.json");
+        ReadJson(*_jsonData, sizeData, DATA_NAME);
         
         for (int i = 0; i < sizeData; i++)
             from_json((*_jsonData)[i], dataValidasi[i]);
@@ -139,7 +139,7 @@ void GetValidasiTanaman(ValidasiTanaman &validasiTanaman, string targetId)
 }
 
 // Menyimpan Data di program saat ini ke JSON
-void SimpanValidasiTanaman(ValidasiTanaman *dataValidasiTanaman, int &sizeData)
+void SimpanValidasiTanaman(ValidasiTanaman *dataValidasiTanaman, int sizeData)
 {
     json *_newJsonData = new json{json::array()};
     try
@@ -174,14 +174,16 @@ void SimpanValidasiTanaman(ValidasiTanaman *dataValidasiTanaman, int &sizeData)
 }
 
 // Mencari ID otomatis yang belum digunakan
-string GetFreeValidasiId(ValidasiTanaman *dataValidasi, int &sizeData)
+string GetFreeValidasiId()
 {
+    ValidasiTanaman *dataValidasi = new ValidasiTanaman[MAX_SIZE];
+    int *sizeData = new int{0};
     stringstream *freeStreamId = new stringstream();
     int *maxId = new int{0};
     try
     {
-        GetAllValidasiTanaman(dataValidasi, sizeData);
-        for (int i = 0; i < sizeData; i++)
+        GetAllValidasiTanaman(dataValidasi, *sizeData);
+        for (int i = 0; i < *sizeData; i++)
         {
             if ((*maxId) < (stoi(dataValidasi[i].id)))
                 *maxId = (stoi(dataValidasi[i].id));
@@ -200,8 +202,12 @@ string GetFreeValidasiId(ValidasiTanaman *dataValidasi, int &sizeData)
         cout << endl
              << e.what() << endl;
     }
+    delete[] dataValidasi;
+    delete sizeData;
     delete freeStreamId;
     delete maxId;
+    dataValidasi = nullptr;
+    sizeData = nullptr;
     freeStreamId = nullptr;
     maxId = nullptr;
 

@@ -30,6 +30,7 @@ int main()
 
     // -- (CREATE) Register Pembeli Baru --
     Pembeli dataPembeliBaru;
+    dataPembeliBaru.id = GetFreePembeliId();
     dataPembeliBaru.username = "Dimas";
     dataPembeliBaru.password = "057";
 

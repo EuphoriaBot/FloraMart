@@ -5,11 +5,16 @@
 #include <iomanip>
 #include <fstream>
 #include "nlohmann/json.hpp"
-#include "data_struct.h"
+#include "data_utilities.h"
 #include "data_metode_transaksi.h"
 
 using json = nlohmann::json;
 using namespace std;
+
+#ifdef DATA_NAME
+#undef DATA_NAME
+#endif
+#define DATA_NAME "supplier.json"
 
 void GetSupplierMetodeTersedia(Supplier &dataSupplier, string *arrIdMetode, int jumlahMetode)
 {
@@ -54,6 +59,7 @@ void from_json(json &j, Supplier &s)
     {
         j.at("id").get_to(s.id);
         j.at("username").get_to(s.username);
+        j.at("password").get_to(s.password);
         for (int i = 0; i < j.at("metode_tersedia").size(); i++)
             (j.at("metode_tersedia")[i]).get_to(_tempArr[i]);
     
@@ -129,14 +135,10 @@ void GetAllSupplier(Supplier *dataSupplier, int &sizeData)
     json* _jsonData = new json();
     try
     {
-        ifstream readFile("./database/supplier.json");
-        *_jsonData = json::parse(readFile);
-        sizeData = min(int((*_jsonData).size()), int(MAX_SIZE));
+        ReadJson(*_jsonData, sizeData, "supplier.json");
     
         for (int i = 0; i < sizeData; i++)
             from_json((*_jsonData)[i], dataSupplier[i]);
-    
-        readFile.close();
     }
     catch (const invalid_argument &e)
     {
@@ -163,8 +165,8 @@ void GetSupplier(Supplier &supplier, string targetId)
     {
         GetAllSupplier(dataSupplier, *sizeDataSupplier);
     
-        for (int i = 0; i < *sizeDataSupplier; i++)
         {
+            for (int i = 0; i < *sizeDataSupplier; i++)
             if (dataSupplier[i].id == targetId)
                 supplier = dataSupplier[i];
         }
@@ -186,7 +188,7 @@ void GetSupplier(Supplier &supplier, string targetId)
 }
 
 // Menyimpan Data di program saat ini ke JSON
-void SimpanDataSupplier(Supplier *dataSupplier, int &sizeData)
+void SimpanSupplier(Supplier *dataSupplier, int &sizeData)
 {
     json *_oldJsonData = new json();
     json *_newJsonData = new json();
@@ -283,7 +285,7 @@ void TambahSupplier(Supplier *dataSupplier, int &sizeData, Supplier supplierBaru
         dataSupplier[sizeData].status = "aktif";
         sizeData++;
 
-        SimpanDataSupplier(dataSupplier, sizeData);
+        SimpanSupplier(dataSupplier, sizeData);
     }
     catch (const invalid_argument &e)
     {
@@ -325,7 +327,7 @@ void HapusSupplier(Supplier *dataSupplier, int &sizeData, Supplier supplierDihap
         }
         sizeData--;
 
-        SimpanDataSupplier(dataSupplier, sizeData);
+        SimpanSupplier(dataSupplier, sizeData);
     }
     catch (const invalid_argument &e)
     {

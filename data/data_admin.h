@@ -5,10 +5,15 @@
 #include <iomanip>
 #include <fstream>
 #include "nlohmann/json.hpp"
-#include "data_struct.h"
+#include "data_utilities.h"
 
 using json = nlohmann::json;
 using namespace std;
+
+#ifdef DATA_NAME
+#undef DATA_NAME
+#endif
+#define DATA_NAME "admin.json"
 
 // Mengubah nilai dari json ke admin per data
 void from_json(json &j, Admin &admin)
@@ -17,6 +22,7 @@ void from_json(json &j, Admin &admin)
     {
         j.at("id").get_to(admin.id);
         j.at("username").get_to(admin.username);
+        j.at("password").get_to(admin.password);
     }
     catch (const invalid_argument &e)
     {
@@ -62,18 +68,13 @@ void to_json(json &j, json &oldJsonData, Admin &admin)
 
 // Mengambil semua data admin (Admin[])
 void GetAllAdmin(Admin *dataAdmin, int &sizeData)
-{
+{ 
     json *_jsonData = new json();
     try
     {
-        ifstream readFile("data_admin.json");
-        *_jsonData = json::parse(readFile);
-        sizeData = min(int((*_jsonData).size()), int(MAX_SIZE));
-
+        ReadJson(*_jsonData, sizeData, "admin.json");
         for (int i = 0; i < sizeData; i++)
             from_json((*_jsonData)[i], dataAdmin[i]);
-
-        readFile.close();
     }
     catch (const invalid_argument &e)
     {
@@ -123,7 +124,7 @@ void GetAdmin(Admin &admin, string targetId)
 }
 
 // Menyimpan Data di program saat ini ke JSON
-void SimpanDataAdmin(Admin *dataAdmin, int &sizeData)
+void SimpanAdmin(Admin *dataAdmin, int &sizeData)
 {
     json *_oldJsonData = new json();
     json *_newJsonData = new json();

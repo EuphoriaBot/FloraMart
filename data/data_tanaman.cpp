@@ -2,7 +2,7 @@
 #include <iomanip>
 #include <fstream>
 #include "nlohmann/json.hpp"
-#include "data_struct.h"
+#include "data_utilities.h"
 #include "data_tanaman.h"
 
 using json = nlohmann::json;
@@ -97,7 +97,7 @@ int main()
     dataTanamanDiedit = &dataTanaman[updateIndex];
     dataTanamanDiedit->namaTanaman = "Kipli Es"; // Input Manual: getline(cin, dataMetodeDiperbarui->metode);
 
-    SimpanDataTanaman(dataTanaman, sizeDataTanaman); // Note: Simpan dengan menggunakan data utama, jangan data yang diperbarui
+    SimpanTanaman(dataTanaman, sizeDataTanaman); // Note: Simpan dengan menggunakan data utama, jangan data yang diperbarui
 
     // -- (DELETE) Menghapus Data --
     int deleteIndex = -1;

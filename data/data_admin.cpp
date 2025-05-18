@@ -2,7 +2,7 @@
 #include <iomanip>
 #include <fstream>
 #include "nlohmann/json.hpp"
-#include "data_struct.h"
+#include "data_utilities.h"
 #include "data_admin.h"
 
 using json = nlohmann::json;
@@ -36,15 +36,11 @@ int main()
     updateIndex = 1; // Memilih nomor 2
     updateIndex--;   // Menurunkan 1 angka untuk menyesuaikan offset index
 
-    // Versi Input Manual:
-    // getline(cin, _updateTemp);
-    // updateIndex = stoi(_updateTemp)--
-
     // Membuat pointer untuk menunjuk ke item data utama yang diedit
     Admin *dataAdminDiedit;
     dataAdminDiedit = &dataAdmin[updateIndex];
     dataAdminDiedit->username = "Gweh Admin"; // Input Manual: getline(cin, dataPembeliDiedit->username->username);
 
-    SimpanDataAdmin(dataAdmin, sizeDataAdmin); // Note: Simpan dengan menggunakan data utama, jangan data yang diperbarui
+    SimpanAdmin(dataAdmin, sizeDataAdmin); // Note: Simpan dengan menggunakan data utama, jangan data yang diperbarui
     return 0;
 }

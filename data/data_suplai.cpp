@@ -3,7 +3,7 @@
 #include <fstream>
 #include <ctime>
 #include "nlohmann/json.hpp"
-#include "data_struct.h"
+#include "data_utilities.h"
 #include "data_suplai.h"
 
 using json = nlohmann::json;
@@ -81,7 +81,7 @@ int main()
     dataSuplaiDiedit = &dataSuplai[updateIndex];
     dataSuplaiDiedit->namaTanaman = "Kaktus"; // Input Manual: getline(cin, dataMetodeDiperbarui->metode);
 
-    SimpanDataSuplai(dataSuplai, sizeDataSuplai); // Note: Simpan dengan menggunakan data utama, jangan data yang diperbarui
+    SimpanSuplai(dataSuplai, sizeDataSuplai); // Note: Simpan dengan menggunakan data utama, jangan data yang diperbarui
 
     // -- (DELETE) Menghapus Data --
     int deleteIndex = -1;

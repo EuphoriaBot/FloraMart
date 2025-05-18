@@ -2,7 +2,7 @@
 #include <iomanip>
 #include <fstream>
 #include "nlohmann/json.hpp"
-#include "data_struct.h"
+#include "data_utilities.h"
 #include "data_supplier.h"
 
 using json = nlohmann::json;
@@ -62,7 +62,7 @@ int main()
     dataSupplierDiedit = &dataSupplier[updateIndex];
     dataSupplierDiedit->username = "Remptyh"; // Input Manual: getline(cin, dataMetodeDiperbarui->metode);
 
-    SimpanDataSupplier(dataSupplier, sizeDataSupplier); // Note: Simpan dengan menggunakan data utama, jangan data yang diperbarui
+    SimpanSupplier(dataSupplier, sizeDataSupplier); // Note: Simpan dengan menggunakan data utama, jangan data yang diperbarui
 
     // -- (DELETE) Menghapus Data --
     int deleteIndex = -1;

@@ -2,7 +2,7 @@
 #include <iomanip>
 #include <fstream>
 #include "nlohmann/json.hpp"
-#include "data_struct.h"
+#include "data_utilities.h"
 #include "data_pembeli.h"
 
 using json = nlohmann::json;
@@ -52,7 +52,7 @@ int main()
     dataPembeliDiedit = &dataPembeli[updateIndex];
     dataPembeliDiedit->username = "xxX_Tzy_Xxx"; // Input Manual: getline(cin, dataPembeliDiedit->username->username);
 
-    SimpanDataPembeli(dataPembeli, sizeDataPembeli); // Note: Simpan dengan menggunakan data utama, jangan data yang diperbarui
+    SimpanPembeli(dataPembeli, sizeDataPembeli); // Note: Simpan dengan menggunakan data utama, jangan data yang diperbarui
 
     // -- (DELETE) Menghapus Data --
     int deleteIndex = -1;

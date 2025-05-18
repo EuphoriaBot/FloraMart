@@ -5,12 +5,17 @@
 #include <iomanip>
 #include <fstream>
 #include "nlohmann/json.hpp"
-#include "data_struct.h"
+#include "data_utilities.h"
 #include "data_tanaman.h"
 #include "data_suplai.h"
 
 using json = nlohmann::json;
 using namespace std;
+
+#ifdef DATA_NAME
+#undef DATA_NAME
+#endif
+#define DATA_NAME "validasi_tanaman.json"
 
 // Mengubah nilai dari json ke data suplai per data
 void from_json(json &j, ValidasiTanaman &validasi)
@@ -76,19 +81,15 @@ void to_json(json &j, ValidasiTanaman &v)
 }
 
 // Mengambil semua data suplai (Suplai[])
-void GetAllValidasi(ValidasiTanaman *dataValidasi, int &sizeData)
+void GetAllValidasiTanaman(ValidasiTanaman *dataValidasi, int &sizeData)
 {
     json *_jsonData = new json();
     try
     {
-        ifstream readFile("./database/validasi_tanaman.json");
-        *_jsonData = json::parse(readFile);
-        sizeData = min(int((*_jsonData).size()), int(MAX_SIZE));
-
+        ReadJson(*_jsonData, sizeData, "validasi_tanaman.json");
+        
         for (int i = 0; i < sizeData; i++)
             from_json((*_jsonData)[i], dataValidasi[i]);
-
-        readFile.close();
     }
     catch (const invalid_argument &e)
     {
@@ -106,14 +107,14 @@ void GetAllValidasi(ValidasiTanaman *dataValidasi, int &sizeData)
 }
 
 // Mencari data suplai dari ID dan ambil dari data yang memiliki id yang sama dengan targetId
-void GetValidasi(ValidasiTanaman &validasiTanaman, string targetId)
+void GetValidasiTanaman(ValidasiTanaman &validasiTanaman, string targetId)
 {
     ValidasiTanaman *dataValidasi = new ValidasiTanaman[MAX_SIZE];
     int *sizeDataValidasi = new int{0};
 
     try
     {
-        GetAllValidasi(dataValidasi, *sizeDataValidasi);
+        GetAllValidasiTanaman(dataValidasi, *sizeDataValidasi);
 
         for (int i = 0; i < *sizeDataValidasi; i++)
         {
@@ -138,29 +139,24 @@ void GetValidasi(ValidasiTanaman &validasiTanaman, string targetId)
 }
 
 // Menyimpan Data di program saat ini ke JSON
-void SimpanDataValidasi(ValidasiTanaman *dataValidasi, int &sizeData)
+void SimpanValidasiTanaman(ValidasiTanaman *dataValidasiTanaman, int &sizeData)
 {
-    json *_newJsonData = new json();
+    json *_newJsonData = new json{json::array()};
     try
     {
-        *_newJsonData = json::array();
-
         for (int i = 0; i < sizeData; i++)
         {
             json *j = new json();
-            to_json(*j, dataValidasi[i]);
+            to_json(*j, dataValidasiTanaman[i]);
 
             // Menambah 1 elemen (data json) array ke belakang
             (*_newJsonData).push_back(*j);
-
+            
             delete j;
             j = nullptr;
         }
 
-        ofstream writeFile("./database/validasi_tanaman.json");
-        writeFile << *_newJsonData;
-
-        writeFile.close();
+        WriteJson(*_newJsonData, DATA_NAME);
     }
     catch (const invalid_argument &e)
     {
@@ -172,6 +168,7 @@ void SimpanDataValidasi(ValidasiTanaman *dataValidasi, int &sizeData)
         cout << endl
              << e.what() << endl;
     }
+
     delete _newJsonData;
     _newJsonData = nullptr;
 }
@@ -183,7 +180,7 @@ string GetFreeValidasiId(ValidasiTanaman *dataValidasi, int &sizeData)
     int *maxId = new int{0};
     try
     {
-        GetAllValidasi(dataValidasi, sizeData);
+        GetAllValidasiTanaman(dataValidasi, sizeData);
         for (int i = 0; i < sizeData; i++)
         {
             if ((*maxId) < (stoi(dataValidasi[i].id)))
@@ -275,9 +272,9 @@ void TambahValidasi(ValidasiTanaman *dataValidasi, int &sizeData, ValidasiTanama
         }
         sizeData++;
 
-        SimpanDataValidasi(dataValidasi, sizeData);
-        SimpanDataSuplai(dataSuplai, *sizeDataSuplai);
-        SimpanDataTanaman(dataTanaman, *sizeDataTanaman);
+        SimpanValidasiTanaman(dataValidasi, sizeData);
+        SimpanSuplai(dataSuplai, *sizeDataSuplai);
+        SimpanTanaman(dataTanaman, *sizeDataTanaman);
     }
     catch (const invalid_argument &e)
     {

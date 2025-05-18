@@ -5,11 +5,16 @@
 #include <iomanip>
 #include <fstream>
 #include "nlohmann/json.hpp"
-#include "data_struct.h"
+#include "data_utilities.h"
 #include "data_supplier.h"
 
 using json = nlohmann::json;
 using namespace std;
+
+#ifdef DATA_NAME
+#undef DATA_NAME
+#endif
+#define DATA_NAME "suplai.json"
 
 // Mengubah nilai dari json ke data suplai per data
 void from_json(json &j, Suplai &s)
@@ -77,14 +82,10 @@ void GetAllSuplai(Suplai *dataSuplai, int &sizeData)
     json *_jsonData = new json();
     try
     {
-        ifstream readFile("./database/suplai.json");
-        *_jsonData = json::parse(readFile);
-        sizeData = min(int((*_jsonData).size()), int(MAX_SIZE));
-
+        ReadJson(*_jsonData, sizeData, "suplai.json");
+        
         for (int i = 0; i < sizeData; i++)
             from_json((*_jsonData)[i], dataSuplai[i]);
-
-        readFile.close();
     }
     catch (const invalid_argument &e)
     {
@@ -134,26 +135,24 @@ void GetSuplai(Suplai &suplai, string targetId)
 }
 
 // Menyimpan Data di program saat ini ke JSON
-void SimpanDataSuplai(Suplai *dataSuplai, int &sizeData)
+void SimpanSuplai(Suplai *dataSuplai, int &sizeData)
 {
-    json *_newJsonData = new json();
+    json *_newJsonData = new json{json::array()};
     try
     {
-        *_newJsonData = json::array();
-
         for (int i = 0; i < sizeData; i++)
         {
-            json j;
-            to_json(j, dataSuplai[i]);
+            json *j = new json();
+            to_json(*j, dataSuplai[i]);
 
             // Menambah 1 elemen (data json) array ke belakang
-            (*_newJsonData).push_back(j);
+            (*_newJsonData).push_back(*j);
+            
+            delete j;
+            j = nullptr;
         }
 
-        ofstream writeFile("./database/suplai.json");
-        writeFile << *_newJsonData;
-
-        writeFile.close();
+        WriteJson(*_newJsonData, DATA_NAME);
     }
     catch (const invalid_argument &e)
     {
@@ -229,7 +228,7 @@ void TambahSuplai(Suplai *dataSuplai, int &sizeData, Suplai suplaiBaru)
         dataSuplai[sizeData].statusValidasi = false;
         sizeData++;
 
-        SimpanDataSuplai(dataSuplai, sizeData);
+        SimpanSuplai(dataSuplai, sizeData);
     }
     catch (const invalid_argument &e)
     {
@@ -277,7 +276,7 @@ void HapusSuplai(Suplai *dataSuplai, int &sizeData, Suplai suplaiDihapus)
         }
         sizeData--;
 
-        SimpanDataSuplai(dataSuplai, sizeData);
+        SimpanSuplai(dataSuplai, sizeData);
     }
     catch (const invalid_argument &e)
     {

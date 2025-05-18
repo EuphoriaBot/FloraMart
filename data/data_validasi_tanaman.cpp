@@ -2,7 +2,7 @@
 #include <iomanip>
 #include <fstream>
 #include "nlohmann/json.hpp"
-#include "data_struct.h"
+#include "data_utilities.h"
 #include "data_validasi_tanaman.h"
 
 using json = nlohmann::json;
@@ -25,7 +25,7 @@ int main()
     int sizeDataSuplai = 0;      // Size Data Utama Suplai
 
     // -- (READ) Contoh Menampilkan Data --
-    GetAllValidasi(dataValidasi, sizeDataValidasi); // Mengambil data terbaru dari JSON
+    GetAllValidasiTanaman(dataValidasi, sizeDataValidasi); // Mengambil data terbaru dari JSON
     GetAllTanaman(dataTanaman, sizeDataTanaman);
     GetAllSuplai(dataSuplai, sizeDataSuplai);
     GetAllKategori(dataKategori, sizeDataKategori);

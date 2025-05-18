@@ -5,12 +5,17 @@
 #include <iomanip>
 #include <fstream>
 #include "nlohmann/json.hpp"
-#include "data_struct.h"
+#include "data_utilities.h"
 #include "data_supplier.h"
 #include "data_kategori.h"
 
 using json = nlohmann::json;
 using namespace std;
+
+#ifdef DATA_NAME
+#undef DATA_NAME
+#endif
+#define DATA_NAME "tanaman.json"
 
 // Mengubah nilai dari json ke tanaman per data
 void from_json(json &j, Tanaman &t)
@@ -86,14 +91,10 @@ void GetAllTanaman(Tanaman *dataTanaman, int &sizeData)
     json *_jsonData = new json();
     try
     {
-        ifstream readFile("./database/tanaman.json");
-        *_jsonData = json::parse(readFile);
-        sizeData = min(int((*_jsonData).size()), int(MAX_SIZE));
+        ReadJson(*_jsonData, sizeData, "tanaman.json");
 
         for (int i = 0; i < sizeData; i++)
             from_json((*_jsonData)[i], dataTanaman[i]);
-
-        readFile.close();
     }
     catch (const invalid_argument &e)
     {
@@ -142,13 +143,11 @@ void GetTanaman(Tanaman &tanaman, string targetId)
 }
 
 // Menyimpan Data di program saat ini ke JSON
-void SimpanDataTanaman(Tanaman *dataTanaman, int &sizeData)
+void SimpanTanaman(Tanaman *dataTanaman, int &sizeData)
 {
-    json *_newJsonData = new json();
+    json *_newJsonData = new json{json::array()};
     try
     {
-        *_newJsonData = json::array();
-
         for (int i = 0; i < sizeData; i++)
         {
             json *j = new json();
@@ -161,10 +160,7 @@ void SimpanDataTanaman(Tanaman *dataTanaman, int &sizeData)
             j = nullptr;
         }
 
-        ofstream writeFile("./database/tanaman.json");
-        writeFile << *_newJsonData;
-
-        writeFile.close();
+        WriteJson(*_newJsonData, DATA_NAME);
     }
     catch (const invalid_argument &e)
     {
@@ -176,6 +172,7 @@ void SimpanDataTanaman(Tanaman *dataTanaman, int &sizeData)
         cout << endl
              << e.what() << endl;
     }
+
     delete _newJsonData;
     _newJsonData = nullptr;
 }
@@ -239,7 +236,7 @@ void TambahTanaman(Tanaman *dataTanaman, int &sizeData, Tanaman tanamanBaru)
         dataTanaman[sizeData].stok = 0;
         sizeData++;
 
-        SimpanDataTanaman(dataTanaman, sizeData);
+        SimpanTanaman(dataTanaman, sizeData);
     }
     catch (const invalid_argument &e)
     {
@@ -280,7 +277,7 @@ void HapusTanaman(Tanaman *dataTanaman, int &sizeData, Tanaman tanamanDihapus)
         }
         sizeData--;
 
-        SimpanDataTanaman(dataTanaman, sizeData);
+        SimpanTanaman(dataTanaman, sizeData);
     }
     catch (const invalid_argument &e)
     {

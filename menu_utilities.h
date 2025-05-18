@@ -13,7 +13,7 @@
 #include "data/data_validasi_tanaman.h"
 
 // Struct Data Utama
-#include "data/data_struct.h"
+#include "data/data_utilities.h"
 
 struct InfoLogin
 {
@@ -38,7 +38,7 @@ void RefreshDataUtama(DataUtama &data)
     GetAllMetodeTransaksi(data.dataMetodeTransaksi, data.sizeDataMetodeTransaksi);
     GetAllSuplai(data.dataSuplai, data.sizeDataSuplai);
     GetAllTransaksi(data.dataTransaksi, data.sizeDataTransaksi);
-    GetAllValidasi(data.dataValidasiTanaman, data.sizeDataValidasi);
+    GetAllValidasiTanaman(data.dataValidasiTanaman, data.sizeDataValidasi);
 }
 
 void Logout(DataMenu &dataMenu, InfoLogin &infoLogin)

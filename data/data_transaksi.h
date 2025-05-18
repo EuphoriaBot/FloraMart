@@ -5,13 +5,16 @@
 #include <iomanip>
 #include <fstream>
 #include "nlohmann/json.hpp"
-#include "data_struct.h"
+#include "data_utilities.h"
 #include "data_tanaman.h"
 #include "data_pembeli.h"
 #include "data_metode_transaksi.h"
 
 using json = nlohmann::json;
 using namespace std;
+
+#undef DATA_NAME
+#define DATA_NAME "transaksi.json"
 
 // Mengubah nilai dari json ke tanaman per data
 void from_json(json &j, Transaksi &transaksi)
@@ -101,14 +104,10 @@ void GetAllTransaksi(Transaksi *dataTanaman, int &sizeData)
     json *_jsonData = new json();
     try
     {
-        ifstream readFile("./database/transaksi.json");
-        *_jsonData = json::parse(readFile);
-        sizeData = min(int((*_jsonData).size()), int(MAX_SIZE));
+        ReadJson(*_jsonData, sizeData, "transaksi.json");
 
         for (int i = 0; i < sizeData; i++)
             from_json((*_jsonData)[i], dataTanaman[i]);
-
-        readFile.close();
     }
     catch (const invalid_argument &e)
     {
@@ -157,26 +156,24 @@ void GetTransaksi(Transaksi &transaksi, string targetId)
 }
 
 // Menyimpan Data di program saat ini ke JSON
-void SimpanDataTransaksi(Transaksi *dataTransaksi, int &sizeData)
+void SimpanTransaksi(Transaksi *dataTransaksi, int &sizeData)
 {
-    json *_newJsonData = new json();
+    json *_newJsonData = new json{json::array()};
     try
     {
-        *_newJsonData = json::array();
-
         for (int i = 0; i < sizeData; i++)
         {
-            json j;
-            to_json(j, dataTransaksi[i]);
+            json *j = new json();
+            to_json(*j, dataTransaksi[i]);
 
             // Menambah 1 elemen (data json) array ke belakang
-            (*_newJsonData).push_back(j);
+            (*_newJsonData).push_back(*j);
+            
+            delete j;
+            j = nullptr;
         }
 
-        ofstream writeFile("./database/transaksi.json");
-        writeFile << (*_newJsonData);
-
-        writeFile.close();
+        WriteJson(*_newJsonData, DATA_NAME);
     }
     catch (const invalid_argument &e)
     {
@@ -274,7 +271,7 @@ void TambahTransaksi(Transaksi *dataTransaksi, int &sizeData, Transaksi transaks
             }
         }
 
-        SimpanDataTransaksi(dataTransaksi, sizeData);
+        SimpanTransaksi(dataTransaksi, sizeData);
     }
     catch (const invalid_argument &e)
     {
@@ -328,7 +325,7 @@ void HapusTanaman(Transaksi *dataTanaman, int &sizeData, Tanaman tanamanDihapus)
         }
         sizeData--;
 
-        SimpanDataTransaksi(dataTanaman, sizeData);
+        SimpanTransaksi(dataTanaman, sizeData);
     }
     catch (const invalid_argument &e)
     {

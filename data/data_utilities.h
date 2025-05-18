@@ -1,10 +1,16 @@
-#ifndef DATA_STRUCT_H
-#define DATA_STRUCT_H
-
-#include <string>
-using namespace std;
-
 #define MAX_SIZE 25
+
+#ifndef DATA_UTILITIES_H
+#define DATA_UTILITIES_H
+
+#include <iostream>
+#include <string>
+#include <filesystem>
+#include <fstream>
+#include "nlohmann/json.hpp"
+
+using json = nlohmann::json;
+using namespace std;
 
 struct MetodeTransaksi
 {
@@ -115,5 +121,58 @@ struct DataUtama
     ValidasiTanaman dataValidasiTanaman[MAX_SIZE];
     int sizeDataValidasi;
 };
+
+void ReadJson(json &jsonData, int &sizeData, string fileName)
+{
+    string *curPath = new string();
+    try
+    {
+        *curPath = ((filesystem::absolute(__FILE__)).remove_filename()).string();
+        ifstream readFile((*curPath) + "\\database\\" + fileName);
+        jsonData = json::parse(readFile);
+        sizeData = min(int((jsonData).size()), int(MAX_SIZE));
+
+        readFile.close();
+    }
+    catch (const invalid_argument &e)
+    {
+        cout << endl
+             << e.what() << endl;
+    }
+    catch (const exception &e)
+    {
+        cout << endl
+             << e.what() << endl;
+    }
+    
+    delete curPath;
+    curPath = nullptr;
+}
+
+void WriteJson(json &jsonData, string fileName)
+{
+    string *curPath = new string();
+    try
+    {
+        *curPath = ((filesystem::absolute(__FILE__)).remove_filename()).string();
+        ofstream writeFile((*curPath) + "\\database\\" + fileName);
+        writeFile << jsonData;
+
+        writeFile.close();
+    }
+    catch (const invalid_argument &e)
+    {
+        cout << endl
+             << e.what() << endl;
+    }
+    catch (const exception &e)
+    {
+        cout << endl
+             << e.what() << endl;
+    }
+    
+    delete curPath;
+    curPath = nullptr;
+}
 
 #endif

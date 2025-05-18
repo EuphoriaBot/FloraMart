@@ -5,10 +5,15 @@
 #include <iomanip>
 #include <fstream>
 #include "nlohmann/json.hpp"
-#include "data_struct.h"
+#include "data_utilities.h"
 
 using json = nlohmann::json;
 using namespace std;
+
+#ifdef DATA_NAME
+#undef DATA_NAME
+#endif
+#define DATA_NAME "kategori.json"
 
 // Mengubah nilai dari json ke kategori per data
 void from_json(json &j, Kategori &kat)
@@ -37,14 +42,10 @@ void GetAllKategori(Kategori *dataKategori, int &sizeData)
     json *_jsonData = new json();
     try
     {
-        ifstream readFile("./database/kategori.json");
-        *_jsonData = json::parse(readFile);
-        sizeData = min(int((*_jsonData).size()), int(MAX_SIZE));
+        ReadJson(*_jsonData, sizeData, DATA_NAME);
 
         for (int i = 0; i < sizeData; i++)
             from_json((*_jsonData)[i], dataKategori[i]);
-
-        readFile.close();
     }
     catch (const invalid_argument &e)
     {
@@ -95,27 +96,24 @@ void GetKategori(Kategori &kategori, string targetId)
 }
 
 // Menyimpan Data di program saat ini ke JSON
-void SimpanDataKategori(Kategori *dataKategori, int &sizeData)
+void SimpanKategori(Kategori *dataKategori, int &sizeData)
 {
-    json *_jsonData = new json();
+    json *_newJsonData = new json{json::array()};
     try
     {
-        *_jsonData = json::array();
         for (int i = 0; i < sizeData; i++)
         {
             json *j = new json();
             to_json(*j, dataKategori[i]);
 
             // Menambah 1 elemen (data json) array ke belakang
-            (*_jsonData).push_back(*j);
+            (*_newJsonData).push_back(*j);
             
             delete j;
             j = nullptr;
         }
 
-        ofstream writeFile("./database/kategori.json");
-        writeFile << (*_jsonData);
-        writeFile.close();
+        WriteJson(*_newJsonData, DATA_NAME);
     }
     catch (const invalid_argument &e)
     {
@@ -128,8 +126,8 @@ void SimpanDataKategori(Kategori *dataKategori, int &sizeData)
              << e.what() << endl;
     }
 
-    delete _jsonData;
-    _jsonData = nullptr;
+    delete _newJsonData;
+    _newJsonData = nullptr;
 }
 
 // Mencari ID otomatis yang belum digunakan
@@ -185,7 +183,7 @@ void TambahKategori(Kategori *dataKategori, int &sizeData, Kategori kategoriBaru
         dataKategori[sizeData].mediaTanam = kategoriBaru.mediaTanam;
         sizeData++;
 
-        SimpanDataKategori(dataKategori, sizeData);
+        SimpanKategori(dataKategori, sizeData);
     }
     catch (const invalid_argument &e)
     {
@@ -227,7 +225,7 @@ void HapusKategori(Kategori *dataKategori, int &sizeData, Kategori kategoriDihap
         }
         sizeData--;
 
-        SimpanDataKategori(dataKategori, sizeData);
+        SimpanKategori(dataKategori, sizeData);
     }
     catch (const invalid_argument &e)
     {

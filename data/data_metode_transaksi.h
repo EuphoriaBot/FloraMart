@@ -5,10 +5,15 @@
 #include <iomanip>
 #include <fstream>
 #include "nlohmann/json.hpp"
-#include "data_struct.h"
+#include "data_utilities.h"
 
 using json = nlohmann::json;
 using namespace std;
+
+#ifdef DATA_NAME
+#undef DATA_NAME
+#endif
+#define DATA_NAME "metode_transaksi.json"
 
 // Mengubah nilai dari json ke metode per data
 void from_json(json &j, MetodeTransaksi &mt)
@@ -31,14 +36,9 @@ void GetAllMetodeTransaksi(MetodeTransaksi *dataMetodeTransaksi, int &sizeData)
     json *_jsonData = new json();
     try
     {
-        ifstream readFile("./database/metode_transaksi.json");
-        *_jsonData = json::parse(readFile);
-        sizeData = min(int((*_jsonData).size()), int(MAX_SIZE));
-
+        ReadJson(*_jsonData, sizeData, "metode_transaksi.json");
         for (int i = 0; i < sizeData; i++)
             from_json((*_jsonData)[i], dataMetodeTransaksi[i]);
-
-        readFile.close();
     }
     catch (const invalid_argument &e)
     {
@@ -89,24 +89,24 @@ void GetMetodeTransaksi(MetodeTransaksi &metodeTransaksi, string targetId)
 }
 
 // Menyimpan Data di program saat ini ke JSON
-void SimpanDataMetodeTransaksi(MetodeTransaksi *dataMetodeTransaksi, int &sizeData)
+void SimpanValidasiTanaman(MetodeTransaksi *dataMetodeTransaksi, int &sizeData)
 {
-    json *_jsonData = new json();
+    json *_newJsonData = new json{json::array()};
     try
     {
-        *_jsonData = json::array();
         for (int i = 0; i < sizeData; i++)
         {
-            json j;
-            to_json(j, dataMetodeTransaksi[i]);
+            json *j = new json();
+            to_json(*j, dataMetodeTransaksi[i]);
 
             // Menambah 1 elemen (data json) array ke belakang
-            (*_jsonData).push_back(j);
+            (*_newJsonData).push_back(*j);
+            
+            delete j;
+            j = nullptr;
         }
 
-        ofstream writeFile("./database/metode_transaksi.json");
-        writeFile << (*_jsonData);
-        writeFile.close();
+        WriteJson(*_newJsonData, DATA_NAME);
     }
     catch (const invalid_argument &e)
     {
@@ -119,8 +119,8 @@ void SimpanDataMetodeTransaksi(MetodeTransaksi *dataMetodeTransaksi, int &sizeDa
              << e.what() << endl;
     }
 
-    delete _jsonData;
-    _jsonData = nullptr;
+    delete _newJsonData;
+    _newJsonData = nullptr;
 }
 
 // Mencari ID otomatis yang belum digunakan
@@ -172,7 +172,7 @@ void TambahMetodeTransaksi(MetodeTransaksi *dataMetodeTransaksi, int &sizeData, 
         dataMetodeTransaksi[sizeData].metode = metodeBaru.metode;
         sizeData++;
 
-        SimpanDataMetodeTransaksi(dataMetodeTransaksi, sizeData);
+        SimpanValidasiTanaman(dataMetodeTransaksi, sizeData);
     }
     catch (const invalid_argument &e)
     {
@@ -211,7 +211,7 @@ void HapusMetodeTransaksi(MetodeTransaksi *dataMetodeTransaksi, int &sizeData, M
         }
         sizeData--;
 
-        SimpanDataMetodeTransaksi(dataMetodeTransaksi, sizeData);
+        SimpanValidasiTanaman(dataMetodeTransaksi, sizeData);
     }
     catch (const invalid_argument &e)
     {

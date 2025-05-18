@@ -5,10 +5,15 @@
 #include <iomanip>
 #include <fstream>
 #include "nlohmann/json.hpp"
-#include "data_struct.h"
+#include "data_utilities.h"
 
 using json = nlohmann::json;
 using namespace std;
+
+#ifdef DATA_NAME
+#undef DATA_NAME
+#endif
+#define DATA_NAME "pembeli.json"
 
 // Mengubah nilai dari json ke pembeli per data
 void from_json(json &j, Pembeli &p)
@@ -18,6 +23,7 @@ void from_json(json &j, Pembeli &p)
     {
         j.at("id").get_to(p.id);
         j.at("username").get_to(p.username);
+        j.at("password").get_to(p.password);
     }
     catch (const invalid_argument &e)
     {
@@ -70,14 +76,10 @@ void GetAllPembeli(Pembeli *dataPembeli, int &sizeData)
     json *_jsonData = new json();
     try
     {
-        ifstream readFile("./database/pembeli.json");
-        *_jsonData = json::parse(readFile);
-        sizeData = min(int((*_jsonData).size()), int(MAX_SIZE));
-
+        ReadJson(*_jsonData, sizeData, "pembeli.json");
+        
         for (int i = 0; i < sizeData; i++)
             from_json((*_jsonData)[i], dataPembeli[i]);
-
-        readFile.close();
     }
     catch (const invalid_argument &e)
     {
@@ -163,7 +165,7 @@ string GetFreePembeliId(Pembeli *dataPembeli, int &sizeData)
 }
 
 // Menyimpan Data di program saat ini ke JSON
-void SimpanDataPembeli(Pembeli *dataPembeli, int &sizeData)
+void SimpanPembeli(Pembeli *dataPembeli, int &sizeData)
 {
     json *_oldJsonData = new json();
     json *_newJsonData = new json();
@@ -223,7 +225,7 @@ void TambahPembeli(Pembeli *dataPembeli, int &sizeData, Pembeli pembeliBaru)
         dataPembeli[sizeData].password = pembeliBaru.password;
         sizeData++;
 
-        SimpanDataPembeli(dataPembeli, sizeData);
+        SimpanPembeli(dataPembeli, sizeData);
     }
     catch (const invalid_argument &e)
     {
@@ -265,7 +267,7 @@ void HapusPembeli(Pembeli *dataPembeli, int &sizeData, Pembeli pembeliDihapus)
         }
         sizeData--;
 
-        SimpanDataPembeli(dataPembeli, sizeData);
+        SimpanPembeli(dataPembeli, sizeData);
     }
     catch (const invalid_argument &e)
     {

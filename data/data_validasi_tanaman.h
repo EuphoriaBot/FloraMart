@@ -75,40 +75,6 @@ void to_json(json &j, ValidasiTanaman &v)
     }
 }
 
-// Mencari ID otomatis yang belum digunakan
-string GetFreeValidasiId(ValidasiTanaman *dataValidasi, int &sizeData)
-{
-    stringstream *freeStreamId = new stringstream();
-    int *maxId = new int{0};
-    try
-    {
-        for (int i = 0; i < sizeData; i++)
-        {
-            if ((*maxId) < (stoi(dataValidasi[i].id)))
-                *maxId = (stoi(dataValidasi[i].id));
-        }
-
-        (*freeStreamId) << setw(4) << setfill('0') << ((*maxId) + 1);
-        return (*freeStreamId).str();
-    }
-    catch (const invalid_argument &e)
-    {
-        cout << endl
-             << e.what() << endl;
-    }
-    catch (const exception &e)
-    {
-        cout << endl
-             << e.what() << endl;
-    }
-    delete freeStreamId;
-    delete maxId;
-    freeStreamId = nullptr;
-    maxId = nullptr;
-
-    return "";
-}
-
 // Mengambil semua data suplai (Suplai[])
 void GetAllValidasi(ValidasiTanaman *dataValidasi, int &sizeData)
 {
@@ -208,6 +174,41 @@ void SimpanDataValidasi(ValidasiTanaman *dataValidasi, int &sizeData)
     }
     delete _newJsonData;
     _newJsonData = nullptr;
+}
+
+// Mencari ID otomatis yang belum digunakan
+string GetFreeValidasiId(ValidasiTanaman *dataValidasi, int &sizeData)
+{
+    stringstream *freeStreamId = new stringstream();
+    int *maxId = new int{0};
+    try
+    {
+        GetAllValidasi(dataValidasi, sizeData);
+        for (int i = 0; i < sizeData; i++)
+        {
+            if ((*maxId) < (stoi(dataValidasi[i].id)))
+                *maxId = (stoi(dataValidasi[i].id));
+        }
+
+        (*freeStreamId) << setw(4) << setfill('0') << ((*maxId) + 1);
+        return (*freeStreamId).str();
+    }
+    catch (const invalid_argument &e)
+    {
+        cout << endl
+             << e.what() << endl;
+    }
+    catch (const exception &e)
+    {
+        cout << endl
+             << e.what() << endl;
+    }
+    delete freeStreamId;
+    delete maxId;
+    freeStreamId = nullptr;
+    maxId = nullptr;
+
+    return "";
 }
 
 // Menambah dan menyimpan langsung data suplai baru ke database

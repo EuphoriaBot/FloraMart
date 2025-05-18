@@ -64,41 +64,6 @@ void to_json(json &j, json &oldJsonData, Pembeli &p)
     newPassword = nullptr;
 }
 
-// Mencari ID otomatis yang belum digunakan
-string GetFreePembeliId(Pembeli *dataPembeli, int &sizeData)
-{
-    stringstream *freeStreamId = new stringstream();
-    int *maxId = new int{0};
-    try
-    {
-        for (int i = 0; i < sizeData; i++)
-        {
-            if ((*maxId) < (stoi(dataPembeli[i].id)))
-                *maxId = (stoi(dataPembeli[i].id));
-        }
-
-        (*freeStreamId) << setw(4) << setfill('0') << ((*maxId) + 1);
-        return (*freeStreamId).str();
-    }
-    catch (const invalid_argument &e)
-    {
-        cout << endl
-             << e.what() << endl;
-    }
-    catch (const exception &e)
-    {
-        cout << endl
-             << e.what() << endl;
-    }
-
-    delete freeStreamId;
-    delete maxId;
-    freeStreamId = nullptr;
-    maxId = nullptr;
-
-    return "";
-}
-
 // Mengambil semua data pembeli (Pembeli[])
 void GetAllPembeli(Pembeli *dataPembeli, int &sizeData)
 {
@@ -158,6 +123,43 @@ void GetPembeli(Pembeli &pembeli, string targetId)
     delete sizeDataPembeli;
     dataPembeli = nullptr;
     sizeDataPembeli = nullptr;
+}
+
+// Mencari ID otomatis yang belum digunakan
+string GetFreePembeliId(Pembeli *dataPembeli, int &sizeData)
+{
+    stringstream *freeStreamId = new stringstream();
+    int *maxId = new int{0};
+    try
+    {
+        GetAllPembeli(dataPembeli, sizeData);
+
+        for (int i = 0; i < sizeData; i++)
+        {
+            if ((*maxId) < (stoi(dataPembeli[i].id)))
+                *maxId = (stoi(dataPembeli[i].id));
+        }
+
+        (*freeStreamId) << setw(4) << setfill('0') << ((*maxId) + 1);
+        return (*freeStreamId).str();
+    }
+    catch (const invalid_argument &e)
+    {
+        cout << endl
+             << e.what() << endl;
+    }
+    catch (const exception &e)
+    {
+        cout << endl
+             << e.what() << endl;
+    }
+
+    delete freeStreamId;
+    delete maxId;
+    freeStreamId = nullptr;
+    maxId = nullptr;
+
+    return "";
 }
 
 // Menyimpan Data di program saat ini ke JSON
@@ -278,36 +280,6 @@ void HapusPembeli(Pembeli *dataPembeli, int &sizeData, Pembeli pembeliDihapus)
     
     delete indexDihapus;
     indexDihapus = nullptr;
-}
-
-bool LoginPembeli(string username, string password, Pembeli currentPembeli, Pembeli *dataPembeli, int &sizeDataPembeli)
-{
-    Pembeli* _tempDataPembeli = new Pembeli[MAX_SIZE];
-
-    ifstream readFile("./database/pembeli.json");
-    json _jsonData = json::parse(readFile);
-
-    // Inisialisasi username dan password dari data pembeli
-    for (int i = 0; i < sizeDataPembeli; i++)
-    {
-        _jsonData[i].at("username").get_to(_tempDataPembeli[i].username);
-        _jsonData[i].at("password").get_to(_tempDataPembeli[i].password);
-    }
-
-    // Pencocokan dengan data akun
-    for (int i = 0; i < sizeDataPembeli; i++)
-    {
-        if (_tempDataPembeli[i].username == username && _tempDataPembeli[i].password == password)
-        {
-            currentPembeli = dataPembeli[i];
-            return true;
-        }
-    }
-
-    delete[] _tempDataPembeli;
-    _tempDataPembeli = nullptr;
-
-    return false;
 }
 
 #endif

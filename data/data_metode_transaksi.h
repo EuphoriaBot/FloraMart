@@ -25,41 +25,6 @@ void to_json(json &j, MetodeTransaksi &mt)
         {"metode", mt.metode}};
 }
 
-// Mencari ID otomatis yang belum digunakan
-string GetFreeMetodeTransaksiId(MetodeTransaksi *dataMetodeTransaksi, int &sizeData)
-{
-    stringstream *freeStreamId = new stringstream();
-    int *maxId = new int{0};
-    try
-    {
-        for (int i = 0; i < sizeData; i++)
-        {
-            if ((*maxId) < (stoi(dataMetodeTransaksi[i].id)))
-                *maxId = (stoi(dataMetodeTransaksi[i].id));
-        }
-
-        (*freeStreamId) << setw(4) << setfill('0') << ((*maxId) + 1);
-        return (*freeStreamId).str();
-    }
-    catch (const invalid_argument &e)
-    {
-        cout << endl
-             << e.what() << endl;
-    }
-    catch (const exception &e)
-    {
-        cout << endl
-             << e.what() << endl;
-    }
-
-    delete freeStreamId;
-    delete maxId;
-    freeStreamId = nullptr;
-    maxId = nullptr;
-
-    return "";
-}
-
 // Mengambil semua data metode transaksi (MetodeTransaksi[])
 void GetAllMetodeTransaksi(MetodeTransaksi *dataMetodeTransaksi, int &sizeData)
 {
@@ -156,6 +121,43 @@ void SimpanDataMetodeTransaksi(MetodeTransaksi *dataMetodeTransaksi, int &sizeDa
 
     delete _jsonData;
     _jsonData = nullptr;
+}
+
+// Mencari ID otomatis yang belum digunakan
+string GetFreeMetodeTransaksiId(MetodeTransaksi *dataMetodeTransaksi, int &sizeData)
+{
+    stringstream *freeStreamId = new stringstream();
+    int *maxId = new int{0};
+    try
+    {
+        GetAllMetodeTransaksi(dataMetodeTransaksi, sizeData);
+        
+        for (int i = 0; i < sizeData; i++)
+        {
+            if ((*maxId) < (stoi(dataMetodeTransaksi[i].id)))
+                *maxId = (stoi(dataMetodeTransaksi[i].id));
+        }
+
+        (*freeStreamId) << setw(4) << setfill('0') << ((*maxId) + 1);
+        return (*freeStreamId).str();
+    }
+    catch (const invalid_argument &e)
+    {
+        cout << endl
+             << e.what() << endl;
+    }
+    catch (const exception &e)
+    {
+        cout << endl
+             << e.what() << endl;
+    }
+
+    delete freeStreamId;
+    delete maxId;
+    freeStreamId = nullptr;
+    maxId = nullptr;
+
+    return "";
 }
 
 // Menambah dan menyimpan langsung data metode transaksi baru ke database

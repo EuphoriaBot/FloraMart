@@ -80,40 +80,6 @@ void to_json(json &j, Tanaman &t)
     }
 }
 
-// Mencari ID otomatis yang belum digunakan
-string GetFreeTanamanId(Tanaman *dataTanaman, int &sizeData)
-{
-    stringstream *freeStreamId = new stringstream();
-    int *maxId = new int{0};
-    try
-    {
-        for (int i = 0; i < sizeData; i++)
-        {
-            if ((*maxId) < (stoi(dataTanaman[i].id)))
-                *maxId = (stoi(dataTanaman[i].id));
-        }
-
-        (*freeStreamId) << setw(4) << setfill('0') << ((*maxId) + 1);
-        return (*freeStreamId).str();
-    }
-    catch (const invalid_argument &e)
-    {
-        cout << endl
-             << e.what() << endl;
-    }
-    catch (const exception &e)
-    {
-        cout << endl
-             << e.what() << endl;
-    }
-    delete freeStreamId;
-    delete maxId;
-    freeStreamId = nullptr;
-    maxId = nullptr;
-
-    return "";
-}
-
 // Mengambil semua data tanaman (Tanaman[])
 void GetAllTanaman(Tanaman *dataTanaman, int &sizeData)
 {
@@ -212,6 +178,41 @@ void SimpanDataTanaman(Tanaman *dataTanaman, int &sizeData)
     }
     delete _newJsonData;
     _newJsonData = nullptr;
+}
+
+// Mencari ID otomatis yang belum digunakan
+string GetFreeTanamanId(Tanaman *dataTanaman, int &sizeData)
+{
+    stringstream *freeStreamId = new stringstream();
+    int *maxId = new int{0};
+    try
+    {
+        GetAllTanaman(dataTanaman, sizeData);
+        for (int i = 0; i < sizeData; i++)
+        {
+            if ((*maxId) < (stoi(dataTanaman[i].id)))
+                *maxId = (stoi(dataTanaman[i].id));
+        }
+
+        (*freeStreamId) << setw(4) << setfill('0') << ((*maxId) + 1);
+        return (*freeStreamId).str();
+    }
+    catch (const invalid_argument &e)
+    {
+        cout << endl
+             << e.what() << endl;
+    }
+    catch (const exception &e)
+    {
+        cout << endl
+             << e.what() << endl;
+    }
+    delete freeStreamId;
+    delete maxId;
+    freeStreamId = nullptr;
+    maxId = nullptr;
+
+    return "";
 }
 
 // Menambah dan menyimpan langsung data tanaman baru ke database

@@ -166,34 +166,4 @@ void SimpanDataAdmin(Admin *dataAdmin, int &sizeData)
     _newJsonData = nullptr;
 }
 
-bool LoginAdmin(string username, string password, Admin currentAdmin, Admin *dataAdmin, int &sizeDataAdmin)
-{
-    Admin *_tempDataAdmin = new Admin[MAX_SIZE];
-
-    ifstream readFile("./database/admin.json");
-    json _jsonData = json::parse(readFile);
-
-    // Inisialisasi username dan password dari data admin
-    for (int i = 0; i < sizeDataAdmin; i++)
-    {
-        _jsonData[i].at("username").get_to(_tempDataAdmin[i].username);
-        _jsonData[i].at("password").get_to(_tempDataAdmin[i].password);
-    }
-
-    // Pencocokan dengan data akun
-    for (int i = 0; i < sizeDataAdmin; i++)
-    {
-        if (_tempDataAdmin[i].username == username && _tempDataAdmin[i].password == password)
-        {
-            currentAdmin = dataAdmin[i];
-            return true;
-        }
-    }
-
-    delete[] _tempDataAdmin;
-    _tempDataAdmin = nullptr;
-
-    return false;
-}
-
 #endif

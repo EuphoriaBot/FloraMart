@@ -71,40 +71,6 @@ void to_json(json &j, Suplai &s)
     }
 }
 
-// Mencari ID otomatis yang belum digunakan
-string GetFreeSuplaiId(Suplai *dataSuplai, int &sizeData)
-{
-    stringstream *freeStreamId = new stringstream();
-    int *maxId = new int{0};
-    try
-    {
-        for (int i = 0; i < sizeData; i++)
-        {
-            if ((*maxId) < (stoi(dataSuplai[i].id)))
-                *maxId = (stoi(dataSuplai[i].id));
-        }
-
-        (*freeStreamId) << setw(4) << setfill('0') << ((*maxId) + 1);
-        return (*freeStreamId).str();
-    }
-    catch (const invalid_argument &e)
-    {
-        cout << endl
-             << e.what() << endl;
-    }
-    catch (const exception &e)
-    {
-        cout << endl
-             << e.what() << endl;
-    }
-    delete freeStreamId;
-    delete maxId;
-    freeStreamId = nullptr;
-    maxId = nullptr;
-
-    return "";
-}
-
 // Mengambil semua data suplai (Suplai[])
 void GetAllSuplai(Suplai *dataSuplai, int &sizeData)
 {
@@ -202,6 +168,41 @@ void SimpanDataSuplai(Suplai *dataSuplai, int &sizeData)
 
     delete _newJsonData;
     _newJsonData = nullptr;
+}
+
+// Mencari ID otomatis yang belum digunakan
+string GetFreeSuplaiId(Suplai *dataSuplai, int &sizeData)
+{
+    stringstream *freeStreamId = new stringstream();
+    int *maxId = new int{0};
+    try
+    {
+        GetAllSuplai(dataSuplai, sizeData);
+        for (int i = 0; i < sizeData; i++)
+        {
+            if ((*maxId) < (stoi(dataSuplai[i].id)))
+                *maxId = (stoi(dataSuplai[i].id));
+        }
+
+        (*freeStreamId) << setw(4) << setfill('0') << ((*maxId) + 1);
+        return (*freeStreamId).str();
+    }
+    catch (const invalid_argument &e)
+    {
+        cout << endl
+             << e.what() << endl;
+    }
+    catch (const exception &e)
+    {
+        cout << endl
+             << e.what() << endl;
+    }
+    delete freeStreamId;
+    delete maxId;
+    freeStreamId = nullptr;
+    maxId = nullptr;
+
+    return "";
 }
 
 // Menambah dan menyimpan langsung data suplai baru ke database

@@ -31,41 +31,6 @@ void to_json(json &j, Kategori &kat)
         {"media_tanam", kat.mediaTanam}};
 }
 
-// Mencari ID otomatis yang belum digunakan
-string GetFreeKategoriId(Kategori *dataKategori, int &sizeData)
-{
-    stringstream *freeStreamId = new stringstream();
-    int *maxId = new int{0};
-    try
-    {
-        for (int i = 0; i < sizeData; i++)
-        {
-            if ((*maxId) < (stoi(dataKategori[i].id)))
-                *maxId = (stoi(dataKategori[i].id));
-        }
-
-        (*freeStreamId) << setw(4) << setfill('0') << ((*maxId) + 1);
-        return (*freeStreamId).str();
-    }
-    catch (const invalid_argument &e)
-    {
-        cout << endl
-             << e.what() << endl;
-    }
-    catch (const exception &e)
-    {
-        cout << endl
-             << e.what() << endl;
-    }
-    
-    delete freeStreamId;
-    delete maxId;
-    freeStreamId = nullptr;
-    maxId = nullptr;
-
-    return "";
-}
-
 // Mengambil semua data kategori (Kategori[])
 void GetAllKategori(Kategori *dataKategori, int &sizeData)
 {
@@ -165,6 +130,43 @@ void SimpanDataKategori(Kategori *dataKategori, int &sizeData)
 
     delete _jsonData;
     _jsonData = nullptr;
+}
+
+// Mencari ID otomatis yang belum digunakan
+string GetFreeKategoriId(Kategori *dataKategori, int &sizeData)
+{
+    stringstream *freeStreamId = new stringstream();
+    int *maxId = new int{0};
+    try
+    {
+        GetAllKategori(dataKategori, sizeData);
+
+        for (int i = 0; i < sizeData; i++)
+        {
+            if ((*maxId) < (stoi(dataKategori[i].id)))
+                *maxId = (stoi(dataKategori[i].id));
+        }
+
+        (*freeStreamId) << setw(4) << setfill('0') << ((*maxId) + 1);
+        return (*freeStreamId).str();
+    }
+    catch (const invalid_argument &e)
+    {
+        cout << endl
+             << e.what() << endl;
+    }
+    catch (const exception &e)
+    {
+        cout << endl
+             << e.what() << endl;
+    }
+    
+    delete freeStreamId;
+    delete maxId;
+    freeStreamId = nullptr;
+    maxId = nullptr;
+
+    return "";
 }
 
 // Menambah dan menyimpan langsung data kategori baru ke database

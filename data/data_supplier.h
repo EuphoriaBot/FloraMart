@@ -123,41 +123,6 @@ void to_json(json &j, json &oldJsonData, Supplier &s)
     dataMetode = nullptr;
 }
 
-// Mencari ID otomatis yang belum digunakan
-string GetFreeSupplierId(Supplier *dataSupplier, int &sizeData)
-{
-    stringstream* freeStreamId = new stringstream();
-    int *maxId = new int{0};
-    try
-    {
-        for (int i = 0; i < sizeData; i++)
-        {
-            if ((*maxId) < (stoi(dataSupplier[i].id)))
-                *maxId = (stoi(dataSupplier[i].id));
-        }
-
-        (*freeStreamId) << setw(4) << setfill('0') << ((*maxId) + 1);
-        return (*freeStreamId).str();
-    }
-    catch (const invalid_argument &e)
-    {
-        cout << endl
-             << e.what() << endl;
-    }
-    catch (const exception &e)
-    {
-        cout << endl
-             << e.what() << endl;
-    }
-
-    delete freeStreamId;
-    delete maxId;
-    freeStreamId = nullptr;
-    maxId = nullptr;
-
-    return "";
-}
-
 // Mengambil semua data supplier (Supplier[])
 void GetAllSupplier(Supplier *dataSupplier, int &sizeData)
 {
@@ -266,6 +231,42 @@ void SimpanDataSupplier(Supplier *dataSupplier, int &sizeData)
     _newJsonData = nullptr;
 }
 
+// Mencari ID otomatis yang belum digunakan
+string GetFreeSupplierId(Supplier *dataSupplier, int &sizeData)
+{
+    stringstream* freeStreamId = new stringstream();
+    int *maxId = new int{0};
+    try
+    {
+        GetAllSupplier(dataSupplier, sizeData);
+        for (int i = 0; i < sizeData; i++)
+        {
+            if ((*maxId) < (stoi(dataSupplier[i].id)))
+                *maxId = (stoi(dataSupplier[i].id));
+        }
+
+        (*freeStreamId) << setw(4) << setfill('0') << ((*maxId) + 1);
+        return (*freeStreamId).str();
+    }
+    catch (const invalid_argument &e)
+    {
+        cout << endl
+             << e.what() << endl;
+    }
+    catch (const exception &e)
+    {
+        cout << endl
+             << e.what() << endl;
+    }
+
+    delete freeStreamId;
+    delete maxId;
+    freeStreamId = nullptr;
+    maxId = nullptr;
+
+    return "";
+}
+
 // Menambah dan menyimpan langsung data supplier baru ke database
 void TambahSupplier(Supplier *dataSupplier, int &sizeData, Supplier supplierBaru)
 {
@@ -339,33 +340,6 @@ void HapusSupplier(Supplier *dataSupplier, int &sizeData, Supplier supplierDihap
 
     delete indexDihapus;
     indexDihapus = nullptr;
-}
-
-bool LoginSupplier(string username, string password, Supplier currentSupplier, Supplier *dataSupplier, int &sizeDataSupplier)
-{
-    Supplier _tempDataSupplier[MAX_SIZE];
-
-    ifstream readFile("./database/supplier.json");
-    json _jsonData = json::parse(readFile);
-
-    // Inisialisasi username dan password dari data supplier
-    for (int i = 0; i < sizeDataSupplier; i++)
-    {
-        _jsonData[i].at("username").get_to(_tempDataSupplier[i].username);
-        _jsonData[i].at("password").get_to(_tempDataSupplier[i].password);
-    }
-
-    // Pencocokan dengan data akun
-    for (int i = 0; i < sizeDataSupplier; i++)
-    {
-        if (_tempDataSupplier[i].username == username && _tempDataSupplier[i].password == password)
-        {
-            currentSupplier = dataSupplier[i];
-            return true;
-        }
-    }
-
-    return false;
 }
 
 #endif

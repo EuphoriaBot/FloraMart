@@ -4,7 +4,7 @@
 #include <string>
 using namespace std;
 
-#define MAX_SIZE 8
+#define MAX_SIZE 25
 
 struct MetodeTransaksi
 {
@@ -84,6 +84,36 @@ struct ValidasiTanaman
     Tanaman tanaman;
     int stok_diterima;
     Suplai suplai;
+};
+
+struct DataUtama
+{
+    Pembeli dataPembeli[MAX_SIZE];
+    int sizeDataPembeli;
+
+    Supplier dataSupplier[MAX_SIZE];
+    int sizeDataSupplier;
+
+    Admin dataAdmin[MAX_SIZE];
+    int sizeDataAdmin;
+
+    Tanaman dataTanaman[MAX_SIZE];
+    int sizeDataTanaman;
+    
+    Kategori dataKategori[MAX_SIZE];
+    int sizeDataKategori;
+
+    MetodeTransaksi dataMetodeTransaksi[MAX_SIZE];
+    int sizeDataMetodeTransaksi;
+
+    Suplai dataSuplai[MAX_SIZE];
+    int sizeDataSuplai;
+
+    Transaksi dataTransaksi[MAX_SIZE];
+    int sizeDataTransaksi;
+
+    ValidasiTanaman dataValidasiTanaman[MAX_SIZE];
+    int sizeDataValidasi;
 };
 
 #endif

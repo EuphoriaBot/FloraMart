@@ -3,10 +3,66 @@
 
 #include "menu_utilities.h"
 
+void TambahKategori(DataUtama &data)
+{
+    RefreshDataUtama(data);
+    cout << "=== Tambah Kategori ===" << endl;
+    cout << "Nama Kategori: ";
+    string nama_kategori;
+    getline(cin, nama_kategori);
+
+    if (nama_kategori.empty())
+    {
+        cout << "Nama kategori tidak boleh kosong!" << endl;
+        return;
+    }
+
+    for (int i = 0; i < data.sizeDataKategori; i++)
+    {
+        if (data.dataKategori[i].namaKategori == nama_kategori)
+        {
+            cout << "Kategori sudah ada!" << endl;
+            return;
+        }
+    }
+
+    Kategori kategori_baru;
+    kategori_baru.id = GetFreeKategoriId();
+    kategori_baru.namaKategori = nama_kategori;
+
+    TambahKategori(data.dataKategori, data.sizeDataKategori, kategori_baru);
+}
+
+// void HapusKategori(DataUtama &data)
+// {
+//     RefreshDataUtama(data);
+//     cout << "=== Hapus Kategori ===" << endl;
+//     cout << "ID Kategori: ";
+//     int id_kategori;
+//     cin >> id_kategori;
+
+//     if (id_kategori <= 0 || id_kategori > data.sizeDataKategori)
+//     {
+//         cout << "ID kategori tidak valid!" << endl;
+//         return;
+//     }
+
+//     for (int i = 0; i < data.sizeDataKategori; i++)
+//     {
+//         if (data.dataKategori[i].id == id_kategori)
+//         {
+//             HapusKategori(data.dataKategori, data.sizeDataKategori, i);
+//             cout << "Kategori berhasil dihapus!" << endl;
+//             return;
+//         }
+//     }
+
+    cout << "Kategori tidak ditemukan!" << endl;
+}
 void ManajemenKategori (DataUtama &data)
 {
     RefreshDataUtama(data);
-    cout << "=== Manajemen Kategori ===" << endl;
+    cout << "===> Manajemen Kategori <===" << endl;
     cout << "1. Tambah Kategori" << endl;
     cout << "2. Hapus Kategori" << endl;  
     cout << "3. Edit Kategori" << endl;
@@ -17,7 +73,7 @@ void ManajemenKategori (DataUtama &data)
     getline(cin, pilihan);
     if (pilihan == "1")
     {
-        // TambahKategori(data);
+        TambahKategori(data);
     }
     else if (pilihan == "2")
     {
@@ -36,6 +92,7 @@ void ManajemenKategori (DataUtama &data)
         cout << "Pilihan tidak valid!" << endl;
     }
 }
+
 void ManajemenTanaman (DataUtama &data)
 {
     RefreshDataUtama(data);
@@ -50,15 +107,11 @@ void ManajemenTanaman (DataUtama &data)
 
     if (pilihan == "1")
     {
-        // TambahTanaman(data);
+        ManajemenKategori(data);
     }
     else if (pilihan == "2")
     {
         // HapusTanaman(data);
-    }
-    else if (pilihan == "3")
-    {
-        // EditTanaman(data);
     }
 }
 
@@ -108,7 +161,7 @@ void MenuUtamaAdmin(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
 
             if (pilihan == "1")
             {
-                // MenuManajemenTanaman(data, infoLogin, dataMenu);
+                ManajemenTanaman(data);
             }
             else if (pilihan == "2")
             {

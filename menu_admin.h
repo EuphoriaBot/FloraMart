@@ -12,11 +12,11 @@ void MenuUtamaAdmin(DataUtama &data, InfoLogin infoLogin, DataMenu dataMenu)
         // Note: Disarankan untuk Refresh Data Utama di awal Fungsi
         RefreshDataUtama(data);
     }
-    catch(invalid_argument& e)
+    catch (invalid_argument &e)
     {
         cout << e.what() << '\n';
     }
-    catch(exception& e)
+    catch (exception &e)
     {
         cout << e.what() << '\n';
     }
@@ -31,11 +31,11 @@ void MenuManajemenTanaman(DataUtama &data, InfoLogin infoLogin, DataMenu dataMen
         // Note: Disarankan untuk Refresh Data Utama di awal Fungsi
         RefreshDataUtama(data);
     }
-    catch(invalid_argument& e)
+    catch (invalid_argument &e)
     {
         cout << e.what() << '\n';
     }
-    catch(exception& e)
+    catch (exception &e)
     {
         cout << e.what() << '\n';
     }

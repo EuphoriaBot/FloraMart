@@ -34,17 +34,15 @@ void DaftarTanaman(DataUtama &data)
     }
 }
 
-int interpolationSearchInt(const int arr[], int lo, int hi, int x)
+int LinearSearch(DataUtama &data, string &key)
 {
-    if (lo <= hi && x >= arr[lo] && x <= arr[hi])
+    int n = data.sizeDataTanaman;
+    for (int i = 0; i < n; i++)
     {
-        int pos = lo + ((double)(hi - lo) / (arr[hi] - arr[lo])) * (x - arr[lo]);
-        if (arr[pos] == x)
-            return pos;
-        if (arr[pos] < x)
-            return interpolationSearchInt(arr, pos + 1, hi, x);
-        if (arr[pos] > x)
-            return interpolationSearchInt(arr, lo, pos - 1, x);
+        if (data.dataTanaman[i].namaTanaman == key)
+        {
+            return i;
+        }
     }
     return -1;
 }
@@ -73,6 +71,30 @@ void MenuUtamaPembeli(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
             }
             else if (pilihan == "2")
             {
+                RefreshDataUtama(data);
+                cout << "Masukkan nama tanaman: ";
+                string key;
+                getline(cin, key);
+                int Index = LinearSearch(data, key);
+                if (Index != -1)
+                {
+                    auto &dataTanaman = data.dataTanaman[Index];
+                    cout << "=== Detail Tanaman ===" << endl;
+                    cout << "ID               : " << dataTanaman.id << endl;
+                    cout << "Nama             : " << dataTanaman.namaTanaman << endl;
+                    cout << "Harga            : " << dataTanaman.harga << endl;
+                    cout << "Stok             : " << dataTanaman.stok << endl;
+
+                    auto &dataKategori = data.dataKategori[Index];
+                    cout << "Kategori         : " << dataKategori.namaKategori << endl;
+                    cout << "HIDUP JOKOWII    : " << dataKategori.minSuhu << endl;
+                    cout << "Max Suhu         : " << dataKategori.maxSuhu << endl;
+                    cout << "Media Tanam      : " << dataKategori.mediaTanam << endl;
+                }
+                else
+                {
+                    cout << "Tanaman dengan nama '" << key << "' tidak ditemukan." << endl;
+                }
             }
             else if (pilihan == "3")
             {

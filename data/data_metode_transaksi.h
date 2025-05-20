@@ -89,7 +89,7 @@ void GetMetodeTransaksi(MetodeTransaksi &metodeTransaksi, string targetId)
 }
 
 // Menyimpan Data di program saat ini ke JSON
-void SimpanValidasiTanaman(MetodeTransaksi *dataMetodeTransaksi, int sizeData)
+void SimpanMetodeTransaksi(MetodeTransaksi *dataMetodeTransaksi, int sizeData)
 {
     json *_newJsonData = new json{json::array()};
     try
@@ -178,7 +178,7 @@ void TambahMetodeTransaksi(MetodeTransaksi *dataMetodeTransaksi, int &sizeData, 
         dataMetodeTransaksi[sizeData].metode = metodeBaru.metode;
         sizeData++;
 
-        SimpanValidasiTanaman(dataMetodeTransaksi, sizeData);
+        SimpanMetodeTransaksi(dataMetodeTransaksi, sizeData);
     }
     catch (const invalid_argument &e)
     {
@@ -217,7 +217,7 @@ void HapusMetodeTransaksi(MetodeTransaksi *dataMetodeTransaksi, int &sizeData, M
         }
         sizeData--;
 
-        SimpanValidasiTanaman(dataMetodeTransaksi, sizeData);
+        SimpanMetodeTransaksi(dataMetodeTransaksi, sizeData);
     }
     catch (const invalid_argument &e)
     {

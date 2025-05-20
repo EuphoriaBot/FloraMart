@@ -41,6 +41,19 @@ void RefreshDataUtama(DataUtama &data)
     GetAllValidasiTanaman(data.dataValidasiTanaman, data.sizeDataValidasi);
 }
 
+void UpdateDataUtama(DataUtama &data)
+{
+    SimpanPembeli(data.dataPembeli, data.sizeDataPembeli);
+    SimpanSupplier(data.dataSupplier, data.sizeDataSupplier);
+    SimpanAdmin(data.dataAdmin, data.sizeDataAdmin);
+    SimpanTanaman(data.dataTanaman, data.sizeDataTanaman);
+    SimpanKategori(data.dataKategori, data.sizeDataKategori);
+    SimpanMetodeTransaksi(data.dataMetodeTransaksi, data.sizeDataMetodeTransaksi);
+    SimpanSuplai(data.dataSuplai, data.sizeDataSuplai);
+    SimpanTransaksi(data.dataTransaksi, data.sizeDataTransaksi);
+    SimpanValidasiTanaman(data.dataValidasiTanaman, data.sizeDataValidasi);
+}
+
 void Logout(DataMenu &dataMenu, InfoLogin &infoLogin)
 {
     infoLogin.id = "";

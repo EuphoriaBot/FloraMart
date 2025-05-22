@@ -153,7 +153,8 @@ void MenuUtamaAdmin(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
             cout << "\n=== Menu Utama Admin ===" << endl;
             cout << "1. Manajemen Tanaman" << endl;
             cout << "2. Manajemen Supplier" << endl;
-            cout << "3. Logout" << endl;
+            cout << "3. Notifikasi" << endl;
+            cout << "4. Logout" << endl;
             cout << "Pilih menu: ";
 
             string pilihan;
@@ -169,6 +170,11 @@ void MenuUtamaAdmin(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
             }
             else if (pilihan == "3")
             {
+                // MenuNotifikasi(data, infoLogin, dataMenu);
+            }
+            else if (pilihan == "4")
+            {
+                cout << "Anda telah logout!" << endl;
                 break; // Logout
             }
             else

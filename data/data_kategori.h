@@ -183,7 +183,14 @@ void TambahKategori(Kategori *dataKategori, int &sizeData, Kategori kategoriBaru
         if (kategoriBaru.mediaTanam == "")
             throw invalid_argument("Media tanam tidak boleh kosong!");
 
+        for (int i = 0; i < sizeData; i++)
+        {
+            if (dataKategori[i].namaKategori == kategoriBaru.namaKategori)
+                throw invalid_argument("Nama kategori sudah ada!");
+        }
+
         dataKategori[sizeData].id = kategoriBaru.id;
+        dataKategori[sizeData].namaKategori = kategoriBaru.namaKategori;
         dataKategori[sizeData].minSuhu = kategoriBaru.minSuhu;
         dataKategori[sizeData].maxSuhu = kategoriBaru.maxSuhu;
         dataKategori[sizeData].mediaTanam = kategoriBaru.mediaTanam;

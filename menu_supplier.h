@@ -5,8 +5,40 @@
 #include "menu_utilities.h"
 using namespace std;
 
+void NambahSuplai(Suplai dataSuplai[], int &size, Suplai suplaiBaru)
+{
+    if (size < MAX_SIZE)
+    {
+        dataSuplai[size] = suplaiBaru;
+        size++;
+    }
+}
+
 void SuplaiTanaman(DataUtama &data, InfoLogin infoLogin)
 {
+    if (data.sizeDataTanaman >= MAX_SIZE)
+    {
+        cout << "Kapasitas data tanaman sudah penuh";
+        return;
+    }
+
+    string nama, stokStr;
+    int stok;
+
+    cout << "Nama Tanaman : ";
+    getline(cin, nama);
+    cout << "Stok         : ";
+    getline(cin, stokStr);
+
+    stok = stoi(stokStr);
+
+    Suplai suplaiBaru;
+    suplaiBaru.namaTanaman = nama;
+    suplaiBaru.jumlah = stok;
+
+    TambahSuplai(data.dataSuplai, data.sizeDataSuplai, suplaiBaru);
+
+    cout << "Tanaman berhasil disuplai " << endl;
 }
 
 void LihatLaporanTransaksi(DataUtama &data, InfoLogin infoLogin)
@@ -32,6 +64,7 @@ void MenuUtamaSupplier(DataUtama &data, InfoLogin infoLogin, DataMenu dataMenu)
 
             if (pilihan == "1")
             {
+                RefreshDataUtama(data);
                 SuplaiTanaman(data, infoLogin);
             }
             else if (pilihan == "2")
@@ -40,12 +73,12 @@ void MenuUtamaSupplier(DataUtama &data, InfoLogin infoLogin, DataMenu dataMenu)
             }
             else if (pilihan == "3")
             {
-                cout << "Logout berhasil.\n";
+                infoLogin = {};
                 break;
             }
             else
             {
-                cout << "Pilihan tidak valid. Coba lagi.\n";
+                cout << "Pilihan tidak valid \n";
             }
         }
     }

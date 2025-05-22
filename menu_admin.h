@@ -57,14 +57,14 @@ void TambahKategori(DataUtama &data)
 //         }
 //     }
 
-    cout << "Kategori tidak ditemukan!" << endl;
-}
-void ManajemenKategori (DataUtama &data)
+//    cout << "Kategori tidak ditemukan!" << endl;
+//}
+void ManajemenKategori(DataUtama &data)
 {
     RefreshDataUtama(data);
     cout << "===> Manajemen Kategori <===" << endl;
     cout << "1. Tambah Kategori" << endl;
-    cout << "2. Hapus Kategori" << endl;  
+    cout << "2. Hapus Kategori" << endl;
     cout << "3. Edit Kategori" << endl;
     cout << "4. Lihat Kategori" << endl;
     cout << "Pilih menu:";
@@ -93,10 +93,10 @@ void ManajemenKategori (DataUtama &data)
     }
 }
 
-void ManajemenTanaman (DataUtama &data)
+void ManajemenTanaman(DataUtama &data)
 {
     RefreshDataUtama(data);
-    
+
     cout << "=== Manajemen Tanaman ===" << endl;
     cout << "1. Manajemen Kategori" << endl;
     cout << "2. Validasi Status " << endl;
@@ -115,10 +115,10 @@ void ManajemenTanaman (DataUtama &data)
     }
 }
 
-void ManajemenSupplier (DataUtama &data)
+void ManajemenSupplier(DataUtama &data)
 {
     RefreshDataUtama(data);
-    
+
     cout << "=== Manajemen Supplier ===" << endl;
     cout << "1. Lihat Supplier" << endl;
     cout << "2. Blokir Supplier" << endl;
@@ -147,7 +147,7 @@ void MenuUtamaAdmin(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
     try
     {
         RefreshDataUtama(data);
-        
+
         while (true)
         {
             cout << "\n=== Menu Utama Admin ===" << endl;

@@ -3,7 +3,41 @@
 
 #include "menu_utilities.h"
 
-void HapusKategori(DataUtama &data)
+void FormTambahKategori(DataUtama &data)
+{
+    RefreshDataUtama(data);
+    cout << "=== Tambah Kategori ===" << endl;
+    cout << "Nama Kategori: ";
+    string nama_kategori;
+    cin.ignore();
+    getline(cin, nama_kategori);
+    cout << "Min Suhu: ";
+    int min_suhu;
+    cin >> min_suhu;
+    cout << "Max Suhu: ";
+    int max_suhu;
+    cin >> max_suhu;
+    cout << "Media Tanam: ";
+    string media_tanam;
+    cin.ignore();
+    getline(cin, media_tanam);
+    
+    for (int i = 0; i < data.sizeDataKategori; i++)
+    {
+        if (data.dataKategori[i].namaKategori == nama_kategori)
+        {
+            cout << "Nama kategori sudah ada!" << endl;
+            return;
+        }
+    }
+    Kategori kategoriBaru = {GetFreeKategoriId(), nama_kategori, min_suhu, max_suhu, media_tanam};
+    
+    TambahKategori(data.dataKategori, data.sizeDataKategori, kategoriBaru);
+    
+    cout << "Kategori berhasil ditambahkan!" << endl;
+}
+
+void FormHapusKategori(DataUtama &data)
 {
     RefreshDataUtama(data);
     cout << "=== Hapus Kategori ===" << endl;
@@ -32,7 +66,7 @@ void HapusKategori(DataUtama &data)
     cout << "Kategori tidak ditemukan!" << endl;
 }
 
-void EditKategori(DataUtama &data)
+void FormEditKategori(DataUtama &data)
 {
     RefreshDataUtama(data);
     cout << "=== Edit Kategori ===" << endl;
@@ -79,7 +113,7 @@ void EditKategori(DataUtama &data)
 
     cout << "Kategori tidak ditemukan!" << endl;
 }
-void LihatKategori(DataUtama &data)
+void FormLihatKategori(DataUtama &data)
 {
     RefreshDataUtama(data);
     cout << "=== Lihat Kategori ===" << endl;
@@ -94,7 +128,7 @@ void LihatKategori(DataUtama &data)
     }
 }
 
-void ManajemenKategori (DataUtama &data)
+void MenuManajemenKategori (DataUtama &data)
 {
     RefreshDataUtama(data);
     cout << "===> Manajemen Kategori <===" << endl;
@@ -108,19 +142,19 @@ void ManajemenKategori (DataUtama &data)
     getline(cin, pilihan);
     if (pilihan == "1")
     {
-        LihatKategori(data);
+        FormLihatKategori(data);
     }
     else if (pilihan == "2")
     {
-        // TambahKategori(data);
+        FormTambahKategori(data);
     }
     else if (pilihan == "3")
     {
-        EditKategori(data);
+        FormEditKategori(data);
     }
     else if (pilihan == "4")
     {
-        HapusKategori(data);
+        FormHapusKategori(data);
     }
     else
     {
@@ -128,7 +162,7 @@ void ManajemenKategori (DataUtama &data)
     }
 }
 
-void ManajemenTanaman (DataUtama &data)
+void MenuManajemenTanaman (DataUtama &data)
 {
     RefreshDataUtama(data);
     
@@ -142,7 +176,7 @@ void ManajemenTanaman (DataUtama &data)
 
     if (pilihan == "1")
     {
-        ManajemenKategori(data);
+        MenuManajemenKategori(data);
     }
     else if (pilihan == "2")
     {
@@ -150,7 +184,7 @@ void ManajemenTanaman (DataUtama &data)
     }
 }
 
-void ManajemenSupplier (DataUtama &data)
+void MenuManajemenSupplier (DataUtama &data)
 {
     RefreshDataUtama(data);
     
@@ -197,7 +231,7 @@ void MenuUtamaAdmin(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
 
             if (pilihan == "1")
             {
-                ManajemenTanaman(data);
+                MenuManajemenTanaman(data);
             }
             else if (pilihan == "2")
             {

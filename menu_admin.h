@@ -41,7 +41,7 @@ void FormHapusKategori(DataUtama &data)
 {
     RefreshDataUtama(data);
     cout << "=== Hapus Kategori ===" << endl;
-    cout << "NomorIndeks : ";
+    cout << "Masukan Index : ";
     int NomorIndeks ;
     cin >> NomorIndeks;
     NomorIndeks-= 1;
@@ -60,7 +60,7 @@ void FormEditKategori(DataUtama &data)
 {
     RefreshDataUtama(data);
     cout << "=== Edit Kategori ===" << endl;
-    cout << "ID Kategori: ";
+    cout << "Masukan Index: ";
     int id_kategori;
     cin >> (id_kategori);
     id_kategori--;
@@ -71,37 +71,23 @@ void FormEditKategori(DataUtama &data)
         return;
     }
 
-    for (int i = 0; i < data.sizeDataKategori; i++)
-    {
-        string nama_kategori;
-        cout << "Nama Kategori: ";
-        if (data.dataKategori[i].namaKategori == nama_kategori)
-        {
-            cout << "Nama Kategori Baru: ";
-            string nama_kategori_baru;
-            cin.ignore();
-            getline(cin, nama_kategori_baru);
-            cout << "Min Suhu Baru: ";
-            int min_suhu_baru;
-            cin >> min_suhu_baru;
-            cout << "Max Suhu Baru: ";
-            int max_suhu_baru;
-            cin >> max_suhu_baru;
-            cout << "Media Tanam Baru: ";
-            string media_tanam_baru;
-            cin.ignore();
-            getline(cin, media_tanam_baru);
+    Kategori dataKategoriBaru;
+    dataKategoriBaru.id = data.dataKategori[id_kategori].id;
+    
+    cout << "Nama Kategori: ";
+    getline(cin, dataKategoriBaru.namaKategori);
 
-            data.dataKategori[i].namaKategori = nama_kategori_baru;
-            data.dataKategori[i].minSuhu = min_suhu_baru;
-            data.dataKategori[i].maxSuhu = max_suhu_baru;
-            data.dataKategori[i].mediaTanam = media_tanam_baru;
-            cout << "Kategori berhasil diedit!" << endl;
-            return;
-        }
-    }
+    cout << "Min Suhu: ";
+    cin >> dataKategoriBaru.minSuhu;
 
-    cout << "Kategori tidak ditemukan!" << endl;
+    cout << "Max Suhu: ";
+    cin >> dataKategoriBaru.maxSuhu;
+
+    cout << "Media Tanam: ";
+    getline(cin, dataKategoriBaru.mediaTanam);
+    
+    data.dataKategori[id_kategori] = dataKategoriBaru;
+    cout << "Kategori berhasil diperbarui!" << endl;
 }
 
 void FormLihatKategori(DataUtama &data)

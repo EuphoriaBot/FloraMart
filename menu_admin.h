@@ -41,29 +41,19 @@ void FormHapusKategori(DataUtama &data)
 {
     RefreshDataUtama(data);
     cout << "=== Hapus Kategori ===" << endl;
-    cout << "ID Kategori: ";
-    int id_kategori;
-    cin >> id_kategori;
-    id_kategori--;
+    cout << "NomorIndeks : ";
+    int NomorIndeks ;
+    cin >> NomorIndeks;
+    NomorIndeks-= 1;
 
-    if (id_kategori <= 0 || id_kategori > data.sizeDataKategori)
+    if (NomorIndeks < 0 || NomorIndeks >= data.sizeDataKategori)
     {
         cout << "ID kategori tidak valid!" << endl;
         return;
     }
 
-    for (int i = 0; i < data.sizeDataKategori; i++)
-    {
-        string nama_kategori;
-        cout << "Nama Kategori: "; 
-        if (data.dataKategori[i].namaKategori == nama_kategori)
-        {
-            HapusKategori(data.dataKategori, data.sizeDataKategori, data.dataKategori [i]);
-            cout << "Kategori berhasil dihapus!" << endl;
-            return;
-        }
-    }
-    cout << "Kategori tidak ditemukan!" << endl;
+    HapusKategori(data.dataKategori, data.sizeDataKategori,data.dataKategori [NomorIndeks]);
+    cout << "Kategori berhasil dihapus!" << endl;
 }
 
 void FormEditKategori(DataUtama &data)
@@ -72,10 +62,10 @@ void FormEditKategori(DataUtama &data)
     cout << "=== Edit Kategori ===" << endl;
     cout << "ID Kategori: ";
     int id_kategori;
-    cin >> id_kategori;
+    cin >> (id_kategori);
     id_kategori--;
 
-    if (id_kategori <= 0 || id_kategori > data.sizeDataKategori)
+    if (id_kategori < 0 || id_kategori >= data.sizeDataKategori)
     {
         cout << "ID kategori tidak valid!" << endl;
         return;
@@ -113,6 +103,7 @@ void FormEditKategori(DataUtama &data)
 
     cout << "Kategori tidak ditemukan!" << endl;
 }
+
 void FormLihatKategori(DataUtama &data)
 {
     RefreshDataUtama(data);
@@ -146,14 +137,17 @@ void MenuManajemenKategori (DataUtama &data)
     }
     else if (pilihan == "2")
     {
+        FormLihatKategori(data);
         FormTambahKategori(data);
     }
     else if (pilihan == "3")
     {
+        FormLihatKategori(data);
         FormEditKategori(data);
     }
     else if (pilihan == "4")
     {
+        FormLihatKategori(data);
         FormHapusKategori(data);
     }
     else
@@ -161,6 +155,51 @@ void MenuManajemenKategori (DataUtama &data)
         cout << "Pilihan tidak valid!" << endl;
     }
 }
+
+void nambahHarga(DataUtama &data)
+{
+    RefreshDataUtama(data);
+    cout << "=== Tambah Harga ===" << endl;
+    cout << "ID Kategori: ";
+    int id_kategori;
+    cin >> id_kategori;
+    id_kategori--;
+
+    if (id_kategori < 0 || id_kategori >= data.sizeDataTanaman)
+    {
+        cout << "ID tanaman tidak valid!" << endl;
+        return;
+    }
+
+    cout << "Harga Baru: ";
+    int Hargabaru;
+    cin >> Hargabaru;
+
+    data.dataTanaman[id_kategori].harga = Hargabaru;
+    cout << "Harga berhasil ditambahkan!" << endl;
+}
+
+void MenuValidasiStatus (DataUtama &data)
+{
+    RefreshDataUtama(data);
+    cout << "=== Validasi Status ===" << endl;
+    cout << "1. Nambah Harga" << endl;
+    cout << "2. Kesiapan Tanaman" << endl;
+    cout << "Pilih menu: ";
+
+    string pilihan;
+    getline(cin, pilihan);
+
+    if (pilihan == "1")
+    {
+        // ValidasiTanaman(data);
+    }
+    else if (pilihan == "2")
+    {
+        // HapusTanaman(data);
+    }
+}
+
 
 void MenuManajemenTanaman (DataUtama &data)
 {
@@ -183,6 +222,7 @@ void MenuManajemenTanaman (DataUtama &data)
         // HapusTanaman(data);
     }
 }
+
 
 void MenuManajemenSupplier (DataUtama &data)
 {

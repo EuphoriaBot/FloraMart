@@ -101,7 +101,7 @@ void SimpanMetodeTransaksi(MetodeTransaksi *dataMetodeTransaksi, int sizeData)
 
             // Menambah 1 elemen (data json) array ke belakang
             (*_newJsonData).push_back(*j);
-            
+
             delete j;
             j = nullptr;
         }
@@ -133,7 +133,7 @@ string GetFreeMetodeTransaksiId()
     try
     {
         GetAllMetodeTransaksi(dataMetodeTransaksi, *sizeData);
-        
+
         for (int i = 0; i < *sizeData; i++)
         {
             if ((*maxId) < (stoi(dataMetodeTransaksi[i].id)))
@@ -171,8 +171,16 @@ void TambahMetodeTransaksi(MetodeTransaksi *dataMetodeTransaksi, int &sizeData, 
 {
     try
     {
+        if (metodeBaru.id == "")
+            throw invalid_argument("ID Metode tidak boleh kosong!");
         if (metodeBaru.metode == "")
             throw invalid_argument("Nama metode transaksi tidak boleh kosong!");
+
+        for (int i = 0; i < sizeData; i++)
+        {
+            if (dataMetodeTransaksi[i].id == metodeBaru.id)
+                throw invalid_argument("ID metode transaksi sudah digunakan!");
+        }
 
         dataMetodeTransaksi[sizeData].id = metodeBaru.id;
         dataMetodeTransaksi[sizeData].metode = metodeBaru.metode;
@@ -195,7 +203,7 @@ void TambahMetodeTransaksi(MetodeTransaksi *dataMetodeTransaksi, int &sizeData, 
 // Menghapus dan menyimpan langsung data metode transaksi yang telah dihapus ke database
 void HapusMetodeTransaksi(MetodeTransaksi *dataMetodeTransaksi, int &sizeData, MetodeTransaksi metodeDihapus)
 {
-    int * indexDihapus = new int{-1};
+    int *indexDihapus = new int{-1};
     try
     {
 

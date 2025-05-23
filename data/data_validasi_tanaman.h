@@ -249,7 +249,7 @@ void TambahValidasi(ValidasiTanaman *dataValidasi, int &sizeData, ValidasiTanama
             throw invalid_argument("Stok diterima tidak bisa di bawah 0!");
         if (validasiBaru.stok_diterima > validasiBaru.suplai.jumlah)
             throw invalid_argument("Stok diterima tidak bisa lebih dari jumlah suplai!");
-        if (validasiBaru.suplai.statusValidasi == true)
+        if (validasiBaru.suplai.statusValidasi)
             throw invalid_argument("Tanaman sudah divalidasi!");
 
         dataValidasi[sizeData].id = validasiBaru.id;

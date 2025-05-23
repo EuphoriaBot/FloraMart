@@ -63,7 +63,7 @@ int main()
         dataMetodeDiperbarui->metode = _updateTemp;
     }
 
-    SimpanValidasiTanaman(dataMetodeTransaksi, sizeDataMetodeTransaksi); // Note: Simpan dengan menggunakan data utama, jangan data yang diperbarui
+    SimpanMetodeTransaksi(dataMetodeTransaksi, sizeDataMetodeTransaksi); // Note: Simpan dengan menggunakan data utama, jangan data yang diperbarui
 
     // -- (DELETE) Menghapus Data --
     int deleteIndex = -1;

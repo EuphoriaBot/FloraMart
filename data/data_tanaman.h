@@ -223,6 +223,8 @@ void TambahTanaman(Tanaman *dataTanaman, int &sizeData, Tanaman tanamanBaru)
 {
     try
     {
+        if (tanamanBaru.id == "")
+            throw invalid_argument("ID Tanaman tidak bisa kosong!");
         if (tanamanBaru.namaTanaman == "")
             throw invalid_argument("Nama Tanaman tidak bisa kosong!");
         if (tanamanBaru.harga <= 0)

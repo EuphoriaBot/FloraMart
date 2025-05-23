@@ -250,6 +250,16 @@ void TambahTransaksi(Transaksi *dataTransaksi, int &sizeData, Transaksi transaks
 
         GetAllTanaman(dataTanaman, *sizeDataTanaman);
         
+        if (transaksiBaru.id == "")
+            throw invalid_argument("ID tanaman tidak boleh kosong!");
+        if (transaksiBaru.jumlahTanaman <= 0)
+            throw invalid_argument("Jumlah tanaman tidak bisa di bawah atau sama dengan 0!");
+        if (transaksiBaru.metodeBayar.id == "")
+            throw invalid_argument("Metode pembayaran tidak boleh kosong!");
+        if (transaksiBaru.pembeli.id == "")
+            throw invalid_argument("Pembeli tidak boleh kosong!");
+        if (transaksiBaru.jumlahTanaman <= 0)
+            throw invalid_argument("Jumlah tanaman tidak bisa di bawah atau sama dengan 0!");
         if (transaksiBaru.jumlahTanaman <= 0)
             throw invalid_argument("Jumlah tanaman tidak bisa di bawah atau sama dengan 0!");
 

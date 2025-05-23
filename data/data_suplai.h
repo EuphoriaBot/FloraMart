@@ -83,7 +83,7 @@ void GetAllSuplai(Suplai *dataSuplai, int &sizeData)
     try
     {
         ReadJson(*_jsonData, sizeData, DATA_NAME);
-        
+
         for (int i = 0; i < sizeData; i++)
             from_json((*_jsonData)[i], dataSuplai[i]);
     }
@@ -147,7 +147,7 @@ void SimpanSuplai(Suplai *dataSuplai, int sizeData)
 
             // Menambah 1 elemen (data json) array ke belakang
             (*_newJsonData).push_back(*j);
-            
+
             delete j;
             j = nullptr;
         }
@@ -216,15 +216,25 @@ void TambahSuplai(Suplai *dataSuplai, int &sizeData, Suplai suplaiBaru)
     time_t *curTimestamp = new time_t{time(NULL)};
     tm *curDatetime = (*localtime)(&(*curTimestamp));
     char *curTimeOutput = new char[50];
-    
+
     try
     {
         strftime(curTimeOutput, 50, "%d-%m-%y %H:%M", &(*curDatetime));
 
+        if (suplaiBaru.id == "")
+            throw invalid_argument("ID Suplai tidak bisa kosong!");
         if (suplaiBaru.namaTanaman == "")
-            throw invalid_argument("Nama Tanaman tidak bisa kosong!");
+            throw invalid_argument("Nama tanaman tidak bisa kosong!");
         if (suplaiBaru.jumlah <= 0)
-            throw invalid_argument("Jumlah tanaman tidak bisa di bawah atau sama dengan 0!");
+            throw invalid_argument("Jumlah suplai tidak bisa di bawah atau sama dengan 0!");
+        if (suplaiBaru.supplier.id == "")
+            throw invalid_argument("Supplier tidak boleh kosong!");
+
+        for (int i = 0; i < sizeData; i++)
+        {
+            if (dataSuplai[i].id == suplaiBaru.id)
+                throw invalid_argument("ID sudah digunakan!");
+        }
 
         dataSuplai[sizeData].id = suplaiBaru.id;
         dataSuplai[sizeData].namaTanaman = suplaiBaru.namaTanaman;

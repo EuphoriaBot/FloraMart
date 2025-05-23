@@ -36,6 +36,10 @@ void SuplaiTanaman(DataUtama &data, InfoLogin infoLogin)
     suplaiBaru.namaTanaman = nama;
     suplaiBaru.jumlah = stok;
 
+    // Yo, jangan lupa isi atribut suplaiBaru yg lainnya :D
+    // suplaiBaru.id = GetFreeSuplaiId(); // Dapatin id suplai yang bisa dipakai
+    // suplaiBaru.supplier.id = infoLogin.id; // Dapatin id akun dari supplier yang dipakai
+
     TambahSuplai(data.dataSuplai, data.sizeDataSuplai, suplaiBaru);
 
     cout << "Tanaman berhasil disuplai " << endl;

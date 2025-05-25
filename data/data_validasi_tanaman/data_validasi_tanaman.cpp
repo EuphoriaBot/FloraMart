@@ -1,8 +1,6 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include "nlohmann/json.hpp"
-#include "data_utilities.h"
 #include "data_validasi_tanaman.h"
 
 using json = nlohmann::json;

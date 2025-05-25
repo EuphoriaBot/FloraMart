@@ -4,8 +4,8 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include "nlohmann/json.hpp"
-#include "data_utilities.h"
+#include "../nlohmann/json.hpp"
+#include "../data_utilities.h"
 
 using json = nlohmann::json;
 using namespace std;

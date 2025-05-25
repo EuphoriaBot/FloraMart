@@ -4,10 +4,10 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include "nlohmann/json.hpp"
-#include "data_utilities.h"
-#include "data_supplier.h"
-#include "data_kategori.h"
+#include "../nlohmann/json.hpp"
+#include "../data_utilities.h"
+#include "../data_supplier/data_supplier.h"
+#include "../data_kategori/data_kategori.h"
 
 using json = nlohmann::json;
 using namespace std;

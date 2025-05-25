@@ -4,11 +4,11 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include "nlohmann/json.hpp"
-#include "data_utilities.h"
-#include "data_tanaman.h"
-#include "data_pembeli.h"
-#include "data_metode_transaksi.h"
+#include "../nlohmann/json.hpp"
+#include "../data_utilities.h"
+#include "../data_tanaman/data_tanaman.h"
+#include "../data_pembeli/data_pembeli.h"
+#include "../data_metode_transaksi/data_metode_transaksi.h"
 
 using json = nlohmann::json;
 using namespace std;

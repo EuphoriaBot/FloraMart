@@ -4,10 +4,10 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include "nlohmann/json.hpp"
-#include "data_utilities.h"
-#include "data_tanaman.h"
-#include "data_suplai.h"
+#include "../nlohmann/json.hpp"
+#include "../data_utilities.h"
+#include "../data_tanaman/data_tanaman.h"
+#include "../data_suplai/data_suplai.h"
 
 using json = nlohmann::json;
 using namespace std;

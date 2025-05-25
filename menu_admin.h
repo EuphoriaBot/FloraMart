@@ -12,10 +12,10 @@ void FormTambahKategori(DataUtama &data)
     cin.ignore();
     getline(cin, nama_kategori);
     cout << "Min Suhu: ";
-    int min_suhu;
+    int min_suhu; // Note: Jadiin float
     cin >> min_suhu;
     cout << "Max Suhu: ";
-    int max_suhu;
+    int max_suhu; // Note: Jadiin float
     cin >> max_suhu;
     cout << "Media Tanam: ";
     string media_tanam;

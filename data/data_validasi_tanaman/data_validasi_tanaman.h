@@ -141,9 +141,10 @@ void GetValidasiTanaman(ValidasiTanaman &validasiTanaman, string targetId)
 // Menyimpan Data di program saat ini ke JSON
 void SimpanValidasiTanaman(ValidasiTanaman *dataValidasiTanaman, int sizeData)
 {
-    json *_newJsonData = new json{json::array()};
+    json *_newJsonData = new json{};
     try
     {
+        *_newJsonData = json::array();
         for (int i = 0; i < sizeData; i++)
         {
             json *j = new json();

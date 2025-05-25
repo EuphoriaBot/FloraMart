@@ -1,1 +1,23 @@
-[[],{"id":"","max_suhu":0.0,"media_tanam":"","min_suhu":0.0,"nama_kategori":""},{"id":"","max_suhu":0.0,"media_tanam":"","min_suhu":0.0,"nama_kategori":""},{"id":"","max_suhu":0.0,"media_tanam":"","min_suhu":0.0,"nama_kategori":""},{"id":"","max_suhu":0.0,"media_tanam":"","min_suhu":0.0,"nama_kategori":""}]
+[
+    {
+        "id": "0001",
+        "max_suhu": 0.0,
+        "media_tanam": "",
+        "min_suhu": 0.0,
+        "nama_kategori": "Bunga"
+    },
+    {
+        "id": "0002",
+        "max_suhu": 0.0,
+        "media_tanam": "",
+        "min_suhu": 0.0,
+        "nama_kategori": "Merambat"
+    },
+    {
+        "id": "0003",
+        "max_suhu": 0.0,
+        "media_tanam": "",
+        "min_suhu": 0.0,
+        "nama_kategori": "Tumbuhan Paku"
+    }
+]

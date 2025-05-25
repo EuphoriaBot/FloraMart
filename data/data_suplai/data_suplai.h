@@ -137,9 +137,10 @@ void GetSuplai(Suplai &suplai, string targetId)
 // Menyimpan Data di program saat ini ke JSON
 void SimpanSuplai(Suplai *dataSuplai, int sizeData)
 {
-    json *_newJsonData = new json{json::array()};
+    json *_newJsonData = new json{};
     try
     {
+        *_newJsonData = json::array();
         for (int i = 0; i < sizeData; i++)
         {
             json *j = new json();

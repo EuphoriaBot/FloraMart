@@ -168,6 +168,7 @@ void SimpanPembeli(Pembeli *dataPembeli, int sizeData)
     json *_newJsonData = new json();
     try
     {
+        *_newJsonData = json::array();
         for (int i = 0; i < sizeData; i++)
         {
             json *j = new json();

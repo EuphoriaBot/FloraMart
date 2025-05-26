@@ -66,6 +66,11 @@ bool CekLogin(InfoLogin infoLogin)
     return infoLogin.id != "" && infoLogin.username != "" && infoLogin.role != "";
 }
 
+void ClearScreen()
+{
+    system("powershell.exe -Command Clear-Host");
+}
+
 // Unused
 // time_t timestamp = time(NULL);
 // tm datetime = *localtime(&timestamp);

@@ -52,7 +52,8 @@ int main()
 void MenuAwal(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
 {
     RefreshDataUtama(data);
-
+    
+    ClearScreen();
     cout << "=== Menu Awal ===" << endl;
     cout << "1. Login" << endl;
     cout << "2. Registrasi Pembeli" << endl;
@@ -88,6 +89,7 @@ void FormLogin(DataUtama &data, InfoLogin &infoLogin)
 {
     RefreshDataUtama(data);
 
+    ClearScreen();
     cout << "=== Form Login ===" << endl;
     cout << "Username: ";
     string input_username;
@@ -140,6 +142,7 @@ void FormRegistrasiPembeli(DataUtama &data)
 {
     RefreshDataUtama(data);
 
+    ClearScreen();
     cout << "=== Registrasi Pembeli ===" << endl;
     cout << "Username: ";
     string input_username;
@@ -178,6 +181,7 @@ void FormRegistrasiSupplier(DataUtama &data)
 {
     RefreshDataUtama(data);
 
+    ClearScreen();
     cout << "=== Registrasi Supplier ===" << endl;
     cout << "Username: ";
     string input_username;

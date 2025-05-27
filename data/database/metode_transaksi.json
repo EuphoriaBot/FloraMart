@@ -1,10 +1,1 @@
-[
-    {
-        "id": "0001",
-        "metode": "Qris"
-    },
-    {
-        "id": "0002",
-        "metode": "gopay"
-    }
-]
+[{"id":"0001","metode":"Qris"},{"id":"0002","metode":"gopay"}]

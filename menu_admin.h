@@ -299,15 +299,16 @@ void FormKesiapanTanaman(DataUtama &data)
     }
 }
 
-void FormNotifikasi (DataUtama &data)
-{
-    for (int i = 0; i < data.sizeDataTransaksi; i++)
-    {
-        if (data.dataTransaksi[i].status == "menunggu")
-        {
-            cout << data.dataTransaksi[i].id << " | " << data.dataTransaksi[i].pembeli.username << " | " << data.dataTransaksi[i].tanggalTransaksi << endl;
-    }
-}
+// void MenuNotifikasi (DataUtama &data)
+// {
+//     for (int i = 0; i < data.sizeDataTransaksi; i++)
+//     {
+//         if (data.dataTransaksi[i].status == "menunggu")
+//         {
+//             cout << data.dataTransaksi[i].id << " | " << data.dataTransaksi[i].pembeli.username << " | " << data.dataTransaksi[i].tanggalTransaksi << endl;
+//         }
+// }
+
 void MenuManajemenTanaman(DataUtama &data)
 {
     RefreshDataUtama(data);
@@ -416,23 +417,5 @@ void MenuUtamaAdmin(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
     }
 } 
 
-void MenuManajemenTanaman(DataUtama &data, InfoLogin infoLogin, DataMenu dataMenu)
-{
-    try
-    {
-        // Menu Manajmene Tanaman
-
-        // Note: Disarankan untuk Refresh Data Utama di awal Fungsi
-        RefreshDataUtama(data);
-    }
-    catch (invalid_argument &e)
-    {
-        cout << e.what() << '\n';
-    }
-    catch (exception &e)
-    {
-        cout << e.what() << '\n';
-    }
-}
 
 #endif

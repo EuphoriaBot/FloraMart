@@ -66,7 +66,7 @@ void LihatLaporanTransaksi(DataUtama &data, InfoLogin infoLogin)
     {
         Transaksi &transaksi = data.dataTransaksi[i];
 
-        if (transaksi.status == infoLogin.id)
+        if (transaksi.tanaman.supplier.id == infoLogin.id)
         {
             ditemukan = true;
 
@@ -112,7 +112,7 @@ void MenuUtamaSupplier(DataUtama &data, InfoLogin infoLogin, DataMenu dataMenu)
             }
             else if (pilihan == "3")
             {
-                infoLogin = {};
+                Logout(DataMenu, infoLogin);
                 break;
             }
             else

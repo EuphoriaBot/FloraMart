@@ -167,7 +167,7 @@ void MenuUtamaPembeli(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
             }
             else if (pilihan == "3")
             {
-                infoLogin = {};
+                Logout(DataMenu, infoLogin);
                 break;
             }
             else

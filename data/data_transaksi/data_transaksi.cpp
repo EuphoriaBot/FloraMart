@@ -40,7 +40,6 @@ int main()
         cout << "Total Harga: " << dataTransaksi[i].totalHarga << endl;
         cout << "Metode Bayar : " << dataTransaksi[i].metodeBayar.metode << endl;
         cout << "Status: " << dataTransaksi[i].status << endl;
-        cout << "Tanggal Pembayaran : " << dataTransaksi[i].tanggalPembayaran << endl;
 
         cout << endl;
     }

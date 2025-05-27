@@ -5,20 +5,11 @@
 #include "menu_utilities.h"
 using namespace std;
 
-void NambahSuplai(Suplai dataSuplai[], int &size, Suplai suplaiBaru)
-{
-    if (size < MAX_SIZE)
-    {
-        dataSuplai[size] = suplaiBaru;
-        size++;
-    }
-}
-
 void SuplaiTanaman(DataUtama &data, InfoLogin infoLogin)
 {
     if (data.sizeDataTanaman >= MAX_SIZE)
     {
-        cout << "Kapasitas data tanaman sudah penuh";
+        cout << "Kapasitas data tanaman sudah penuh\n";
         return;
     }
 
@@ -30,19 +21,39 @@ void SuplaiTanaman(DataUtama &data, InfoLogin infoLogin)
     cout << "Stok         : ";
     getline(cin, stokStr);
 
-    stok = stoi(stokStr);
+    try
+    {
+        stok = stoi(stokStr);
+    }
+    catch (...)
+    {
+        cout << "Input stok tidak valid!\n";
+        return;
+    }
 
     Suplai suplaiBaru;
+    suplaiBaru.id = GetFreeSuplaiId();
     suplaiBaru.namaTanaman = nama;
     suplaiBaru.jumlah = stok;
-
-    // Yo, jangan lupa isi atribut suplaiBaru yg lainnya :D
-    // suplaiBaru.id = GetFreeSuplaiId(); // Dapatin id suplai yang bisa dipakai
-    // suplaiBaru.supplier.id = infoLogin.id; // Dapatin id akun dari supplier yang dipakai
+    suplaiBaru.supplier.id = infoLogin.id;
+    suplaiBaru.supplier.username = infoLogin.username;
 
     TambahSuplai(data.dataSuplai, data.sizeDataSuplai, suplaiBaru);
 
-    cout << "Tanaman berhasil disuplai " << endl;
+    cout << "Tanaman berhasil disuplai";
+    cout << "ID Suplai     : " << suplaiBaru.id << endl;
+    cout << "Nama Tanaman  : " << suplaiBaru.namaTanaman << endl;
+    cout << "Jumlah        : " << suplaiBaru.jumlah << endl;
+    cout << "Supplier      : " << suplaiBaru.supplier.username << endl;
+}
+
+void NambahSuplai(Suplai dataSuplai[], int &size, Suplai suplaiBaru)
+{
+    if (size < MAX_SIZE)
+    {
+        dataSuplai[size] = suplaiBaru;
+        size++;
+    }
 }
 
 void LihatLaporanTransaksi(DataUtama &data, InfoLogin infoLogin)

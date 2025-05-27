@@ -1,6 +1,5 @@
 #include <iostream>
 #include <filesystem>
-
 #include "menu_utilities.h"
 #include "menu_supplier.h"
 #include "menu_pembeli.h"
@@ -41,7 +40,7 @@ int main()
         }
         else
         {
-            // Menghapus info login jika role tidak valid
+
             infoLogin = {};
         }
     }

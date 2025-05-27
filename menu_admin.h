@@ -46,7 +46,7 @@ void FormHapusKategori(DataUtama &data)
     cout << "Masukan Index : ";
     int NomorIndeks;
     getline(cin, temp);
-    NomorIndeks = stoi(temp); // Convert string to int
+    NomorIndeks = stoi(temp);
     NomorIndeks -= 1;
 
     if (NomorIndeks < 0 || NomorIndeks >= data.sizeDataKategori)
@@ -302,15 +302,129 @@ void FormKesiapanTanaman(DataUtama &data)
     }
 }
 
-void MenuNotifikasi (DataUtama &data)
+void MenuNotifikasi(DataUtama &data)
 {
+    string temp;
+    RefreshDataUtama(data);
     for (int i = 0; i < data.sizeDataTransaksi; i++)
     {
-        if (data.dataTransaksi[i].status == "menunggu")
+        if (data.dataTransaksi[i].status == "Menunggu Konfirmasi")
         {
             cout << data.dataTransaksi[i].id << " | " << data.dataTransaksi[i].tanaman.namaTanaman << " | " << data.dataTransaksi[i].jumlahTanaman << endl;
         }
+    }
+    int pilihan;
+    cout << "Masukkan ID Transaksi yang ingin dikonfirmasi: ";
+    getline(cin, temp);
+    pilihan = stoi(temp);
+
+    if (pilihan > 0 || pilihan <= data.sizeDataTransaksi)
+    {
+        cout << "=== Detail Transaksi ===" << endl;
+        cout << data.dataTransaksi[pilihan].id << endl;
+        cout << data.dataTransaksi[pilihan].tanaman.namaTanaman << endl;
+        cout << data.dataTransaksi[pilihan].pembeli.username << endl;
+        cout << data.dataTransaksi[pilihan].jumlahTanaman << endl;
+        cout << data.dataTransaksi[pilihan].metodeBayar.metode << endl;
+        cout << data.dataTransaksi[pilihan].tanggalTransaksi << endl;
+        cout << data.dataTransaksi[pilihan].totalHarga << endl;
+    }
 }
+void FormLihatSupplier(DataUtama &data)
+{
+    RefreshDataUtama(data);
+    cout << "=== Lihat Supplier ===" << endl;
+    cout << "ID Supplier\tUsername\tStatus" << endl;
+    for (int i = 0; i < data.sizeDataSupplier; i++)
+    {
+        cout << data.dataSupplier[i].id << "\t\t";
+        cout << data.dataSupplier[i].username << "\t\t";
+        cout << data.dataSupplier[i].status << endl;
+    }
+}
+
+void FormHapusSupplier(DataUtama &data)
+{
+    RefreshDataUtama(data);
+    cout << "=== Hapus Supplier ===" << endl;
+    cout << "Masukkan ID: ";
+    string id;
+    getline(cin, id);
+    Supplier supplierDipilih;
+
+    for (int i = 0; i < data.sizeDataSupplier; i++)
+    {
+        if (data.dataSupplier[i].id == id)
+        {
+            supplierDipilih = data.dataSupplier[i];
+            break;
+        }
+    }
+
+    HapusSupplier(data.dataSupplier, data.sizeDataSupplier, supplierDipilih);
+    cout << "Supplier berhasil dihapus!" << endl;
+}
+
+void FormBlokirSupplier(DataUtama &data)
+{
+    RefreshDataUtama(data);
+    cout << "=== Blokir Supplier ===" << endl;
+
+    for (int i = 0; i < data.sizeDataSupplier; i++)
+    {
+        cout << data.dataSupplier[i].id << " | " << data.dataSupplier[i].username << " | " << data.dataSupplier[i].status << endl;
+    }
+    cout << "Masukkan ID Supplier yang ingin diblokir atau unblokir: ";
+    string id;
+    getline(cin, id);
+    Supplier *supplierDipilih;
+
+    for (int i = 0; i < data.sizeDataSupplier; i++)
+    {
+        if (data.dataSupplier[i].id == id)
+        {
+            supplierDipilih = &data.dataSupplier[i];
+            break;
+        }
+    }
+    if (supplierDipilih->status == "aktif")
+    {
+        cout << "Apakah Anda yakin ingin memblokir akun supplier " << supplierDipilih->username << "?  [y/n]" << endl;
+        string konfirmasi;
+        getline(cin, konfirmasi);
+        if (konfirmasi == "y" || konfirmasi == "Y")
+        {
+            supplierDipilih->status = "blokir";
+            cout << "Supplier berhasil diblokir!" << endl;
+        }
+        else
+        {
+            cout << "Pembatalan blokir akun supplier." << endl;
+            return;
+        }
+    }
+    else if (supplierDipilih->status == "blokir")
+    {
+        cout << "Apakah Anda yakin ingin mengaktifkan akun supplier " << supplierDipilih->username << "?  [y/n]" << endl;
+        string konfirmasi;
+        getline(cin, konfirmasi);
+        if (konfirmasi == "y" || konfirmasi == "Y")
+        {
+            supplierDipilih->status = "aktif";
+            cout << "Supplier berhasil diaktifkan!" << endl;
+        }
+        else
+        {
+            cout << "Pembatalan aktifasi akun supplier." << endl;
+            return;
+        }
+    }
+    else
+    {
+        cout << "Status supplier tidak valid!" << endl;
+        return;
+    }
+    UpdateDataUtama(data);
 }
 
 void MenuManajemenTanaman(DataUtama &data)
@@ -342,11 +456,11 @@ void MenuManajemenTanaman(DataUtama &data)
 void MenuManajemenSupplier(DataUtama &data)
 {
     RefreshDataUtama(data);
-
+    ClearScreen();
     cout << "=== Manajemen Supplier ===" << endl;
     cout << "1. Lihat Supplier" << endl;
-    cout << "2. Blokir Supplier" << endl;
-    cout << "3. Hapus Supplier" << endl;
+    cout << "2. Hapus Supplier" << endl;
+    cout << "3. Blokir Supplier" << endl;
     cout << "Pilih menu: ";
 
     string pilihan;
@@ -354,15 +468,17 @@ void MenuManajemenSupplier(DataUtama &data)
 
     if (pilihan == "1")
     {
-        // TambahSupplier(data);
+        FormLihatSupplier(data);
     }
     else if (pilihan == "2")
     {
-        // HapusSupplier(data);
+        FormLihatSupplier(data);
+        FormHapusSupplier(data);
     }
     else if (pilihan == "3")
     {
-        // EditSupplier(data);
+        FormLihatSupplier(data);
+        FormBlokirSupplier(data);
     }
 }
 
@@ -390,11 +506,11 @@ void MenuUtamaAdmin(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
             }
             else if (pilihan == "2")
             {
-                // MenuManajemenSupplier(data, infoLogin, dataMenu);
+                MenuManajemenSupplier(data);
             }
             else if (pilihan == "3")
             {
-                // MenuNotifikasi(data, infoLogin, dataMenu);
+                MenuNotifikasi(data);
             }
             else if (pilihan == "4")
             {
@@ -406,10 +522,6 @@ void MenuUtamaAdmin(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
                 cout << "Pilihan tidak valid! Silakan coba lagi." << endl;
             }
         }
-        // Menu Utama Admin
-
-        // Note: Disarankan untuk Refresh Data Utama di awal Fungsi
-        RefreshDataUtama(data);
     }
     catch (invalid_argument &e)
     {
@@ -420,6 +532,5 @@ void MenuUtamaAdmin(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
         cout << e.what() << '\n';
     }
 }
-
 
 #endif

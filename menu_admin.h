@@ -84,7 +84,7 @@ void FormEditKategori(DataUtama &data)
     cin >> dataKategoriBaru.maxSuhu;
 
     cout << "Media Tanam: ";
-    getline(cin, dataKategoriBaru.mediaTanam);
+    getline(cin, dataategoriBaru.mediaTanam);
     
     data.dataKategori[id_kategori] = dataKategoriBaru;
     cout << "Kategori berhasil diperbarui!" << endl;

@@ -4,8 +4,8 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include "nlohmann/json.hpp"
-#include "data_utilities.h"
+#include "../nlohmann/json.hpp"
+#include "../data_utilities.h"
 
 using json = nlohmann::json;
 using namespace std;
@@ -168,6 +168,7 @@ void SimpanPembeli(Pembeli *dataPembeli, int sizeData)
     json *_newJsonData = new json();
     try
     {
+        *_newJsonData = json::array();
         for (int i = 0; i < sizeData; i++)
         {
             json *j = new json();

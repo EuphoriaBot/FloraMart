@@ -4,10 +4,10 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include "nlohmann/json.hpp"
-#include "data_utilities.h"
-#include "data_supplier.h"
-#include "data_kategori.h"
+#include "../nlohmann/json.hpp"
+#include "../data_utilities.h"
+#include "../data_supplier/data_supplier.h"
+#include "../data_kategori/data_kategori.h"
 
 using json = nlohmann::json;
 using namespace std;
@@ -145,9 +145,10 @@ void GetTanaman(Tanaman &tanaman, string targetId)
 // Menyimpan Data di program saat ini ke JSON
 void SimpanTanaman(Tanaman *dataTanaman, int sizeData)
 {
-    json *_newJsonData = new json{json::array()};
+    json *_newJsonData = new json{};
     try
     {
+        *_newJsonData = json::array();
         for (int i = 0; i < sizeData; i++)
         {
             json *j = new json();

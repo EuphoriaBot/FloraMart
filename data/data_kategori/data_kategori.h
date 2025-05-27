@@ -4,8 +4,8 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include "nlohmann/json.hpp"
-#include "data_utilities.h"
+#include "../nlohmann/json.hpp"
+#include "../data_utilities.h"
 
 using json = nlohmann::json;
 using namespace std;
@@ -98,9 +98,10 @@ void GetKategori(Kategori &kategori, string targetId)
 // Menyimpan Data di program saat ini ke JSON
 void SimpanKategori(Kategori *dataKategori, int sizeData)
 {
-    json *_newJsonData = new json{json::array()};
+    json *_newJsonData = new json{};
     try
     {
+        *_newJsonData = json::array();
         for (int i = 0; i < sizeData; i++)
         {
             json *j = new json();
@@ -113,7 +114,7 @@ void SimpanKategori(Kategori *dataKategori, int sizeData)
             j = nullptr;
         }
 
-        WriteJson(*_newJsonData, DATA_NAME);
+        WriteJson((*_newJsonData), DATA_NAME);
     }
     catch (const invalid_argument &e)
     {

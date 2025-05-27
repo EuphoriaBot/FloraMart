@@ -4,8 +4,8 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include "nlohmann/json.hpp"
-#include "data_utilities.h"
+#include "../nlohmann/json.hpp"
+#include "../data_utilities.h"
 
 using json = nlohmann::json;
 using namespace std;
@@ -91,9 +91,10 @@ void GetMetodeTransaksi(MetodeTransaksi &metodeTransaksi, string targetId)
 // Menyimpan Data di program saat ini ke JSON
 void SimpanMetodeTransaksi(MetodeTransaksi *dataMetodeTransaksi, int sizeData)
 {
-    json *_newJsonData = new json{json::array()};
+    json *_newJsonData = new json{};
     try
     {
+        *_newJsonData = json::array();
         for (int i = 0; i < sizeData; i++)
         {
             json *j = new json();

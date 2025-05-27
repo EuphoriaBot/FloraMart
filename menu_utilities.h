@@ -2,15 +2,15 @@
 #define UTILITIES_H
 
 // Data Utilities
-#include "data/data_admin.h"
-#include "data/data_kategori.h"
-#include "data/data_metode_transaksi.h"
-#include "data/data_pembeli.h"
-#include "data/data_suplai.h"
-#include "data/data_supplier.h"
-#include "data/data_tanaman.h"
-#include "data/data_transaksi.h"
-#include "data/data_validasi_tanaman.h"
+#include "data/data_admin/data_admin.h"
+#include "data/data_kategori/data_kategori.h"
+#include "data/data_metode_transaksi/data_metode_transaksi.h"
+#include "data/data_pembeli/data_pembeli.h"
+#include "data/data_suplai/data_suplai.h"
+#include "data/data_supplier/data_supplier.h"
+#include "data/data_tanaman/data_tanaman.h"
+#include "data/data_transaksi/data_transaksi.h"
+#include "data/data_validasi_tanaman/data_validasi_tanaman.h"
 
 // Struct Data Utama
 #include "data/data_utilities.h"
@@ -64,6 +64,11 @@ void Logout(DataMenu &dataMenu, InfoLogin &infoLogin)
 bool CekLogin(InfoLogin infoLogin)
 {
     return infoLogin.id != "" && infoLogin.username != "" && infoLogin.role != "";
+}
+
+void ClearScreen()
+{
+    system("powershell.exe -Command Clear-Host");
 }
 
 // Unused

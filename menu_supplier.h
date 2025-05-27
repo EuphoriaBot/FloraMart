@@ -112,7 +112,7 @@ void MenuUtamaSupplier(DataUtama &data, InfoLogin infoLogin, DataMenu dataMenu)
             }
             else if (pilihan == "3")
             {
-                infoLogin = {};
+                Logout(dataMenu, infoLogin);
                 break;
             }
             else

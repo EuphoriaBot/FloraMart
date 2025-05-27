@@ -302,15 +302,16 @@ void FormKesiapanTanaman(DataUtama &data)
     }
 }
 
-// void MenuNotifikasi (DataUtama &data)
-// {
-//     for (int i = 0; i < data.sizeDataTransaksi; i++)
-//     {
-//         if (data.dataTransaksi[i].status == "menunggu")
-//         {
-//             cout << data.dataTransaksi[i].id << " | " << data.dataTransaksi[i].pembeli.username << " | " << data.dataTransaksi[i].tanggalTransaksi << endl;
-//         }
-// }
+void MenuNotifikasi (DataUtama &data)
+{
+    for (int i = 0; i < data.sizeDataTransaksi; i++)
+    {
+        if (data.dataTransaksi[i].status == "menunggu")
+        {
+            cout << data.dataTransaksi[i].id << " | " << data.dataTransaksi[i].tanaman.namaTanaman << " | " << data.dataTransaksi[i].jumlahTanaman << endl;
+        }
+}
+}
 
 void MenuManajemenTanaman(DataUtama &data)
 {

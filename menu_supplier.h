@@ -5,7 +5,7 @@
 #include "menu_utilities.h"
 using namespace std;
 
-void SuplaiTanaman(DataUtama &data, InfoLogin infoLogin)
+void SuplaiTanaman(DataUtama &data, InfoLogin &infoLogin)
 {
     if (data.sizeDataTanaman >= MAX_SIZE)
     {
@@ -56,7 +56,7 @@ void NambahSuplai(Suplai dataSuplai[], int &size, Suplai suplaiBaru)
     }
 }
 
-void LihatLaporanTransaksi(DataUtama &data, InfoLogin infoLogin)
+void LihatLaporanTransaksi(DataUtama &data, InfoLogin &infoLogin)
 {
     bool ditemukan = false;
 
@@ -66,7 +66,7 @@ void LihatLaporanTransaksi(DataUtama &data, InfoLogin infoLogin)
     {
         Transaksi &transaksi = data.dataTransaksi[i];
 
-        if (transaksi.status == infoLogin.id)
+        if (transaksi.tanaman.supplier.id == infoLogin.id)
         {
             ditemukan = true;
 
@@ -84,7 +84,7 @@ void LihatLaporanTransaksi(DataUtama &data, InfoLogin infoLogin)
     }
 }
 
-void MenuUtamaSupplier(DataUtama &data, InfoLogin infoLogin, DataMenu dataMenu)
+void MenuUtamaSupplier(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
 {
     try
     {
@@ -112,7 +112,7 @@ void MenuUtamaSupplier(DataUtama &data, InfoLogin infoLogin, DataMenu dataMenu)
             }
             else if (pilihan == "3")
             {
-                infoLogin = {};
+                Logout(infoLogin);
                 break;
             }
             else

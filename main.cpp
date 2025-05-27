@@ -52,7 +52,7 @@ int main()
 void MenuAwal(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
 {
     RefreshDataUtama(data);
-    
+
     ClearScreen();
     cout << "=== Menu Awal ===" << endl;
     cout << "1. Login" << endl;

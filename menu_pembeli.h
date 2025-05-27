@@ -34,6 +34,98 @@ void DaftarTanaman(DataUtama &data)
     }
 }
 
+void HalamanTransaksi(DataUtama &data, int indexTanaman)
+{
+    int stokTersedia = data.dataTanaman[indexTanaman].stok;
+    cout << "=== Halaman Transaksi ===";
+    cout << "Stok tersedia: " << stokTersedia << endl;
+    cout << "Masukkan jumlah yang ingin dibeli: ";
+
+    string inputJumlah;
+    getline(cin, inputJumlah);
+    int jumlah = stoi(inputJumlah);
+
+    if (jumlah <= 0)
+    {
+        cout << "Jumlah tidak valid" << endl;
+        return;
+    }
+
+    if (jumlah > stokTersedia)
+    {
+        cout << "Jumlah melebihi stok yang tersedia" << endl;
+        return;
+    }
+
+    int totalHarga = data.dataTanaman[indexTanaman].harga * jumlah;
+    cout << "Total harga: " << totalHarga << endl;
+
+    cout << "Lanjutkan pembelian? (y/n): ";
+    string konfirmasi;
+    getline(cin, konfirmasi);
+    if (konfirmasi == "y")
+    {
+        data.dataTanaman[indexTanaman].stok -= jumlah;
+
+        cout << "Pembelian berhasil" << endl;
+        cout << "Sisa stok: " << data.dataTanaman[indexTanaman].stok << endl;
+    }
+    else
+    {
+        cout << "Pembelian dibatalkan" << endl;
+    }
+}
+
+void SearchingTanaman(DataUtama &data)
+{
+    RefreshDataUtama(data);
+    cout << "Masukkan nama tanaman: ";
+    string key;
+    getline(cin, key);
+
+    int index[MAX_SIZE], cari = 0;
+    for (int i = 0; i < data.sizeDataTanaman; i++)
+        if (data.dataTanaman[i].namaTanaman == key)
+            index[cari++] = i;
+
+    if (!cari)
+    {
+        cout << "Tanaman '" << key << "' tidak ditemukan.\n";
+        return;
+    }
+
+    cout << "Hasil:";
+    for (int j = 0; j < cari; j++)
+        cout << j + 1 << ". "
+             << data.dataTanaman[index[j]].namaTanaman
+             << " (" << data.dataSupplier[index[j]].username << ")\n";
+
+    cout << "Pilih nomor: ";
+    int pilihan = stoi((getline(cin, key), key));
+    if (pilihan > 0 && pilihan <= cari)
+    {
+        int i = index[pilihan - 1];
+        cout << "\n=== Detail Informasi ===\n"
+             << "ID            : " << data.dataTanaman[i].id << endl
+             << "Nama          : " << data.dataTanaman[i].namaTanaman << endl
+             << "Harga         : " << data.dataTanaman[i].harga << endl
+             << "Stok          : " << data.dataTanaman[i].stok << endl
+             << "Supplier      : " << data.dataSupplier[i].username << endl
+             << "Kategori      : " << data.dataKategori[i].namaKategori << endl
+             << "Min Suhu      : " << data.dataKategori[i].minSuhu << endl
+             << "Max Suhu      : " << data.dataKategori[i].maxSuhu << endl
+             << "HIDUP JOKOWI  : " << data.dataKategori[i].mediaTanam << endl;
+
+        cout << "Apakah Anda ingin melakukan transaksi? (y/n): ";
+        string jawab;
+        getline(cin, jawab);
+        if (jawab == "y" || jawab == "Y")
+        {
+            HalamanTransaksi(data, i);
+        }
+    }
+}
+
 int LinearSearch(DataUtama &data, string &key)
 {
     int n = data.sizeDataTanaman;
@@ -71,44 +163,7 @@ void MenuUtamaPembeli(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
             }
             else if (pilihan == "2")
             {
-                RefreshDataUtama(data);
-                cout << "Masukkan nama tanaman: ";
-                string key;
-                getline(cin, key);
-
-                int index[MAX_SIZE], cari = 0;
-                for (int i = 0; i < data.sizeDataTanaman; i++)
-                    if (data.dataTanaman[i].namaTanaman == key)
-                        index[cari++] = i;
-
-                if (!cari)
-                {
-                    cout << "Tanaman '" << key << "' tidak ditemukan.\n";
-                    continue;
-                }
-
-                cout << "\nHasil:\n";
-                for (int j = 0; j < cari; j++)
-                    cout << j + 1 << ". "
-                         << data.dataTanaman[index[j]].namaTanaman
-                         << " (" << data.dataSupplier[index[j]].username << ")\n";
-
-                cout << "Pilih nomor: ";
-                int pilihan = stoi((getline(cin, key), key));
-                if (pilihan > 0 && pilihan <= cari)
-                {
-                    int i = index[pilihan - 1];
-                    cout << "\n=== Detail Informasi ===\n"
-                         << "ID            : " << data.dataTanaman[i].id << "\n"
-                         << "Nama          : " << data.dataTanaman[i].namaTanaman << "\n"
-                         << "Harga         : " << data.dataTanaman[i].harga << "\n"
-                         << "Stok          : " << data.dataTanaman[i].stok << "\n"
-                         << "Supplier      : " << data.dataSupplier[i].username << "\n"
-                         << "Kategori      : " << data.dataKategori[i].namaKategori << "\n"
-                         << "Min Suhu      : " << data.dataKategori[i].minSuhu << "\n"
-                         << "Max Suhu      : " << data.dataKategori[i].maxSuhu << "\n"
-                         << "HIDUP JOKOWI  : " << data.dataKategori[i].mediaTanam << "\n";
-                }
+                SearchingTanaman(data);
             }
             else if (pilihan == "3")
             {

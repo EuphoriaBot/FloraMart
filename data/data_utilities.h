@@ -16,6 +16,11 @@ struct MetodeTransaksi
 {
     string id;
     string metode;
+
+    bool operator==(MetodeTransaksi *other)
+    {
+        return id == other->id && metode == other->metode;
+    }
 };
 
 struct Supplier
@@ -26,6 +31,35 @@ struct Supplier
     MetodeTransaksi metodeTersedia[MAX_SIZE];
     int sizeMetodeTersedia = 0;
     string status;
+
+    bool operator==(Supplier *other)
+    {
+        bool *metodeTersediaSama = new bool{true};
+
+        try
+        {
+            // if (sizeMetodeTersedia != &other->sizeMetodeTersedia)
+            // {
+            //     *metodeTersediaSama = false;
+            // }
+
+            // if 
+            // for (int i = 0; i < ; i++)
+            // {
+                
+            // }
+            
+            return id == other->id && username == other->username && password == other->password && metodeTersedia == other->metodeTersedia && status == other->status;
+        }
+        catch(exception& e)
+        {
+            cout << e.what() << '\n';
+        }
+        delete metodeTersediaSama;
+        metodeTersediaSama = nullptr;
+
+        return false;   
+    }
 };
 
 struct Pembeli
@@ -33,6 +67,11 @@ struct Pembeli
     string id;
     string username;
     string password;
+    
+    bool operator==(Pembeli *other)
+    {
+        return id == other->id && username == other->username && username == other->password;
+    }
 };
 
 struct Admin
@@ -40,6 +79,11 @@ struct Admin
     string id;
     string username;
     string password;
+
+    bool operator==(Admin *other)
+    {
+        return id == other->id && username == other->username && username == other->password;
+    }
 };
 
 struct Kategori
@@ -49,6 +93,11 @@ struct Kategori
     float minSuhu = 0;
     float maxSuhu = 0;
     string mediaTanam;
+
+    bool operator==(Kategori *other)
+    {
+        return id == other->id && namaKategori == other->namaKategori && minSuhu == other->minSuhu && maxSuhu == other->maxSuhu && mediaTanam == other->mediaTanam;
+    }
 };
 
 struct Tanaman
@@ -59,6 +108,11 @@ struct Tanaman
     Kategori kategori;
     double harga = 0;
     int stok;
+
+    bool operator==(Tanaman *other)
+    {
+        return id == other->id && namaTanaman == other->namaTanaman && supplier == &(other->supplier) && kategori == &(other->kategori) && harga == other->harga && stok == other->stok;
+    }
 };
 
 struct Transaksi
@@ -120,6 +174,34 @@ struct DataUtama
 
     ValidasiTanaman dataValidasiTanaman[MAX_SIZE];
     int sizeDataValidasi;
+
+    // Temporary Data For Performance
+    Pembeli _tempDataPembeli[MAX_SIZE];
+    int _tempSizeDataPembeli;
+
+    Supplier _tempDataSupplier[MAX_SIZE];
+    int _tempSizeDataSupplier;
+
+    Admin _tempDataAdmin[MAX_SIZE];
+    int _tempSizeDataAdmin;
+
+    Tanaman _tempDataTanaman[MAX_SIZE];
+    int _tempSizeDataTanaman;
+
+    Kategori _tempDataKategori[MAX_SIZE];
+    int _tempSizeDataKategori;
+
+    MetodeTransaksi _tempDataMetodeTransaksi[MAX_SIZE];
+    int _tempSizeDataMetodeTransaksi;
+
+    Suplai _tempDataSuplai[MAX_SIZE];
+    int _tempSizeDataSuplai;
+
+    Transaksi _tempDataTransaksi[MAX_SIZE];
+    int _tempSizeDataTransaksi;
+
+    ValidasiTanaman _tempDataValidasiTanaman[MAX_SIZE];
+    int _tempSizeDataValidasi;
 };
 
 void ReadJson(json &jsonData, int &sizeData, string fileName)

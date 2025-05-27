@@ -301,31 +301,6 @@ void FormKesiapanTanaman(DataUtama &data)
         TambahValidasi(data.dataValidasiTanaman, data.sizeDataValidasi, validasiBaru);
     }
 }
-// void MenuValidasiStatus(DataUtama &data)
-// {
-//     RefreshDataUtama(data);
-//     cout << "=== Validasi Status ===" << endl;
-//     cout << "1. Nambah Harga" << endl;
-//     cout << "2. Kesiapan Tanaman" << endl;
-//     cout << "Pilih menu: ";
-
-//     string pilihan;
-//     getline(cin, pilihan);
-
-//     if (pilihan == "1")
-//     {
-
-//         FormNambahHarga(data);
-//     }
-//     else if (pilihan == "2")
-//     {
-//         FormKesiapanTanaman(data);
-//     }
-//     else
-//     {
-//         cout << "Pilihan tidak valid!" << endl;
-//     }
-// }
 
 void MenuManajemenTanaman(DataUtama &data)
 {

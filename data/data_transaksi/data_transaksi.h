@@ -39,7 +39,6 @@ void from_json(json &j, Transaksi &transaksi)
         j.at("jumlah").get_to(transaksi.jumlahTanaman);
         j.at("total_harga").get_to(transaksi.totalHarga);
         j.at("tanggal_transaksi").get_to(transaksi.tanggalTransaksi);
-        j.at("tanggal_pembayaran").get_to(transaksi.tanggalPembayaran);
         j.at("status").get_to(transaksi.status);
 
         GetTanaman(transaksi.tanaman, j.at("id_tanaman"));
@@ -83,8 +82,7 @@ void to_json(json &j, Transaksi &transaksi)
             {"jumlah", transaksi.jumlahTanaman},
             {"id_metode_bayar", transaksi.metodeBayar.id},
             {"tanggal_transaksi", transaksi.tanggalTransaksi},
-            {"tanggal_pembayaran", transaksi.tanggalPembayaran},
-            {"jumlah", transaksi.tanggalPembayaran},
+            {"jumlah", transaksi.jumlahTanaman},
             {"total_harga", transaksi.totalHarga},
             {"status", transaksi.status}};
     }
@@ -276,9 +274,8 @@ void TambahTransaksi(Transaksi *dataTransaksi, int &sizeData, Transaksi transaks
         dataTransaksi[sizeData].jumlahTanaman = transaksiBaru.jumlahTanaman;
         dataTransaksi[sizeData].metodeBayar = transaksiBaru.metodeBayar;
         dataTransaksi[sizeData].tanggalTransaksi = curTimeOutput;
-        dataTransaksi[sizeData].tanggalPembayaran = "";
         dataTransaksi[sizeData].totalHarga = (transaksiBaru.tanaman.harga * transaksiBaru.jumlahTanaman);
-        dataTransaksi[sizeData].status = "Menunggu Pembayaran";
+        dataTransaksi[sizeData].status = "Menunggu Konfirmasi";
         sizeData++;
 
         for (int i = 0; i < *sizeDataTanaman; i++)

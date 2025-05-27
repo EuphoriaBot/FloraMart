@@ -12,10 +12,10 @@ void FormTambahKategori(DataUtama &data)
     cin.ignore();
     getline(cin, nama_kategori);
     cout << "Min Suhu: ";
-    int min_suhu; // Note: Jadiin float
+    float min_suhu; // Note: Jadiin float
     cin >> min_suhu;
     cout << "Max Suhu: ";
-    int max_suhu; // Note: Jadiin float
+    float max_suhu; // Note: Jadiin float
     cin >> max_suhu;
     cout << "Media Tanam: ";
     string media_tanam;
@@ -84,7 +84,7 @@ void FormEditKategori(DataUtama &data)
     cin >> dataKategoriBaru.maxSuhu;
 
     cout << "Media Tanam: ";
-    getline(cin, dataategoriBaru.mediaTanam);
+    getline(cin, dataKategoriBaru.mediaTanam);
     
     data.dataKategori[id_kategori] = dataKategoriBaru;
     cout << "Kategori berhasil diperbarui!" << endl;

@@ -30,21 +30,5 @@
     "nama_tanaman": "suplir",
     "status_validasi": false,
     "tanggal_suplai": "14-10-2024 19:30"
-  },
-  {
-    "id": "0005",
-    "id_supplier": "0001",
-    "jumlah": 1,
-    "nama_tanaman": "HidupJokowi",
-    "status_validasi": false,
-    "tanggal_suplai": "27-05-25 16:35"
-  },
-  {
-    "id": "0006",
-    "id_supplier": "0001",
-    "jumlah": 23,
-    "nama_tanaman": "Dimas",
-    "status_validasi": false,
-    "tanggal_suplai": "27-05-25 16:35"
   }
 ]

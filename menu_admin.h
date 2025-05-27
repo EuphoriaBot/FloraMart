@@ -68,9 +68,9 @@ void FormEditKategori(DataUtama &data)
     int NomorIndeks;
     getline(cin, temp);
     NomorIndeks = stoi(temp); // Convert string to int
-    NomorIndeks -=1;
+    NomorIndeks -= 1;
 
-    if (NomorIndeks< 0 || NomorIndeks >= data.sizeDataKategori)
+    if (NomorIndeks < 0 || NomorIndeks >= data.sizeDataKategori)
     {
         cout << "ID kategori tidak valid!" << endl;
         return;
@@ -89,15 +89,16 @@ void FormEditKategori(DataUtama &data)
     if (!temp.empty())
     {
         KategoriDiedit->minSuhu = stof(temp);
-    } 
+    }
 
     cout << "Max Suhu: ";
     getline(cin, temp);
     if (!temp.empty())
     {
-        KategoriDiedit->maxSuhu = stof(temp);;
-    } 
-    
+        KategoriDiedit->maxSuhu = stof(temp);
+        ;
+    }
+
     cout << "Media Tanam: ";
     getline(cin, temp);
     if (!temp.empty())
@@ -172,7 +173,8 @@ void FormKesiapanTanaman(DataUtama &data)
     {
         if (data.dataSuplai[i].statusValidasi == false)
         {
-            cout << data.dataSuplai[i].id  << "|" << data.dataSuplai[i].namaTanaman << "|" << data.dataSuplai [i].jumlah << endl;;
+            cout << data.dataSuplai[i].id << "|" << data.dataSuplai[i].namaTanaman << "|" << data.dataSuplai[i].jumlah << endl;
+            ;
         }
     }
     cout << "Masukkan ID Suplai yang ingin divalidasi: ";
@@ -256,46 +258,47 @@ void FormKesiapanTanaman(DataUtama &data)
         {
             if (suplaidipilih.supplier.id == data.dataTanaman[i].supplier.id)
             {
-                cout << data.dataSuplai[i].id  << "|" << data.dataTanaman[i].namaTanaman << endl;;
+                cout << data.dataSuplai[i].id << "|" << data.dataTanaman[i].namaTanaman << endl;
+                ;
             }
         }
-            cout << "Pilih Tanaman: ";
-            string id_tanaman;
-            getline(cin, id_tanaman);
-            bool tanamanditemukan = false;
-            for (int i = 0; i < data.sizeDataTanaman; i++)
+        cout << "Pilih Tanaman: ";
+        string id_tanaman;
+        getline(cin, id_tanaman);
+        bool tanamanditemukan = false;
+        for (int i = 0; i < data.sizeDataTanaman; i++)
+        {
+            if (data.dataTanaman[i].id == id_tanaman)
             {
-                if (data.dataTanaman[i].id == id_tanaman)
-                {
-                    tanamanditemukan = true;
-                    tanamandipilih = data.dataTanaman[i];
-                    break;
-                }
+                tanamanditemukan = true;
+                tanamandipilih = data.dataTanaman[i];
+                break;
             }
-            
-            if (!tanamanditemukan)
-            {
-                cout << "ID Tanaman tidak ditemukan." << endl;
-                return;
-            }
+        }
 
-            int stok_diterima;
-            cout << "Masukkan jumlah stok yang diterima: ";
-            getline(cin, temp);
-            stok_diterima = stoi(temp); // Convert string to int
-            if (stok_diterima < 0)
-            {
-                cout << "Jumlah stok tidak boleh kurang dari nol!" << endl;
-                return;
-            }
+        if (!tanamanditemukan)
+        {
+            cout << "ID Tanaman tidak ditemukan." << endl;
+            return;
+        }
 
-            ValidasiTanaman validasiBaru;
-            validasiBaru.id = GetFreeValidasiId();
-            validasiBaru.tanaman = tanamandipilih;
-            validasiBaru.stok_diterima = stok_diterima;
-            validasiBaru.suplai = suplaidipilih;
+        int stok_diterima;
+        cout << "Masukkan jumlah stok yang diterima: ";
+        getline(cin, temp);
+        stok_diterima = stoi(temp); // Convert string to int
+        if (stok_diterima < 0)
+        {
+            cout << "Jumlah stok tidak boleh kurang dari nol!" << endl;
+            return;
+        }
 
-            TambahValidasi(data.dataValidasiTanaman, data.sizeDataValidasi, validasiBaru);
+        ValidasiTanaman validasiBaru;
+        validasiBaru.id = GetFreeValidasiId();
+        validasiBaru.tanaman = tanamandipilih;
+        validasiBaru.stok_diterima = stok_diterima;
+        validasiBaru.suplai = suplaidipilih;
+
+        TambahValidasi(data.dataValidasiTanaman, data.sizeDataValidasi, validasiBaru);
     }
 }
 
@@ -415,7 +418,7 @@ void MenuUtamaAdmin(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
     {
         cout << e.what() << '\n';
     }
-} 
+}
 
 
 #endif

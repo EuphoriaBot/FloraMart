@@ -27,7 +27,7 @@ void SuplaiTanaman(DataUtama &data, InfoLogin infoLogin)
     }
     catch (...)
     {
-        cout << "Input stok tidak valid!\n";
+        cout << "Input stok tidak valid";
         return;
     }
 
@@ -58,6 +58,30 @@ void NambahSuplai(Suplai dataSuplai[], int &size, Suplai suplaiBaru)
 
 void LihatLaporanTransaksi(DataUtama &data, InfoLogin infoLogin)
 {
+    bool ditemukan = false;
+
+    cout << "LAPORAN TRANSAKSI";
+
+    for (int i = 0; i < data.sizeDataTransaksi; i++)
+    {
+        Transaksi &transaksi = data.dataTransaksi[i];
+
+        if (transaksi.status == infoLogin.id)
+        {
+            ditemukan = true;
+
+            cout << "ID Transaksi : " << transaksi.id << endl;
+            cout << "Tanaman      : " << transaksi.tanaman.namaTanaman << endl;
+            cout << "Jumlah       : " << transaksi.jumlahTanaman << endl;
+            cout << "Tanggal      : " << transaksi.tanggalTransaksi << endl;
+            cout << "Pembeli      : " << transaksi.pembeli.username << endl;
+        }
+    }
+
+    if (!ditemukan)
+    {
+        cout << "Belum ada transaksi";
+    }
 }
 
 void MenuUtamaSupplier(DataUtama &data, InfoLogin infoLogin, DataMenu dataMenu)

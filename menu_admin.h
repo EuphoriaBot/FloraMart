@@ -162,7 +162,6 @@ void MenuManajemenKategori(DataUtama &data)
     }
 }
 
-
 void FormKesiapanTanaman(DataUtama &data)
 {
     RefreshDataUtama(data);
@@ -300,6 +299,15 @@ void FormKesiapanTanaman(DataUtama &data)
     }
 }
 
+void FormNotifikasi (DataUtama &data)
+{
+    for (int i = 0; i < data.sizeDataTransaksi; i++)
+    {
+        if (data.dataTransaksi[i].status == "menunggu")
+        {
+            cout << data.dataTransaksi[i].id << " | " << data.dataTransaksi[i].pembeli.username << " | " << data.dataTransaksi[i].tanggalTransaksi << endl;
+    }
+}
 void MenuManajemenTanaman(DataUtama &data)
 {
     RefreshDataUtama(data);

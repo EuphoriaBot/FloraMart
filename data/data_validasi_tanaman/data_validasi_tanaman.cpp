@@ -35,7 +35,7 @@ int main()
         cout << "ID: " << dataValidasi[i].id << endl;
         cout << "Nama Tanaman: " << dataValidasi[i].tanaman.namaTanaman << endl;
         cout << "Supplier: " << dataValidasi[i].suplai.supplier.username << endl;
-        cout << "Stok Diterima (Suplai): " << dataValidasi[i].stok_diterima << "(" << dataValidasi[i].suplai.jumlah << ")" << endl;
+        cout << "Stok Diterima (Suplai): " << dataValidasi[i].stokDiterima << "(" << dataValidasi[i].suplai.jumlah << ")" << endl;
 
         cout << endl;
     }
@@ -86,7 +86,7 @@ int main()
     validasiBaru.id = GetFreeValidasiId();
     validasiBaru.tanaman = tanamanBaru;
     validasiBaru.suplai = suplaiBelumDivalidasi[_indexValidasi];
-    validasiBaru.stok_diterima = 5;
+    validasiBaru.stokDiterima = 5;
 
     // Memanggil fungsi untuk menyimpan data baru tanaman dan validasi
     TambahTanaman(dataTanaman, sizeDataTanaman, tanamanBaru);
@@ -106,7 +106,7 @@ int main()
     validasiBaru.id = GetFreeValidasiId();
     validasiBaru.suplai = suplaiBelumDivalidasi[_indexValidasi];
     validasiBaru.tanaman = dataTanaman[_indexTanaman];
-    validasiBaru.stok_diterima = 5;
+    validasiBaru.stokDiterima = 5;
 
     TambahValidasi(dataValidasi, sizeDataValidasi, validasiBaru);
 

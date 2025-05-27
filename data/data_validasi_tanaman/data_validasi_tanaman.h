@@ -31,7 +31,7 @@ void from_json(json &j, ValidasiTanaman &validasi)
         GetAllSuplai(dataSuplai, *sizeDataSuplai);
 
         j.at("id").get_to(validasi.id);
-        j.at("stok_diterima").get_to(validasi.stok_diterima);
+        j.at("stok_diterima").get_to(validasi.stokDiterima);
 
         GetTanaman(validasi.tanaman, j.at("id_tanaman"));
         GetSuplai(validasi.suplai, j.at("id_suplai"));
@@ -65,7 +65,7 @@ void to_json(json &j, ValidasiTanaman &v)
         j = json{
             {"id", v.id},
             {"id_tanaman", v.tanaman.id},
-            {"stok_diterima", v.stok_diterima},
+            {"stok_diterima", v.stokDiterima},
             {"id_suplai", v.suplai.id}};
     }
     catch (const invalid_argument &e)
@@ -246,16 +246,16 @@ void TambahValidasi(ValidasiTanaman *dataValidasi, int &sizeData, ValidasiTanama
 
         if (!tanamanDitemukan)
             throw invalid_argument("Tidak ada tanaman divalidasi!");
-        if (validasiBaru.stok_diterima < 0)
+        if (validasiBaru.stokDiterima < 0)
             throw invalid_argument("Stok diterima tidak bisa di bawah 0!");
-        if (validasiBaru.stok_diterima > validasiBaru.suplai.jumlah)
+        if (validasiBaru.stokDiterima > validasiBaru.suplai.jumlah)
             throw invalid_argument("Stok diterima tidak bisa lebih dari jumlah suplai!");
         if (validasiBaru.suplai.statusValidasi)
             throw invalid_argument("Tanaman sudah divalidasi!");
 
         dataValidasi[sizeData].id = validasiBaru.id;
         dataValidasi[sizeData].tanaman = validasiBaru.tanaman;
-        dataValidasi[sizeData].stok_diterima = validasiBaru.stok_diterima;
+        dataValidasi[sizeData].stokDiterima = validasiBaru.stokDiterima;
         dataValidasi[sizeData].suplai = validasiBaru.suplai;
 
         for (int i = 0; i < *sizeDataSuplai; i++)
@@ -273,7 +273,7 @@ void TambahValidasi(ValidasiTanaman *dataValidasi, int &sizeData, ValidasiTanama
             // Menambah Stok ke Database Tanaman
             if (dataValidasi[sizeData].tanaman.id == dataTanaman[i].id)
             {
-                dataTanaman[i].stok += validasiBaru.stok_diterima;
+                dataTanaman[i].stok += validasiBaru.stokDiterima;
                 break;
             }
         }

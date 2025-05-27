@@ -246,7 +246,7 @@ void FormKesiapanTanaman(DataUtama &data)
         ValidasiTanaman validasiBaru;
         validasiBaru.id = GetFreeValidasiId();
         validasiBaru.tanaman = tanamanBaru;
-        validasiBaru.stok_diterima = stok_diterima;
+        validasiBaru.stokDiterima = stok_diterima;
         validasiBaru.suplai = suplaidipilih;
 
         TambahTanaman(data.dataTanaman, data.sizeDataTanaman, tanamanBaru);
@@ -295,7 +295,7 @@ void FormKesiapanTanaman(DataUtama &data)
         ValidasiTanaman validasiBaru;
         validasiBaru.id = GetFreeValidasiId();
         validasiBaru.tanaman = tanamandipilih;
-        validasiBaru.stok_diterima = stok_diterima;
+        validasiBaru.stokDiterima = stok_diterima;
         validasiBaru.suplai = suplaidipilih;
 
         TambahValidasi(data.dataValidasiTanaman, data.sizeDataValidasi, validasiBaru);

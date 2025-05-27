@@ -14,7 +14,6 @@
 
 // Struct Data Utama
 #include "data/data_utilities.h"
-#include <zlib.h>
 
 struct InfoLogin
 {

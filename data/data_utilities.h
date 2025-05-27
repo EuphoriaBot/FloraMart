@@ -34,10 +34,21 @@ struct Supplier
 
     bool operator==(Supplier *other)
     {
-        bool *metodeTersediaSama = new bool{false};
+        bool *metodeTersediaSama = new bool{true};
 
         try
         {
+            // if (sizeMetodeTersedia != &other->sizeMetodeTersedia)
+            // {
+            //     *metodeTersediaSama = false;
+            // }
+
+            // if 
+            // for (int i = 0; i < ; i++)
+            // {
+                
+            // }
+            
             return id == other->id && username == other->username && password == other->password && metodeTersedia == other->metodeTersedia && status == other->status;
         }
         catch(exception& e)

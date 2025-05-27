@@ -54,7 +54,7 @@ void UpdateDataUtama(DataUtama &data)
     SimpanValidasiTanaman(data.dataValidasiTanaman, data.sizeDataValidasi);
 }
 
-void Logout(DataMenu &dataMenu, InfoLogin &infoLogin)
+void Logout(InfoLogin &infoLogin)
 {
     infoLogin.id = "";
     infoLogin.username = "";

@@ -28,17 +28,89 @@ struct DataMenu
     bool keluar = false;
 };
 
+template <typename T>
+bool CheckStructChanges(T *struct1, int sizeStruct1, T *struct2, int sizeStruct2)
+{
+    bool _isChanged = true;
+    if (sizeStruct1 == sizeStruct2)
+    {
+        for (int i = 0; i < sizeStruct1; i++)
+        {
+            if (struct1[i] == &(struct1[i]))
+            {
+                _isChanged = false;
+                break;
+            }
+        }
+    }
+    return _isChanged;
+}
+
+template <typename T>
+void CopyStruct(T *structSrc, int sizeStructSrc, T *structDst, int sizeStructDst)
+{
+    for (int i = 0; i < sizeStructSrc; i++)
+        structDst = structSrc;
+    
+    sizeStructDst = sizeStructSrc;
+}
+
 void RefreshDataUtama(DataUtama &data)
 {
-    GetAllPembeli(data.dataPembeli, data.sizeDataPembeli);
-    GetAllSupplier(data.dataSupplier, data.sizeDataSupplier);
-    GetAllAdmin(data.dataAdmin, data.sizeDataAdmin);
-    GetAllTanaman(data.dataTanaman, data.sizeDataTanaman);
-    GetAllKategori(data.dataKategori, data.sizeDataKategori);
-    GetAllMetodeTransaksi(data.dataMetodeTransaksi, data.sizeDataMetodeTransaksi);
-    GetAllSuplai(data.dataSuplai, data.sizeDataSuplai);
-    GetAllTransaksi(data.dataTransaksi, data.sizeDataTransaksi);
-    GetAllValidasiTanaman(data.dataValidasiTanaman, data.sizeDataValidasi);
+    
+    if (CheckStructChanges(data.dataPembeli, data.sizeDataPembeli, data._tempDataPembeli, data._tempSizeDataPembeli))
+    {
+        GetAllPembeli(data.dataPembeli, data.sizeDataPembeli);
+        CopyStruct(data.dataPembeli, data.sizeDataPembeli, data._tempDataPembeli, data._tempSizeDataPembeli);
+    }
+    
+    if (CheckStructChanges(data.dataSupplier, data.sizeDataSupplier, data._tempDataSupplier, data._tempSizeDataSupplier))
+    {
+        GetAllSupplier(data.dataSupplier, data.sizeDataSupplier);
+        CopyStruct(data.dataSupplier, data.sizeDataSupplier, data._tempDataSupplier, data._tempSizeDataSupplier);
+    }
+
+    if (CheckStructChanges(data.dataAdmin, data.sizeDataAdmin, data._tempDataAdmin, data._tempSizeDataAdmin))
+    {
+        GetAllAdmin(data.dataAdmin, data.sizeDataAdmin);
+        CopyStruct(data.dataAdmin, data.sizeDataAdmin, data._tempDataAdmin, data._tempSizeDataAdmin);
+    }
+
+    if (CheckStructChanges(data.dataTanaman, data.sizeDataTanaman, data._tempDataTanaman, data._tempSizeDataTanaman))
+    {
+        GetAllTanaman(data.dataTanaman, data.sizeDataTanaman);
+        CopyStruct(data.dataTanaman, data.sizeDataTanaman, data._tempDataTanaman, data._tempSizeDataTanaman);
+    }
+
+    if (CheckStructChanges(data.dataKategori, data.sizeDataKategori, data._tempDataKategori, data._tempSizeDataKategori))
+    {
+        GetAllKategori(data.dataKategori, data.sizeDataKategori);
+        CopyStruct(data.dataKategori, data.sizeDataKategori, data._tempDataKategori, data._tempSizeDataKategori);
+    }
+
+    if (CheckStructChanges(data.dataMetodeTransaksi, data.sizeDataMetodeTransaksi, data._tempDataMetodeTransaksi, data._tempSizeDataMetodeTransaksi))
+    {
+        GetAllMetodeTransaksi(data.dataMetodeTransaksi, data.sizeDataMetodeTransaksi);
+        CopyStruct(data.dataMetodeTransaksi, data.sizeDataMetodeTransaksi, data._tempDataMetodeTransaksi, data._tempSizeDataMetodeTransaksi);
+    }
+
+    if (CheckStructChanges(data.dataSuplai, data.sizeDataSuplai, data._tempDataSuplai, data._tempSizeDataSuplai))
+    {
+        GetAllSuplai(data.dataSuplai, data.sizeDataSuplai);
+        CopyStruct(data.dataSuplai, data.sizeDataSuplai, data._tempDataSuplai, data._tempSizeDataSuplai);
+    }
+
+    if (CheckStructChanges(data.dataTransaksi, data.sizeDataTransaksi, data._tempDataTransaksi, data._tempSizeDataTransaksi))
+    {
+        GetAllTransaksi(data.dataTransaksi, data.sizeDataTransaksi);
+        CopyStruct(data.dataTransaksi, data.sizeDataTransaksi, data._tempDataTransaksi, data._tempSizeDataTransaksi);
+    }
+
+    if (CheckStructChanges(data.dataValidasiTanaman, data.sizeDataValidasi, data._tempDataValidasiTanaman, data._tempSizeDataValidasi))
+    {
+        GetAllValidasiTanaman(data.dataValidasiTanaman, data.sizeDataValidasi);
+        CopyStruct(data.dataValidasiTanaman, data.sizeDataValidasi, data._tempDataValidasiTanaman, data._tempSizeDataValidasi);
+    }
 }
 
 void UpdateDataUtama(DataUtama &data)

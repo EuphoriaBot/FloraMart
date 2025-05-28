@@ -34,31 +34,24 @@ struct Supplier
 
     bool operator==(Supplier *other)
     {
-        bool *metodeTersediaSama = new bool{true};
+        bool metodeTersediaSama = true;
+        
+        if (sizeMetodeTersedia != other->sizeMetodeTersedia)
+            metodeTersediaSama = false;
 
-        try
+        if (metodeTersediaSama)
         {
-            // if (sizeMetodeTersedia != &other->sizeMetodeTersedia)
-            // {
-            //     *metodeTersediaSama = false;
-            // }
-
-            // if 
-            // for (int i = 0; i < ; i++)
-            // {
-                
-            // }
-            
-            return id == other->id && username == other->username && password == other->password && metodeTersedia == other->metodeTersedia && status == other->status;
+            for (int i = 0; i < sizeMetodeTersedia; i++)
+            {
+                if (!(metodeTersedia[i] == &(other->metodeTersedia[i])))
+                {
+                    metodeTersediaSama = false;
+                    break;
+                }
+            }
         }
-        catch(exception& e)
-        {
-            cout << e.what() << '\n';
-        }
-        delete metodeTersediaSama;
-        metodeTersediaSama = nullptr;
 
-        return false;   
+        return id == other->id && username == other->username && password == other->password && metodeTersediaSama && status == other->status;
     }
 };
 
@@ -67,7 +60,7 @@ struct Pembeli
     string id;
     string username;
     string password;
-    
+
     bool operator==(Pembeli *other)
     {
         return id == other->id && username == other->username && username == other->password;
@@ -125,7 +118,18 @@ struct Transaksi
     MetodeTransaksi metodeBayar;
     string status;
     string tanggalTransaksi;
-    string tanggalPembayaran;
+
+    bool operator==(Transaksi *other)
+    {
+        return 
+            id == other->id &&
+            tanaman == &(other->tanaman) &&
+            pembeli == &(other->pembeli) &&
+            jumlahTanaman == other->jumlahTanaman &&
+            metodeBayar == &(other->metodeBayar) &&
+            status == other->status &&
+            tanggalTransaksi == other->tanggalTransaksi;
+    }
 };
 
 struct Suplai
@@ -136,14 +140,30 @@ struct Suplai
     int jumlah;
     string tanggalSuplai;
     bool statusValidasi;
+    
+    bool operator==(Suplai *other)
+    {
+        return 
+            id == other->id &&
+            namaTanaman == other->namaTanaman &&
+            supplier == &(other->supplier) &&
+            jumlah == other->jumlah &&
+            tanggalSuplai == other->tanggalSuplai &&
+            statusValidasi == other->statusValidasi;
+    }
 };
 
 struct ValidasiTanaman
 {
     string id;
     Tanaman tanaman;
-    int stok_diterima;
+    int stokDiterima;
     Suplai suplai;
+
+    bool operator==(ValidasiTanaman *other)
+    {
+        return id == other->id && tanaman == &(other->tanaman) && stokDiterima == other->stokDiterima && suplai == &(other->suplai);
+    }
 };
 
 struct DataUtama

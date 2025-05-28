@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-[{"id":"0001","max_suhu":0.0,"media_tanam":"","min_suhu":0.0,"nama_kategori":"Bunga"},{"id":"0002","max_suhu":0.0,"media_tanam":"","min_suhu":0.0,"nama_kategori":"Merambat"},{"id":"0003","max_suhu":0.0,"media_tanam":"","min_suhu":0.0,"nama_kategori":"Tumbuhan Paku"},{"id":"0004","max_suhu":69.0,"media_tanam":"Tanah","min_suhu":67.0,"nama_kategori":"Lumut"}]
-=======
 [
   {
     "id": "0001",
@@ -38,4 +35,3 @@
     "nama_kategori": "Lumut  liar"
   }
 ]
->>>>>>> 9b057eb096c5d44a113cbc4213d13ad3e2dbfd6e

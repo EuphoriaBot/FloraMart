@@ -15,6 +15,10 @@
 // Struct Data Utama
 #include "data/data_utilities.h"
 
+#include <ctime>
+#include <cctype>
+#include <iomanip>
+
 struct InfoLogin
 {
     string id;
@@ -28,89 +32,17 @@ struct DataMenu
     bool keluar = false;
 };
 
-template <typename T>
-bool CheckStructChanges(T *struct1, int sizeStruct1, T *struct2, int sizeStruct2)
-{
-    bool _isChanged = true;
-    if (sizeStruct1 == sizeStruct2)
-    {
-        for (int i = 0; i < sizeStruct1; i++)
-        {
-            if (struct1[i] == &(struct1[i]))
-            {
-                _isChanged = false;
-                break;
-            }
-        }
-    }
-    return _isChanged;
-}
-
-template <typename T>
-void CopyStruct(T *structSrc, int sizeStructSrc, T *structDst, int sizeStructDst)
-{
-    for (int i = 0; i < sizeStructSrc; i++)
-        structDst = structSrc;
-    
-    sizeStructDst = sizeStructSrc;
-}
-
 void RefreshDataUtama(DataUtama &data)
 {
-    
-    if (CheckStructChanges(data.dataPembeli, data.sizeDataPembeli, data._tempDataPembeli, data._tempSizeDataPembeli))
-    {
-        GetAllPembeli(data.dataPembeli, data.sizeDataPembeli);
-        CopyStruct(data.dataPembeli, data.sizeDataPembeli, data._tempDataPembeli, data._tempSizeDataPembeli);
-    }
-    
-    if (CheckStructChanges(data.dataSupplier, data.sizeDataSupplier, data._tempDataSupplier, data._tempSizeDataSupplier))
-    {
-        GetAllSupplier(data.dataSupplier, data.sizeDataSupplier);
-        CopyStruct(data.dataSupplier, data.sizeDataSupplier, data._tempDataSupplier, data._tempSizeDataSupplier);
-    }
-
-    if (CheckStructChanges(data.dataAdmin, data.sizeDataAdmin, data._tempDataAdmin, data._tempSizeDataAdmin))
-    {
-        GetAllAdmin(data.dataAdmin, data.sizeDataAdmin);
-        CopyStruct(data.dataAdmin, data.sizeDataAdmin, data._tempDataAdmin, data._tempSizeDataAdmin);
-    }
-
-    if (CheckStructChanges(data.dataTanaman, data.sizeDataTanaman, data._tempDataTanaman, data._tempSizeDataTanaman))
-    {
-        GetAllTanaman(data.dataTanaman, data.sizeDataTanaman);
-        CopyStruct(data.dataTanaman, data.sizeDataTanaman, data._tempDataTanaman, data._tempSizeDataTanaman);
-    }
-
-    if (CheckStructChanges(data.dataKategori, data.sizeDataKategori, data._tempDataKategori, data._tempSizeDataKategori))
-    {
-        GetAllKategori(data.dataKategori, data.sizeDataKategori);
-        CopyStruct(data.dataKategori, data.sizeDataKategori, data._tempDataKategori, data._tempSizeDataKategori);
-    }
-
-    if (CheckStructChanges(data.dataMetodeTransaksi, data.sizeDataMetodeTransaksi, data._tempDataMetodeTransaksi, data._tempSizeDataMetodeTransaksi))
-    {
-        GetAllMetodeTransaksi(data.dataMetodeTransaksi, data.sizeDataMetodeTransaksi);
-        CopyStruct(data.dataMetodeTransaksi, data.sizeDataMetodeTransaksi, data._tempDataMetodeTransaksi, data._tempSizeDataMetodeTransaksi);
-    }
-
-    if (CheckStructChanges(data.dataSuplai, data.sizeDataSuplai, data._tempDataSuplai, data._tempSizeDataSuplai))
-    {
-        GetAllSuplai(data.dataSuplai, data.sizeDataSuplai);
-        CopyStruct(data.dataSuplai, data.sizeDataSuplai, data._tempDataSuplai, data._tempSizeDataSuplai);
-    }
-
-    if (CheckStructChanges(data.dataTransaksi, data.sizeDataTransaksi, data._tempDataTransaksi, data._tempSizeDataTransaksi))
-    {
-        GetAllTransaksi(data.dataTransaksi, data.sizeDataTransaksi);
-        CopyStruct(data.dataTransaksi, data.sizeDataTransaksi, data._tempDataTransaksi, data._tempSizeDataTransaksi);
-    }
-
-    if (CheckStructChanges(data.dataValidasiTanaman, data.sizeDataValidasi, data._tempDataValidasiTanaman, data._tempSizeDataValidasi))
-    {
-        GetAllValidasiTanaman(data.dataValidasiTanaman, data.sizeDataValidasi);
-        CopyStruct(data.dataValidasiTanaman, data.sizeDataValidasi, data._tempDataValidasiTanaman, data._tempSizeDataValidasi);
-    }
+    GetAllPembeli(data.dataPembeli, data.sizeDataPembeli);
+    GetAllSupplier(data.dataSupplier, data.sizeDataSupplier);
+    GetAllAdmin(data.dataAdmin, data.sizeDataAdmin);
+    GetAllTanaman(data.dataTanaman, data.sizeDataTanaman);
+    GetAllKategori(data.dataKategori, data.sizeDataKategori);
+    GetAllMetodeTransaksi(data.dataMetodeTransaksi, data.sizeDataMetodeTransaksi);
+    GetAllSuplai(data.dataSuplai, data.sizeDataSuplai);
+    GetAllTransaksi(data.dataTransaksi, data.sizeDataTransaksi);
+    GetAllValidasiTanaman(data.dataValidasiTanaman, data.sizeDataValidasi);
 }
 
 void UpdateDataUtama(DataUtama &data)
@@ -143,17 +75,208 @@ void ClearScreen()
     system("powershell.exe -Command Clear-Host");
 }
 
-// Unused
-// time_t timestamp = time(NULL);
-// tm datetime = *localtime(&timestamp);
-// string _temp = "";
+void Border(string lineType = "─", int length = 80)
+{
+    for (int i = 0; i < length; i++)
+    {
+        cout << lineType;
+    }
+    cout << endl;
+}
 
-// char output[50];
-// strftime(output, 50, "%d-%m-%y %H:%M", &datetime);
+void Title(string titleText, string lineType = "═", int length = 80)
+{
+    Border(lineType, length);
+    int spaceLength = (length / 2) - (titleText.length() / 2);
 
-// cout << ctime(&timestamp) << endl;
-// cout << output << endl;
+    for (int i = 0; i < spaceLength; i++)
+        cout << ' ';
 
-// getline(cin, _temp);
+    cout << titleText << endl;
+    Border(lineType, length);
+}
+
+// void TableHead(string itemHead[], int lenHeads[])
+// {
+//     if (sizeof(itemHead) / sizeof(string) != sizeof(lenHeads) / sizeof(int))
+//     {
+//         cout << "Elemen judul dengan panjang tidak sama";
+//     }
+    
+//     cout << 
+    
+// }
+
+int JumlahJenisTanamanSupplier(DataUtama &data, string &idSupplier)
+{
+    int jumlahJenis = 0;
+    for (int i = 0; i < data.sizeDataTanaman; i++)
+    {
+        if (data.dataTanaman[i].supplier.id == idSupplier)
+            jumlahJenis += 1;
+    }
+
+    return jumlahJenis;
+}
+
+int StokTerjualSupplier(DataUtama &data, string &idSupplier)
+{
+    int stokTerjual = 0;
+    for (int i = 0; i < data.sizeDataTransaksi; i++)
+    {
+        if (data.dataTransaksi[i].tanaman.supplier.id == idSupplier && data.dataTransaksi[i].jumlahTanaman)
+            stokTerjual += 1;
+    }
+
+    return stokTerjual;
+}
+
+void ParseTime(tm &time, stringstream &timestr)
+{
+    timestr >> get_time(&time, "%d-%m-%y %H:%M");
+}
+
+int CompareTimeRangeByMonth(tm &dateTimeToCompare, int month)
+{
+    time_t *curTimestamp = new time_t(time(NULL));
+    tm *curDatetime = (*localtime)(&(*curTimestamp));
+
+    try
+    {
+        
+        int &currentMonth = curDatetime->tm_mon;
+        int &currentYear = curDatetime->tm_year;
+    
+        currentMonth -= month;
+        while (currentMonth < 0)
+        {
+            currentMonth += 12;
+            currentYear -= 1;
+        }
+    
+        curDatetime->tm_hour = 0;
+        curDatetime->tm_min = 0;
+        curDatetime->tm_sec = 0;
+        curDatetime->tm_isdst = -1;
+        curDatetime->tm_mday = 1;
+    
+        auto diffs = _difftime64(mktime(&dateTimeToCompare), mktime(curDatetime));
+    
+        if (diffs > 0)
+            return 1;
+        else if (diffs < 0)
+            return -1;
+        else
+            return 0;
+    }
+    catch(exception& e)
+    {
+        cout << e.what() << '\n';
+    }
+    delete curTimestamp;
+    delete curDatetime;
+    curTimestamp = nullptr;
+    curDatetime = nullptr;
+    
+    return 0;
+}
+
+int GetPemasukanBulanIniSupplier(DataUtama &data, string &idSupplier)
+{
+    int *pemasukanBulanIni = new int{0};
+    stringstream *timestr = new stringstream();
+    tm *timeTransaksi = new tm();
+    try
+    {
+        for (int i = 0; i < data.sizeDataTransaksi; i++)
+        {
+            if (data.dataTransaksi[i].tanaman.supplier.id == idSupplier)
+            {
+                timestr = new stringstream();
+                (*timestr) << data.dataTransaksi[i].tanggalTransaksi;
+                ParseTime((*timeTransaksi), (*timestr));
+
+                if (CompareTimeRangeByMonth((*timeTransaksi), 0) > 0)
+                    *pemasukanBulanIni += data.dataTransaksi[i].totalHarga;
+            }
+        }
+
+        return *pemasukanBulanIni;
+    }
+    catch (exception &e)
+    {
+        cout << e.what() << '\n';
+    }
+    delete pemasukanBulanIni;
+    delete timestr;
+    delete timeTransaksi;
+    pemasukanBulanIni = nullptr;
+    timestr = nullptr;
+    timeTransaksi = nullptr;
+    
+    return 0;
+}
+
+void FixString(string &str)
+{
+    stringstream *stream = new stringstream();
+    try
+    {
+        for (int i = 0; i < str.length(); i++)
+        {
+            if (!isspace(str[i]))
+            {
+                // Menambah Karakter Terlihat
+                (*stream) << str[i];
+            }
+            else if (isspace(str[i]) && !((*stream).str().empty()))
+            {
+                // Menambah Spasi
+                if (i+1 < str.length())
+                {
+                    if (!isspace(str[i+1]) && !isspace((*stream).str()[(*stream).str().length()-1]))
+                    {
+                        (*stream) << str[i];
+                    }
+                }
+            }
+        }
+        str = (*stream).str();
+    }
+    catch (exception &e)
+    {
+        cout << e.what() << endl;
+    }
+    delete stream;
+    stream = nullptr;
+}
+
+bool IsValidString(string &str)
+{
+    string *fixedStr = new string();
+    try
+    {
+        *fixedStr = str;
+        FixString((*fixedStr));
+        if ((*fixedStr).length() <= 0) return false;
+    
+        for (int i = 0; i < (*fixedStr).length(); i++)
+        {
+            if (!(isprint((*fixedStr)[i]) && (isalpha((*fixedStr)[i]) || isspace((*fixedStr)[i]))))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    catch (exception &e)
+    {
+        cout << e.what() << endl;
+    }
+    delete fixedStr;
+    fixedStr = nullptr;
+
+    return false;
+}
 
 #endif

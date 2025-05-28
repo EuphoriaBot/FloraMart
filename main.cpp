@@ -40,8 +40,7 @@ int main()
         }
         else
         {
-
-            infoLogin = {};
+            Logout(infoLogin);
         }
     }
 
@@ -156,6 +155,11 @@ void FormRegistrasiPembeli(DataUtama &data)
         cout << "Username dan password tidak boleh kosong" << endl;
         return;
     }
+    else if (IsValidString(input_username))
+    {
+        cout << "Username tidak valid" << endl;
+        return;
+    }
 
     for (int i = 0; i < data.sizeDataPembeli; i++)
     {
@@ -189,6 +193,17 @@ void FormRegistrasiSupplier(DataUtama &data)
     cout << "Password: ";
     string input_password;
     getline(cin, input_password);
+
+    if (input_username.empty() || input_password.empty())
+    {
+        cout << "Username dan password tidak boleh kosong" << endl;
+        return;
+    }
+    else if (IsValidString(input_username))
+    {
+        cout << "Username tidak valid" << endl;
+        return;
+    }
 
     for (int i = 0; i < data.sizeDataSupplier; i++)
     {

@@ -1,1 +1,20 @@
-[{"id":"0001","password":"pembeli1","username":"pembeli1"},{"id":"0002","password":"pembeli2","username":"pembeli2"},{"id":"0003","password":"pembeli3","username":"pembeli3"}]
+[
+    {
+        "id": "0001",
+        "password": "pembeli1",
+        "username": "pembeli1",
+        "saldo": 100000
+    },
+    {
+        "id": "0002",
+        "password": "pembeli2",
+        "username": "pembeli2",
+        "saldo": 50000
+    },
+    {
+        "id": "0003",
+        "password": "pembeli3",
+        "username": "pembeli3",
+        "saldo": 7500
+    }
+]

@@ -1,4 +1,4 @@
-#define MAX_SIZE 25
+#define MAX_SIZE 40
 
 #ifndef DATA_UTILITIES_H
 #define DATA_UTILITIES_H
@@ -60,10 +60,11 @@ struct Pembeli
     string id;
     string username;
     string password;
+    double saldo;
 
     bool operator==(Pembeli *other)
     {
-        return id == other->id && username == other->username && username == other->password;
+        return id == other->id && username == other->username && username == other->password && saldo == other->saldo;
     }
 };
 
@@ -196,32 +197,32 @@ struct DataUtama
     int sizeDataValidasi;
 
     // Temporary Data For Performance
-    Pembeli _tempDataPembeli[MAX_SIZE];
-    int _tempSizeDataPembeli;
+    // Pembeli _tempDataPembeli[MAX_SIZE];
+    // int _tempSizeDataPembeli;
 
-    Supplier _tempDataSupplier[MAX_SIZE];
-    int _tempSizeDataSupplier;
+    // Supplier _tempDataSupplier[MAX_SIZE];
+    // int _tempSizeDataSupplier;
 
-    Admin _tempDataAdmin[MAX_SIZE];
-    int _tempSizeDataAdmin;
+    // Admin _tempDataAdmin[MAX_SIZE];
+    // int _tempSizeDataAdmin;
 
-    Tanaman _tempDataTanaman[MAX_SIZE];
-    int _tempSizeDataTanaman;
+    // Tanaman _tempDataTanaman[MAX_SIZE];
+    // int _tempSizeDataTanaman;
 
-    Kategori _tempDataKategori[MAX_SIZE];
-    int _tempSizeDataKategori;
+    // Kategori _tempDataKategori[MAX_SIZE];
+    // int _tempSizeDataKategori;
 
-    MetodeTransaksi _tempDataMetodeTransaksi[MAX_SIZE];
-    int _tempSizeDataMetodeTransaksi;
+    // MetodeTransaksi _tempDataMetodeTransaksi[MAX_SIZE];
+    // int _tempSizeDataMetodeTransaksi;
 
-    Suplai _tempDataSuplai[MAX_SIZE];
-    int _tempSizeDataSuplai;
+    // Suplai _tempDataSuplai[MAX_SIZE];
+    // int _tempSizeDataSuplai;
 
-    Transaksi _tempDataTransaksi[MAX_SIZE];
-    int _tempSizeDataTransaksi;
+    // Transaksi _tempDataTransaksi[MAX_SIZE];
+    // int _tempSizeDataTransaksi;
 
-    ValidasiTanaman _tempDataValidasiTanaman[MAX_SIZE];
-    int _tempSizeDataValidasi;
+    // ValidasiTanaman _tempDataValidasiTanaman[MAX_SIZE];
+    // int _tempSizeDataValidasi;
 };
 
 void ReadJson(json &jsonData, int &sizeData, string fileName)

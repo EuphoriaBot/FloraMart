@@ -24,6 +24,7 @@ void from_json(json &j, Pembeli &p)
         j.at("id").get_to(p.id);
         j.at("username").get_to(p.username);
         j.at("password").get_to(p.password);
+        j.at("saldo").get_to(p.saldo);
     }
     catch (const invalid_argument &e)
     {
@@ -48,7 +49,8 @@ void to_json(json &j, Pembeli &p)
         j = json{
             {"id", p.id},
             {"username", p.username},
-            {"password", p.password}};
+            {"username", p.password},
+            {"saldo", p.saldo}};
     }
     catch (const invalid_argument &e)
     {
@@ -203,6 +205,8 @@ void TambahPembeli(Pembeli *dataPembeli, int &sizeData, Pembeli pembeliBaru)
 {
     try
     {
+        if (pembeliBaru.id == "")
+            throw invalid_argument("Username tidak bisa kosong!");
         if (pembeliBaru.username == "")
             throw invalid_argument("Username tidak bisa kosong!");
         if (pembeliBaru.password == "")
@@ -211,6 +215,7 @@ void TambahPembeli(Pembeli *dataPembeli, int &sizeData, Pembeli pembeliBaru)
         dataPembeli[sizeData].id = pembeliBaru.id;
         dataPembeli[sizeData].username = pembeliBaru.username;
         dataPembeli[sizeData].password = pembeliBaru.password;
+        dataPembeli[sizeData].saldo = 0;
         sizeData++;
 
         SimpanPembeli(dataPembeli, sizeData);

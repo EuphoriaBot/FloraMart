@@ -20,8 +20,6 @@ int main()
 
     RefreshDataUtama(data);
 
-    // cout << StringPos("Hello World", 5, "Right");
-
     while (!dataMenu.keluar)
     {
         if (!CekLogin(infoLogin))
@@ -140,14 +138,6 @@ void FormLogin(DataUtama &data, InfoLogin &infoLogin)
     }
 
     cout << "Username atau password salah!" << endl;
-}
-
-string ftos(float value)
-{
-    stringstream stringStream;
-
-    stringStream << value;
-    return stringStream.str();
 }
 
 void FormRegistrasiPembeli(DataUtama &data)

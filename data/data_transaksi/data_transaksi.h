@@ -283,7 +283,7 @@ void TambahTransaksi(Transaksi *dataTransaksi, int &sizeData, Transaksi transaks
         {
             if (dataPembeli[i].id == transaksiBaru.pembeli.id)
             {
-                if (dataPembeli[i].saldo <= (transaksiBaru.tanaman.harga * transaksiBaru.jumlahTanaman))
+                if ((transaksiBaru.tanaman.harga * transaksiBaru.jumlahTanaman) <= dataPembeli[i].saldo)
                     dataPembeli[i].saldo -= (transaksiBaru.tanaman.harga * transaksiBaru.jumlahTanaman);
                 else
                     throw invalid_argument("Saldo tidak mencukupi");

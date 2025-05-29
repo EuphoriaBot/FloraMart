@@ -138,6 +138,14 @@ void ClearScreen()
     system("powershell.exe -Command Clear-Host");
 }
 
+string ftos(float value)
+{
+    stringstream stringStream;
+
+    stringStream << value;
+    return stringStream.str();
+}
+
 string StringPos(string text, int length, string pos = "L")
 {
     stringstream streamText;

@@ -19,17 +19,22 @@ void FormTambahKategori(DataUtama &data)
             cout << "Nama Kategori sudah ada!" << endl;
             return;
         }
+        else if (IsValidString(nama_kategori) == false)
+        {
+            cout << "Nama Kategori harus berupa string alfabet!" << endl;
+            return;
+        }
     }
 
     cout << "Min Suhu: ";
-    float min_suhu; // Note: Jadiin float
-    getline(cin, temp);// Convert string to float
+    float min_suhu; 
+    getline(cin, temp);
     cout << "Max Suhu: ";
     getline(cin, temp);
     float max_suhu;
     max_suhu = stof(temp); 
     
-    if (max_suhu > min_suhu){
+    if (min_suhu > max_suhu){
         cout << "Maksimum Suhu tidak boleh kurang dari Minimum Suhu!" << endl;
         return;
     }
@@ -37,14 +42,17 @@ void FormTambahKategori(DataUtama &data)
         cout << "Media Tanam: ";
         string media_tanam;
         getline(cin, media_tanam);
+        if (IsValidString(media_tanam) == false)
+        {
+            cout << "Media Tanam harus berupa string alfabet!" << endl;
+            return;
+        }
         Kategori kategoriBaru = {GetFreeKategoriId(), nama_kategori, min_suhu, max_suhu, media_tanam};
 
         TambahKategori(data.dataKategori, data.sizeDataKategori, kategoriBaru);
 
         cout << "Kategori berhasil ditambahkan!" << endl;
     }
-    
-    getline(cin, temp); // Wait for user input before returning to menu
 
 }
 
@@ -68,9 +76,20 @@ void FormHapusKategori(DataUtama &data)
     }
    if (!kategoriDihapus.id.empty())
     {
-        HapusKategori(data.dataKategori, data.sizeDataKategori, kategoriDihapus);
-        cout << "Kategori berhasil dihapus!" << endl;
-        return;
+        cout << "Anda yakin ingin menghapus kategori " << kategoriDihapus.namaKategori << "? [y/n]" << endl;
+        string konfirmasi;
+        getline(cin, konfirmasi);
+        if (konfirmasi == "y" || konfirmasi == "Y")
+        {
+            HapusKategori(data.dataKategori, data.sizeDataKategori, kategoriDihapus);
+            cout << "Kategori berhasil dihapus!" << endl;
+            return;
+        }
+        else 
+        {
+            return;
+        }
+       
     }
     else 
     {
@@ -110,9 +129,9 @@ void FormEditKategori(DataUtama &data)
 
     for (int i = 0; i < data.sizeDataKategori; i++)
     {
-        if (data.dataKategori[i].namaKategori == kategoriDiedit->namaKategori)
+        if (IsValidString(kategoriDiedit->namaKategori) == false)
         {
-            cout << "Nama Kategori tidak boleh sama" << endl;
+            cout << "Nama Kategori harus berupa string alfabet!" << endl;
             return;
         }
     }
@@ -143,6 +162,11 @@ void FormEditKategori(DataUtama &data)
         {
             kategoriDiedit->mediaTanam = temp;
         }
+        else if (IsValidString(kategoriDiedit->mediaTanam) == false)
+        {
+            cout << "Media Tanam harus berupa string alfabet!" << endl;
+            return;
+        }
 
         UpdateDataUtama(data);
         cout << "Kategori berhasil diperbarui!" << endl;
@@ -161,14 +185,13 @@ void FormLihatKategori(DataUtama &data)
         cout << data.dataKategori[i].minSuhu << "\t\t";
         cout << data.dataKategori[i].maxSuhu << "\t\t";
         cout << data.dataKategori[i].mediaTanam << endl;
-    }
-    getline(cin, data._tempDataKategori[0].namaKategori); // Wait for user input before returning to menu
+    } 
 }
 
 void FormSortingKategori(DataUtama &data)
 {
     RefreshDataUtama(data);
-    cout << "=== Sorting Kategori Berdasarkan Nama Secara Ascending ===" << endl;
+    cout << "=== Sorting Kategori Berdasarkan Nama Secara Ascending===" << endl;
     for (int i = 0; i < data.sizeDataKategori - 1; i++) {
         for (int j = 0; j < data.sizeDataKategori - i - 1; j++) {
             if (data.dataKategori[j].namaKategori > data.dataKategori[j + 1].namaKategori) {
@@ -188,14 +211,14 @@ void MenuManajemenKategori(DataUtama &data , InfoLogin &infoLogin)
     while (CekLogin(infoLogin)){
     RefreshDataUtama(data);
     ClearScreen();
-    cout << "===> Manajemen Kategori <===" << endl;
+    cout << "=== Manajemen Kategori ===" << endl;
     cout << "1. Lihat Kategori" << endl;
     cout << "2. Tambah Kategori" << endl;
     cout << "3. Edit Kategori" << endl;
     cout << "4. Hapus Kategori" << endl;
     cout << "5. Sorting Kategori Berdasarkan Nama Secara Ascending" << endl;
     cout << "6. Kembali ke Menu Utama" << endl;
-    cout << "Pilih menu:";
+    cout << "Pilih menu: ";
 
     string pilihan;
     getline(cin, pilihan);
@@ -276,7 +299,12 @@ void FormKesiapanTanaman(DataUtama &data)
         getline(cin, nama_tanaman);
         if (nama_tanaman.empty())
         {
-            cout << "Nama tanaman tidak boleh" << endl;
+            cout << "Nama tanaman tidak boleh kosong" << endl;
+            return;
+        }
+        else if (IsValidString(nama_tanaman) == false)
+        {
+            cout << "Nama tanaman harus berupa string alfabet!" << endl;
             return;
         }
         double harga;
@@ -385,7 +413,7 @@ void MenuNotifikasi(DataUtama &data, InfoLogin &infoLogin)
         }
     }
     Transaksi *pilihanTransaksi;
-    cout << "Masukkan ID Transaksi yang ingin dilihat: ";
+    cout << "Masukkan ID Transaksi yang ingin dikonfirmasi: ";
     getline(cin, temp);
 
     for (int i = 0; i < data.sizeDataTransaksi; i++)
@@ -623,7 +651,7 @@ void MenuUtamaAdmin(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
         ClearScreen();
         while (true)
         {
-            cout << "\n=== Menu Utama Admin ===" << endl;
+            cout << "=== Menu Utama Admin ===" << endl;
             cout << "1. Manajemen Tanaman" << endl;
             cout << "2. Manajemen Supplier" << endl;
             cout << "3. Notifikasi" << endl;

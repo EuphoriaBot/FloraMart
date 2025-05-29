@@ -22,16 +22,23 @@
   },
   {
     "id": "0004",
-    "max_suhu": 45.0,
-    "media_tanam": "Tanag",
-    "min_suhu": 43.0,
-    "nama_kategori": "Cacing"
+    "max_suhu": 78.0,
+    "media_tanam": "Tanah",
+    "min_suhu": 0.0,
+    "nama_kategori": "Lumut Air"
   },
   {
     "id": "0005",
-    "max_suhu": 45.0,
+    "max_suhu": 54.0,
+    "media_tanam": "Tanah kering",
+    "min_suhu": 0.0,
+    "nama_kategori": "Lumut Tanah"
+  },
+  {
+    "id": "0006",
+    "max_suhu": 78.0,
     "media_tanam": "Air",
-    "min_suhu": 32.0,
-    "nama_kategori": "Lumut  liar"
+    "min_suhu": 76.0,
+    "nama_kategori": "Lumut"
   }
 ]

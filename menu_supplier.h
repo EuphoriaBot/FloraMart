@@ -45,6 +45,10 @@ void SuplaiTanaman(DataUtama &data, InfoLogin &infoLogin)
     cout << "Nama Tanaman  : " << suplaiBaru.namaTanaman << endl;
     cout << "Jumlah        : " << suplaiBaru.jumlah << endl;
     cout << "Supplier      : " << suplaiBaru.supplier.username << endl;
+
+    string _temp;
+    cout << "Tekan [Enter] untuk kembali ke menu...";
+    getline(cin, _temp);
 }
 
 void NambahSuplai(Suplai dataSuplai[], int &size, Suplai suplaiBaru)
@@ -59,7 +63,7 @@ void NambahSuplai(Suplai dataSuplai[], int &size, Suplai suplaiBaru)
 void LihatLaporanTransaksi(DataUtama &data, InfoLogin &infoLogin)
 {
     bool ditemukan = false;
-    
+
     ClearScreen();
     cout << "LAPORAN TRANSAKSI";
 
@@ -99,7 +103,7 @@ void DashboardSupplier(DataUtama &data, InfoLogin &infoLogin)
         cout << "Pemasukan Bulan Ini\t\t: Rp" << GetPemasukanBulanIniSupplier(data, infoLogin.id) << endl;
         cout << "Stok Tanaman Terjual\t\t: " << StokTerjualSupplier(data, infoLogin.id) << " Stok Tanaman" << endl;
         Border();
-        
+
         DataTanamanTerlarisSupplier(data, infoLogin.id, dataTanamanTerlaris, (*sizeDataTanamanTerlaris));
 
         cout << "Tanaman Terlaris" << endl;
@@ -115,7 +119,7 @@ void DashboardSupplier(DataUtama &data, InfoLogin &infoLogin)
             cout << "Belum ada tanaman yang terjual" << endl;
         }
         Border();
-        
+
         cout << "Tekan [Enter] untuk kembali...";
         getline(cin, (*_temp));
     }
@@ -136,7 +140,7 @@ void MenuUtamaSupplier(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu
     try
     {
         RefreshDataUtama(data);
-        
+
         while (true)
         {
             ClearScreen();

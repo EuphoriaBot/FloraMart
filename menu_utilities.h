@@ -65,8 +65,18 @@ void Logout(InfoLogin &infoLogin)
     infoLogin.role = "";
 }
 
-bool CekLogin(InfoLogin infoLogin)
+bool CekLogin(DataUtama &data, InfoLogin &infoLogin)
 {
+    if (infoLogin.role == "supplier")
+    {
+        for (int i = 0; i < data.sizeDataSupplier; i++)
+        {
+            if (data.dataSupplier[i].id == infoLogin.id && data.dataSupplier[i].status == "blokir")
+                return false;
+        }
+        
+    }
+
     return infoLogin.id != "" && infoLogin.username != "" && infoLogin.role != "";
 }
 

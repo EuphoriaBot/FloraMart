@@ -22,7 +22,7 @@ int main()
 
     while (!dataMenu.keluar)
     {
-        if (!CekLogin(infoLogin))
+        if (!CekLogin(data, infoLogin))
         {
             MenuAwal(data, infoLogin, dataMenu);
         }
@@ -128,6 +128,13 @@ void FormLogin(DataUtama &data, InfoLogin &infoLogin)
     {
         if (data.dataSupplier[i].username == input_username && data.dataSupplier[i].password == input_password)
         {
+            if (data.dataSupplier[i].status == "blokir")
+            {
+                cout << "Akun Anda diblokir! Silakan hubungi Admin...!";
+                getline(cin, temp);
+                return;
+            }
+
             infoLogin.id = data.dataSupplier[i].id;
             infoLogin.username = data.dataSupplier[i].username;
             infoLogin.role = "supplier";

@@ -156,7 +156,7 @@ string ftos(float value)
     return stringStream.str();
 }
 
-string dtos(float value)
+string dtos(double value)
 {
     stringstream stringStream;
 
@@ -190,12 +190,14 @@ string StringPos(string text, int length, string pos = "L")
     }
     else if (length > 0)
     {
-        for (int i = 0; i < length - 1; i++)
+        for (int i = 0; i < length; i++)
         {
             if (i < length - 4)
                 streamText << text[i];
-            else
+            else if (i < length - 1)
                 streamText << ".";
+            else
+                streamText << " ";
         }
     }
     else
@@ -217,12 +219,7 @@ void Border(string lineType = "-", int length = 80)
 void Title(string titleText, string lineType = "=", int length = 80)
 {
     Border(lineType, length);
-    int spaceLength = (length / 2) - (titleText.length() / 2);
-
-    for (int i = 0; i < spaceLength; i++)
-        cout << ' ';
-
-    cout << titleText << endl;
+    cout << StringPos(titleText, length, "C") << endl;
     Border(lineType, length);
 }
 

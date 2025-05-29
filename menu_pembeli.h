@@ -209,7 +209,6 @@ void DaftarTanaman(DataUtama &data, InfoLogin &infoLogin)
 void SearchingTanaman(DataUtama &data, InfoLogin &infoLogin)
 {
     string temp;
-    RefreshDataUtama(data);
     cout << "Masukkan nama tanaman: ";
     string key;
     getline(cin, key);
@@ -283,6 +282,7 @@ void MenuUtamaPembeli(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
         {
             ClearScreen();
             Title("Menu Utama Pembeli");
+            cout << "Selamat Datang, " << infoLogin.username << endl;
             cout << "1. Daftar Tanaman" << endl;
             cout << "2. Searching Tanaman" << endl;
             cout << "3. Top Up" << endl;

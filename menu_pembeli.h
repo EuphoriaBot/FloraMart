@@ -55,7 +55,6 @@ void HalamanTransaksi(DataUtama &data, int indexTanaman, InfoLogin &infoLogin)
         if (data.dataPembeli[i].id == infoLogin.id)
         {
             cout << "Saldo Anda\t: Rp" << data.dataPembeli[i].saldo << endl;
-            cout << endl;
         }
     }
 
@@ -63,6 +62,7 @@ void HalamanTransaksi(DataUtama &data, int indexTanaman, InfoLogin &infoLogin)
     cout << "Lanjutkan pembelian? (y/n): ";
     string konfirmasi;
     getline(cin, konfirmasi);
+    cout << endl;
     if (konfirmasi == "y")
     {
         Transaksi transaksiBaru;

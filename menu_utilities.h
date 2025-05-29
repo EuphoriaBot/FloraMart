@@ -102,120 +102,10 @@ void Title(string titleText, string lineType = "═", int length = 80)
 //     {
 //         cout << "Elemen judul dengan panjang tidak sama";
 //     }
-    
-//     cout << 
-    
+
+//     cout <<
+
 // }
-
-int JumlahJenisTanamanSupplier(DataUtama &data, string &idSupplier)
-{
-    int jumlahJenis = 0;
-    for (int i = 0; i < data.sizeDataTanaman; i++)
-    {
-        if (data.dataTanaman[i].supplier.id == idSupplier)
-            jumlahJenis += 1;
-    }
-
-    return jumlahJenis;
-}
-
-int StokTerjualSupplier(DataUtama &data, string &idSupplier)
-{
-    int stokTerjual = 0;
-    for (int i = 0; i < data.sizeDataTransaksi; i++)
-    {
-        if (data.dataTransaksi[i].tanaman.supplier.id == idSupplier && data.dataTransaksi[i].jumlahTanaman)
-            stokTerjual += 1;
-    }
-
-    return stokTerjual;
-}
-
-void ParseTime(tm &time, stringstream &timestr)
-{
-    timestr >> get_time(&time, "%d-%m-%y %H:%M");
-}
-
-int CompareTimeRangeByMonth(tm &dateTimeToCompare, int month)
-{
-    time_t *curTimestamp = new time_t(time(NULL));
-    tm *curDatetime = (*localtime)(&(*curTimestamp));
-
-    try
-    {
-        
-        int &currentMonth = curDatetime->tm_mon;
-        int &currentYear = curDatetime->tm_year;
-    
-        currentMonth -= month;
-        while (currentMonth < 0)
-        {
-            currentMonth += 12;
-            currentYear -= 1;
-        }
-    
-        curDatetime->tm_hour = 0;
-        curDatetime->tm_min = 0;
-        curDatetime->tm_sec = 0;
-        curDatetime->tm_isdst = -1;
-        curDatetime->tm_mday = 1;
-    
-        auto diffs = _difftime64(mktime(&dateTimeToCompare), mktime(curDatetime));
-    
-        if (diffs > 0)
-            return 1;
-        else if (diffs < 0)
-            return -1;
-        else
-            return 0;
-    }
-    catch(exception& e)
-    {
-        cout << e.what() << '\n';
-    }
-    delete curTimestamp;
-    delete curDatetime;
-    curTimestamp = nullptr;
-    curDatetime = nullptr;
-    
-    return 0;
-}
-
-int GetPemasukanBulanIniSupplier(DataUtama &data, string &idSupplier)
-{
-    int *pemasukanBulanIni = new int{0};
-    stringstream *timestr = new stringstream();
-    tm *timeTransaksi = new tm();
-    try
-    {
-        for (int i = 0; i < data.sizeDataTransaksi; i++)
-        {
-            if (data.dataTransaksi[i].tanaman.supplier.id == idSupplier)
-            {
-                timestr = new stringstream();
-                (*timestr) << data.dataTransaksi[i].tanggalTransaksi;
-                ParseTime((*timeTransaksi), (*timestr));
-
-                if (CompareTimeRangeByMonth((*timeTransaksi), 0) > 0)
-                    *pemasukanBulanIni += data.dataTransaksi[i].totalHarga;
-            }
-        }
-
-        return *pemasukanBulanIni;
-    }
-    catch (exception &e)
-    {
-        cout << e.what() << '\n';
-    }
-    delete pemasukanBulanIni;
-    delete timestr;
-    delete timeTransaksi;
-    pemasukanBulanIni = nullptr;
-    timestr = nullptr;
-    timeTransaksi = nullptr;
-    
-    return 0;
-}
 
 void FixString(string &str)
 {
@@ -232,9 +122,9 @@ void FixString(string &str)
             else if (isspace(str[i]) && !((*stream).str().empty()))
             {
                 // Menambah Spasi
-                if (i+1 < str.length())
+                if (i + 1 < str.length())
                 {
-                    if (!isspace(str[i+1]) && !isspace((*stream).str()[(*stream).str().length()-1]))
+                    if (!isspace(str[i + 1]) && !isspace((*stream).str()[(*stream).str().length() - 1]))
                     {
                         (*stream) << str[i];
                     }
@@ -258,8 +148,9 @@ bool IsValidString(string &str)
     {
         *fixedStr = str;
         FixString((*fixedStr));
-        if ((*fixedStr).length() <= 0) return false;
-    
+        if ((*fixedStr).length() <= 0)
+            return false;
+
         for (int i = 0; i < (*fixedStr).length(); i++)
         {
             if (!(isprint((*fixedStr)[i]) && (isalpha((*fixedStr)[i]) || isspace((*fixedStr)[i]))))
@@ -277,6 +168,386 @@ bool IsValidString(string &str)
     fixedStr = nullptr;
 
     return false;
+}
+
+int JumlahJenisTanamanSupplier(DataUtama &data, string &idSupplier)
+{
+    int jumlahJenis = 0;
+    for (int i = 0; i < data.sizeDataTanaman; i++)
+    {
+        if (data.dataTanaman[i].supplier.id == idSupplier)
+            jumlahJenis += 1;
+    }
+
+    return jumlahJenis;
+}
+
+int StokTerjualSupplier(DataUtama &data, string &idSupplier)
+{
+    int stokTerjual = 0;
+    for (int i = 0; i < data.sizeDataTransaksi; i++)
+    {
+        if (data.dataTransaksi[i].tanaman.supplier.id == idSupplier)
+            stokTerjual += data.dataTransaksi[i].jumlahTanaman;
+    }
+
+    return stokTerjual;
+}
+
+void ParseTime(tm &time, stringstream &timestr)
+{
+    timestr >> get_time(&time, "%d-%m-%y %H:%M");
+}
+
+int CompareTimeRangeByMonth(tm &dateTimeToCompare, int month)
+{
+    time_t *curTimestamp = new time_t(time(NULL));
+    tm *curDatetime = (*localtime)(&(*curTimestamp));
+
+    try
+    {
+
+        int &currentMonth = curDatetime->tm_mon;
+        int &currentYear = curDatetime->tm_year;
+
+        currentMonth -= month;
+        while (currentMonth < 0)
+        {
+            currentMonth += 12;
+            currentYear -= 1;
+        }
+
+        curDatetime->tm_hour = 0;
+        curDatetime->tm_min = 0;
+        curDatetime->tm_sec = 0;
+        curDatetime->tm_isdst = -1;
+        curDatetime->tm_mday = 1;
+
+        auto diffs = _difftime64(mktime(&dateTimeToCompare), mktime(curDatetime));
+
+        if (diffs > 0)
+            return 1;
+        else if (diffs < 0)
+            return -1;
+        else
+            return 0;
+    }
+    catch (exception &e)
+    {
+        cout << e.what() << '\n';
+    }
+    delete curTimestamp;
+    delete curDatetime;
+    curTimestamp = nullptr;
+    curDatetime = nullptr;
+
+    return 0;
+}
+
+int GetPemasukanBulanIniSupplier(DataUtama &data, string &idSupplier)
+{
+    int *pemasukanBulanIni = new int{0};
+    stringstream *timestr = new stringstream();
+    tm *timeTransaksi = new tm();
+    try
+    {
+        for (int i = 0; i < data.sizeDataTransaksi; i++)
+        {
+            if (data.dataTransaksi[i].tanaman.supplier.id == idSupplier && data.dataTransaksi[i].status == "Selesai")
+            {
+                timestr = new stringstream();
+                (*timestr) << data.dataTransaksi[i].tanggalTransaksi;
+                ParseTime((*timeTransaksi), (*timestr));
+
+                if (CompareTimeRangeByMonth((*timeTransaksi), 0) > 0)
+                    *pemasukanBulanIni += data.dataTransaksi[i].totalHarga;
+            }
+        }
+
+        return *pemasukanBulanIni;
+    }
+    catch (exception &e)
+    {
+        cout << e.what() << '\n';
+    }
+    delete pemasukanBulanIni;
+    delete timestr;
+    delete timeTransaksi;
+    pemasukanBulanIni = nullptr;
+    timestr = nullptr;
+    timeTransaksi = nullptr;
+
+    return 0;
+}
+
+void quickSort(Tanaman arr[], int low, int high)
+{
+    if (low >= high)
+        return;
+
+    // menentukan data tengah sebagai pivot
+    int mid = low + (high - low) / 2;
+    int pivot = arr[mid].stok;
+    int i = low, j = high;
+    while (i <= j)
+    {
+        while (arr[i].stok > pivot)
+        {
+            i++;
+        }
+        while (arr[j].stok < pivot)
+        {
+            j--;
+        }
+        if (i <= j)
+        { // Tukar elemen jika berada di posisi yang salah
+            swap(arr[i], arr[j]);
+            i++;
+            j--;
+        }
+    }
+    // Rekursi untuk bagian kiri dan kanan array
+    if (low < j)
+    {
+        quickSort(arr, low, j);
+    }
+    if (i < high)
+    {
+        quickSort(arr, i, high);
+    }
+}
+
+void DataTanamanTerlarisSupplier(DataUtama &data, string &idSupplier, Tanaman *dataTanamanTerlaris, int &sizeDataTanamanTerlaris)
+{
+    const int *jumlahTanaman = new int{JumlahJenisTanamanSupplier(data, idSupplier)};
+    Tanaman *dataTanamanSupplier = new Tanaman[*jumlahTanaman];
+    int *sizeDataTanamanSupplier = new int{0};
+
+    try
+    {
+        // Mencari semua jenis tanaman milik supplier
+        for (int i = 0; i < data.sizeDataTanaman; i++)
+        {
+            if (data.dataTanaman[i].supplier.id == idSupplier)
+            {
+                dataTanamanSupplier[(*sizeDataTanamanSupplier)] = data.dataTanaman[i];
+                dataTanamanSupplier[(*sizeDataTanamanSupplier)].stok = 0;
+                (*sizeDataTanamanSupplier)++;
+            }
+        }
+
+        // Menambahkan jumlah tanaman dari setiap transaksi
+        for (int i = 0; i < data.sizeDataTransaksi; i++)
+        {
+            for (int j = 0; i < (*jumlahTanaman); i++)
+            {
+                if (data.dataTransaksi[i].tanaman.id == dataTanamanSupplier[j].id && data.dataTransaksi[i].status == "Selesai")
+                {
+                    dataTanamanSupplier[j].stok += data.dataTransaksi[i].jumlahTanaman;
+                }
+            }
+        }
+
+        quickSort(dataTanamanSupplier, 0, (*jumlahTanaman) - 1);
+
+        sizeDataTanamanTerlaris = 0;
+        for (int i = 0; i < (*jumlahTanaman); i++)
+        {
+            if (dataTanamanSupplier[i].stok > 0)
+            {
+                dataTanamanTerlaris[sizeDataTanamanTerlaris] = dataTanamanSupplier[i];
+                sizeDataTanamanTerlaris++;
+            }
+        }
+    }
+    catch (exception &e)
+    {
+        cerr << e.what() << endl;
+    }
+    delete jumlahTanaman;
+    delete[] dataTanamanSupplier;
+    delete sizeDataTanamanSupplier;
+    jumlahTanaman = nullptr;
+    dataTanamanSupplier = nullptr;
+    sizeDataTanamanSupplier = nullptr;
+}
+
+int GetJumlahSupplierAktif(DataUtama &data)
+{
+    int jumlahSupplier = 0;
+    try
+    {
+        for (int i = 0; i < data.sizeDataSupplier; i++)
+        {
+            if (data.dataSupplier[i].status == "aktif")
+            {
+                jumlahSupplier += 1;
+            }
+        }
+        return jumlahSupplier;
+    }
+    catch (exception &e)
+    {
+        cout << e.what() << endl;
+    }
+    return 0;
+}
+
+int GetPenjualanBulanIniAdmin(DataUtama &data)
+{
+    int *penjualanBulanIni = new int{0};
+    stringstream *timestr = new stringstream();
+    tm *timeTransaksi = new tm();
+    try
+    {
+        for (int i = 0; i < data.sizeDataTransaksi; i++)
+        {
+            if (data.dataTransaksi[i].status == "Selesai")
+            {
+                timestr = new stringstream();
+                (*timestr) << data.dataTransaksi[i].tanggalTransaksi;
+                ParseTime((*timeTransaksi), (*timestr));
+
+                if (CompareTimeRangeByMonth((*timeTransaksi), 0) > 0)
+                    *penjualanBulanIni += data.dataTransaksi[i].totalHarga;
+            }
+        }
+
+        return *penjualanBulanIni;
+    }
+    catch (exception &e)
+    {
+        cout << e.what() << '\n';
+    }
+    delete penjualanBulanIni;
+    delete timestr;
+    delete timeTransaksi;
+    penjualanBulanIni = nullptr;
+    timestr = nullptr;
+    timeTransaksi = nullptr;
+
+    return 0;
+}
+
+int GetTransaksiBulanIniAdmin(DataUtama &data)
+{
+    int *jumlahTransaksi = new int{0};
+    stringstream *timestr = new stringstream();
+    tm *timeTransaksi = new tm();
+    try
+    {
+        for (int i = 0; i < data.sizeDataTransaksi; i++)
+        {
+            if (data.dataTransaksi[i].status == "Selesai")
+            {
+                timestr = new stringstream();
+                (*timestr) << data.dataTransaksi[i].tanggalTransaksi;
+                ParseTime((*timeTransaksi), (*timestr));
+
+                if (CompareTimeRangeByMonth((*timeTransaksi), 0) > 0)
+                    *jumlahTransaksi += 1;
+            }
+        }
+
+        return *jumlahTransaksi;
+    }
+    catch (exception &e)
+    {
+        cout << e.what() << '\n';
+    }
+    delete jumlahTransaksi;
+    delete timestr;
+    delete timeTransaksi;
+    jumlahTransaksi = nullptr;
+    timestr = nullptr;
+    timeTransaksi = nullptr;
+
+    return 0;
+}
+
+void insertionSort(int a[], int panjang, Supplier *dataSupplier)
+{
+    for (int i = 1; i < panjang; i++)
+    {
+        Supplier supplierKey = dataSupplier[i];
+        int key = a[i];
+        int j = i - 1;
+        while (j >= 0 && a[j] < key)
+        {
+            dataSupplier[j + 1] = dataSupplier[j];
+            a[j + 1] = a[j];
+            j = j - 1;
+        }
+        dataSupplier[j + 1] = supplierKey;
+        a[j + 1] = key;
+    }
+}
+
+void GetDataSupplierTerlaris(DataUtama &data, Supplier *dataSupplierTerlaris, int &sizeDataSupplierTerlaris, int *dataStokTerjualSupplierAktif)
+{
+    const int *jumlahSupplierAktif = new int{GetJumlahSupplierAktif(data)};
+    Supplier *dataSupplierAktif = new Supplier[*jumlahSupplierAktif];
+    int *sizeDataSupplierAktif = new int{0};
+
+    int *jumlahTransaksi = new int{0};
+    stringstream *timestr = new stringstream();
+    tm *timeTransaksi = new tm();
+
+    try
+    {
+        // Mencari semua supplier aktif
+        for (int i = 0; i < data.sizeDataSupplier; i++)
+        {
+            if (data.dataSupplier[i].status == "aktif")
+            {
+                dataSupplierAktif[(*sizeDataSupplierAktif)] = data.dataSupplier[i];
+                dataStokTerjualSupplierAktif[(*sizeDataSupplierAktif)] = 0;
+                (*sizeDataSupplierAktif)++;
+            }
+        }
+
+        // Menambahkan jumlah tanaman dari setiap transaksi
+        for (int i = 0; i < data.sizeDataTransaksi; i++)
+        {
+            for (int j = 0; j < (*jumlahSupplierAktif); j++)
+            {
+                if (data.dataTransaksi[i].tanaman.supplier.id == dataSupplierAktif[j].id && data.dataTransaksi[i].status == "Selesai")
+                {
+                    timestr = new stringstream();
+                    (*timestr) << data.dataTransaksi[i].tanggalTransaksi;
+                    ParseTime((*timeTransaksi), (*timestr));
+
+                    if (CompareTimeRangeByMonth((*timeTransaksi), 0) > 0)
+                        dataStokTerjualSupplierAktif[j] += data.dataTransaksi[i].jumlahTanaman;
+                }
+            }
+        }
+
+        insertionSort(dataStokTerjualSupplierAktif, (*sizeDataSupplierAktif), dataSupplierAktif);
+
+        sizeDataSupplierTerlaris = 0;
+        for (int i = 0; i < (*jumlahSupplierAktif); i++)
+        {
+            dataSupplierTerlaris[sizeDataSupplierTerlaris] = dataSupplierAktif[i];
+            sizeDataSupplierTerlaris++;
+        }
+    }
+    catch (exception &e)
+    {
+        cerr << e.what() << endl;
+    }
+    delete jumlahSupplierAktif;
+    delete[] dataSupplierAktif;
+    delete sizeDataSupplierAktif;
+    delete jumlahTransaksi;
+    delete timestr;
+    delete timeTransaksi;
+    jumlahSupplierAktif = nullptr;
+    dataSupplierAktif = nullptr;
+    sizeDataSupplierAktif = nullptr;
+    jumlahTransaksi = nullptr;
+    timestr = nullptr;
+    timeTransaksi = nullptr;
 }
 
 #endif

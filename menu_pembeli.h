@@ -19,6 +19,7 @@ void loadDataTanaman(DataUtama &data)
 
 void DaftarTanaman(DataUtama &data)
 {
+    ClearScreen();
     cout << "=== Daftar Tanaman ===" << endl;
 
     if (data.sizeDataTanaman == 0)
@@ -37,6 +38,8 @@ void DaftarTanaman(DataUtama &data)
 void HalamanTransaksi(DataUtama &data, int indexTanaman)
 {
     int stokTersedia = data.dataTanaman[indexTanaman].stok;
+    
+    ClearScreen();
     cout << "=== Halaman Transaksi ===";
     cout << "Stok tersedia: " << stokTersedia << endl;
     cout << "Masukkan jumlah yang ingin dibeli: ";
@@ -147,6 +150,7 @@ void MenuUtamaPembeli(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
 
         while (true)
         {
+            ClearScreen();
             cout << "\n=== Menu Utama Pembeli ===" << endl;
             cout << "1. Daftar Tanaman" << endl;
             cout << "2. Searching Tanaman" << endl;

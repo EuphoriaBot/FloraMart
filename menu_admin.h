@@ -337,6 +337,7 @@ void FormKesiapanTanaman(DataUtama &data)
         }
         Tanaman tanamanBaru;
         tanamanBaru.id = GetFreeTanamanId();
+        tanamanBaru.supplier = suplaidipilih.supplier;
         tanamanBaru.harga = harga;
         tanamanBaru.namaTanaman = nama_tanaman;
         tanamanBaru.kategori = data.dataKategori[pilihan_kategori];
@@ -643,19 +644,69 @@ void MenuManajemenSupplier(DataUtama &data, InfoLogin &infoLogin)
 }
 }
 
+void DashboardAdmin(DataUtama data)
+{
+    Supplier *dataSupplierTerlaris = new Supplier[MAX_SIZE];
+    int *sizeDataSupplierTerlaris = new int{0};
+    int *dataStokTerjualSupplierAktif = new int[GetJumlahSupplierAktif(data)];
+    string *_temp = new string();
+
+    try
+    {
+        ClearScreen();
+        Title("Dashboard");
+        cout << "Supplier Terdaftar\t: " << GetJumlahSupplierAktif(data) << " Supplier" << endl;
+        cout << "Penjualan Bulan Ini\t: Rp" << GetPenjualanBulanIniAdmin(data) << endl;
+        cout << "Jumlah Jenis Tanaman\t: " << data.sizeDataTanaman << " Tanaman" << endl;
+        cout << "Transaksi Bulan Ini\t: " << GetTransaksiBulanIniAdmin(data) << " Transaksi" << endl;
+        Border();
+        
+        GetDataSupplierTerlaris(data, dataSupplierTerlaris, (*sizeDataSupplierTerlaris), dataStokTerjualSupplierAktif);
+        cout << "Supplier Terlaris Bulan Ini" << endl;
+        if ((*sizeDataSupplierTerlaris) > 0)
+        {
+            for (int i = 0; i < (*sizeDataSupplierTerlaris); i++)
+            {
+                cout << i + 1 << ". " << dataSupplierTerlaris[i].username << "\t: " << dataStokTerjualSupplierAktif[i] << " Stok Tanaman Terjual" << endl;
+            }
+        }
+        else
+        {
+            cout << "Tidak ada data" << endl;
+        }
+        Border();
+        
+        cout << "Tekan [Enter] untuk kembali...";
+        getline(cin, (*_temp));
+    }
+    catch(exception& e)
+    {
+        cout << e.what() << endl;
+    }
+    delete[] dataSupplierTerlaris;
+    delete sizeDataSupplierTerlaris;
+    delete[] dataStokTerjualSupplierAktif;
+    delete _temp;
+    dataSupplierTerlaris = nullptr;
+    sizeDataSupplierTerlaris = nullptr;
+    dataStokTerjualSupplierAktif = nullptr;
+    _temp = nullptr;
+}
+
 void MenuUtamaAdmin(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
 {
     try
     {
         RefreshDataUtama(data);
-        ClearScreen();
-        while (true)
+        while (CekLogin(infoLogin))
         {
+            ClearScreen();
             cout << "=== Menu Utama Admin ===" << endl;
-            cout << "1. Manajemen Tanaman" << endl;
-            cout << "2. Manajemen Supplier" << endl;
-            cout << "3. Notifikasi" << endl;
-            cout << "4. Logout" << endl;
+            cout << "1. Dashboard" << endl;
+            cout << "2. Manajemen Tanaman" << endl;
+            cout << "3. Manajemen Supplier" << endl;
+            cout << "4. Notifikasi" << endl;
+            cout << "5. Logout" << endl;
             cout << "Pilih menu: ";
 
             string pilihan;
@@ -663,17 +714,21 @@ void MenuUtamaAdmin(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
 
             if (pilihan == "1")
             {
-                MenuManajemenTanaman(data, infoLogin);
+                DashboardAdmin(data);
             }
             else if (pilihan == "2")
             {
-                MenuManajemenSupplier(data, infoLogin);
+                MenuManajemenTanaman(data, infoLogin);
             }
             else if (pilihan == "3")
             {
-                MenuNotifikasi(data, infoLogin);
+                MenuManajemenSupplier(data, infoLogin);
             }
             else if (pilihan == "4")
+            {
+                MenuNotifikasi(data, infoLogin);
+            }
+            else if (pilihan == "5")
             {
                 cout << "Anda telah logout!" << endl;
                 Logout (infoLogin);

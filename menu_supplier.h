@@ -59,7 +59,8 @@ void NambahSuplai(Suplai dataSuplai[], int &size, Suplai suplaiBaru)
 void LihatLaporanTransaksi(DataUtama &data, InfoLogin &infoLogin)
 {
     bool ditemukan = false;
-
+    
+    ClearScreen();
     cout << "LAPORAN TRANSAKSI";
 
     for (int i = 0; i < data.sizeDataTransaksi; i++)
@@ -84,18 +85,66 @@ void LihatLaporanTransaksi(DataUtama &data, InfoLogin &infoLogin)
     }
 }
 
+void DashboardSupplier(DataUtama &data, InfoLogin &infoLogin)
+{
+    Tanaman *dataTanamanTerlaris = new Tanaman[MAX_SIZE];
+    int *sizeDataTanamanTerlaris = new int{0};
+    string *_temp = new string();
+
+    try
+    {
+        ClearScreen();
+        Title("Dashboard");
+        cout << "Jumlah Jenis Tanaman Saya\t: " << JumlahJenisTanamanSupplier(data, infoLogin.id) << " Jenis Tanaman" << endl;
+        cout << "Pemasukan Bulan Ini\t\t: Rp" << GetPemasukanBulanIniSupplier(data, infoLogin.id) << endl;
+        cout << "Stok Tanaman Terjual\t\t: " << StokTerjualSupplier(data, infoLogin.id) << " Stok Tanaman" << endl;
+        Border();
+        
+        DataTanamanTerlarisSupplier(data, infoLogin.id, dataTanamanTerlaris, (*sizeDataTanamanTerlaris));
+
+        cout << "Tanaman Terlaris" << endl;
+        if ((*sizeDataTanamanTerlaris) > 0)
+        {
+            for (int i = 0; i < (*sizeDataTanamanTerlaris); i++)
+            {
+                cout << (i + 1) << ". " << dataTanamanTerlaris[i].namaTanaman << "\t: " << dataTanamanTerlaris[i].stok << " Buah" << endl;
+            }
+        }
+        else
+        {
+            cout << "Belum ada tanaman yang terjual" << endl;
+        }
+        Border();
+        
+        cout << "Tekan [Enter] untuk kembali...";
+        getline(cin, (*_temp));
+    }
+    catch (exception &e)
+    {
+        cout << e.what() << endl;
+    }
+    delete[] dataTanamanTerlaris;
+    delete sizeDataTanamanTerlaris;
+    delete _temp;
+    dataTanamanTerlaris = nullptr;
+    sizeDataTanamanTerlaris = nullptr;
+    _temp = nullptr;
+}
+
 void MenuUtamaSupplier(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
 {
     try
     {
         RefreshDataUtama(data);
-
+        
         while (true)
         {
-            cout << "\n=== MENU UTAMA SUPPLIER ===\n";
-            cout << "1. Suplai Tanaman\n";
-            cout << "2. Lihat Laporan Transaksi\n";
-            cout << "3. Logout\n";
+            ClearScreen();
+            cout << "=== MENU UTAMA SUPPLIER ===\n";
+            cout << "1. Dashboard\n";
+            cout << "2. Suplai Tanaman\n";
+            cout << "3. Lihat Laporan Transaksi\n";
+            cout << "4. Logout\n";
             cout << "Pilih menu: ";
 
             string pilihan;
@@ -103,10 +152,14 @@ void MenuUtamaSupplier(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu
 
             if (pilihan == "1")
             {
+                DashboardSupplier(data, infoLogin);
+            }
+            else if (pilihan == "2")
+            {
                 RefreshDataUtama(data);
                 SuplaiTanaman(data, infoLogin);
             }
-            else if (pilihan == "2")
+            else if (pilihan == "3")
             {
                 LihatLaporanTransaksi(data, infoLogin);
             }

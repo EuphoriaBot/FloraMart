@@ -1,1 +1,21 @@
-[{"id":"0001","metode_tersedia":["0001","0002"],"password":"060","status":"aktif","username":"Hermawan"},{"id":"0002","metode_tersedia":["0001"],"password":"061","status":"blokir","username":"Dante"}]
+[
+    {
+        "id": "0001",
+        "metode_tersedia": [
+            "0001",
+            "0002"
+        ],
+        "password": "060",
+        "status": "aktif",
+        "username": "Hermawan"
+    },
+    {
+        "id": "0002",
+        "metode_tersedia": [
+            "0001"
+        ],
+        "password": "061",
+        "status": "aktif",
+        "username": "Dante"
+    }
+]

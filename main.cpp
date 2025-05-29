@@ -86,6 +86,7 @@ void MenuAwal(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
 void FormLogin(DataUtama &data, InfoLogin &infoLogin)
 {
     RefreshDataUtama(data);
+    string temp;
 
     ClearScreen();
     cout << "=== Form Login ===" << endl;
@@ -104,7 +105,8 @@ void FormLogin(DataUtama &data, InfoLogin &infoLogin)
             infoLogin.id = data.dataAdmin[i].id;
             infoLogin.username = data.dataAdmin[i].username;
             infoLogin.role = "admin";
-            cout << "Login sebagai admin berhasil." << endl;
+            cout << "Login sebagai admin berhasil...";
+            getline(cin, temp);
             return;
         }
     }
@@ -116,7 +118,8 @@ void FormLogin(DataUtama &data, InfoLogin &infoLogin)
             infoLogin.id = data.dataPembeli[i].id;
             infoLogin.username = data.dataPembeli[i].username;
             infoLogin.role = "pembeli";
-            cout << "Login sebagai pembeli berhasil." << endl;
+            cout << "Login sebagai pembeli berhasil...";
+            getline(cin, temp);
             return;
         }
     }
@@ -128,7 +131,8 @@ void FormLogin(DataUtama &data, InfoLogin &infoLogin)
             infoLogin.id = data.dataSupplier[i].id;
             infoLogin.username = data.dataSupplier[i].username;
             infoLogin.role = "supplier";
-            cout << "Login sebagai supplier berhasil." << endl;
+            cout << "Login sebagai supplier berhasil...";
+            getline(cin, temp);
             return;
         }
     }

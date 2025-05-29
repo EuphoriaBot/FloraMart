@@ -70,6 +70,69 @@ bool CekLogin(InfoLogin infoLogin)
     return infoLogin.id != "" && infoLogin.username != "" && infoLogin.role != "";
 }
 
+void FixString(string &str)
+{
+    stringstream *stream = new stringstream();
+    try
+    {
+        for (int i = 0; i < str.length(); i++)
+        {
+            if (!isspace(str[i]))
+            {
+                // Menambah Karakter Terlihat
+                (*stream) << str[i];
+            }
+            else if (isspace(str[i]) && !((*stream).str().empty()))
+            {
+                // Menambah Spasi
+                if (i + 1 < str.length())
+                {
+                    if (!isspace(str[i + 1]) && !isspace((*stream).str()[(*stream).str().length() - 1]))
+                    {
+                        (*stream) << str[i];
+                    }
+                }
+            }
+        }
+        str = (*stream).str();
+    }
+    catch (exception &e)
+    {
+        cout << e.what() << endl;
+    }
+    delete stream;
+    stream = nullptr;
+}
+
+bool IsValidString(string &str)
+{
+    string *fixedStr = new string();
+    try
+    {
+        *fixedStr = str;
+        FixString((*fixedStr));
+        if ((*fixedStr).length() <= 0)
+            return false;
+
+        for (int i = 0; i < (*fixedStr).length(); i++)
+        {
+            if (!(isprint((*fixedStr)[i]) && (isalpha((*fixedStr)[i]) || isspace((*fixedStr)[i]))))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    catch (exception &e)
+    {
+        cout << e.what() << endl;
+    }
+    delete fixedStr;
+    fixedStr = nullptr;
+
+    return false;
+}
+
 void ClearScreen()
 {
     system("powershell.exe -Command Clear-Host");
@@ -147,69 +210,6 @@ void Title(string titleText, string lineType = "=", int length = 80)
 //     cout <<
 
 // }
-
-void FixString(string &str)
-{
-    stringstream *stream = new stringstream();
-    try
-    {
-        for (int i = 0; i < str.length(); i++)
-        {
-            if (!isspace(str[i]))
-            {
-                // Menambah Karakter Terlihat
-                (*stream) << str[i];
-            }
-            else if (isspace(str[i]) && !((*stream).str().empty()))
-            {
-                // Menambah Spasi
-                if (i + 1 < str.length())
-                {
-                    if (!isspace(str[i + 1]) && !isspace((*stream).str()[(*stream).str().length() - 1]))
-                    {
-                        (*stream) << str[i];
-                    }
-                }
-            }
-        }
-        str = (*stream).str();
-    }
-    catch (exception &e)
-    {
-        cout << e.what() << endl;
-    }
-    delete stream;
-    stream = nullptr;
-}
-
-bool IsValidString(string &str)
-{
-    string *fixedStr = new string();
-    try
-    {
-        *fixedStr = str;
-        FixString((*fixedStr));
-        if ((*fixedStr).length() <= 0)
-            return false;
-
-        for (int i = 0; i < (*fixedStr).length(); i++)
-        {
-            if (!(isprint((*fixedStr)[i]) && (isalpha((*fixedStr)[i]) || isspace((*fixedStr)[i]))))
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-    catch (exception &e)
-    {
-        cout << e.what() << endl;
-    }
-    delete fixedStr;
-    fixedStr = nullptr;
-
-    return false;
-}
 
 int JumlahJenisTanamanSupplier(DataUtama &data, string &idSupplier)
 {

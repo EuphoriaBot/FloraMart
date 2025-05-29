@@ -142,6 +142,14 @@ void FormLogin(DataUtama &data, InfoLogin &infoLogin)
     cout << "Username atau password salah!" << endl;
 }
 
+string ftos(float value)
+{
+    stringstream stringStream;
+
+    stringStream << value;
+    return stringStream.str();
+}
+
 void FormRegistrasiPembeli(DataUtama &data)
 {
     RefreshDataUtama(data);

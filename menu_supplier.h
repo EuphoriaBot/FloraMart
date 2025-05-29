@@ -141,7 +141,7 @@ void MenuUtamaSupplier(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu
     {
         RefreshDataUtama(data);
 
-        while (true)
+        while (CekLogin(data, infoLogin))
         {
             ClearScreen();
             cout << "=== MENU UTAMA SUPPLIER ===\n";

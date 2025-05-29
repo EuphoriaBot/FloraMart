@@ -196,7 +196,7 @@ void MenuUtamaPembeli(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
     {
         RefreshDataUtama(data);
 
-        while (true)
+        while (CekLogin(data, infoLogin))
         {
             ClearScreen();
             cout << "\n=== Menu Utama Pembeli ===" << endl;

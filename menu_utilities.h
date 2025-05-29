@@ -158,7 +158,7 @@ string StringPos(string text, int length, string pos = "L")
 
             for (int i = 0; i < spaceLength; i++)
                 streamText << " ";
-            
+
             streamText << text;
         }
         else if (pos == "R" || pos == "Right")
@@ -182,7 +182,7 @@ string StringPos(string text, int length, string pos = "L")
     }
     else
     {
-         return text;
+        return text;
     }
     return streamText.str();
 }
@@ -250,14 +250,13 @@ void ParseTime(tm &time, stringstream &timestr)
 
 int CompareTimeRangeByMonth(tm &dateTimeToCompare, int month)
 {
-    time_t *curTimestamp = new time_t(time(NULL));
-    tm *curDatetime = (*localtime)(&(*curTimestamp));
-
     try
     {
+        time_t curTimestamp = time_t(time(NULL));
+        tm curDatetime = *localtime(&curTimestamp);
 
-        int &currentMonth = curDatetime->tm_mon;
-        int &currentYear = curDatetime->tm_year;
+        int &currentMonth = curDatetime.tm_mon;
+        int &currentYear = curDatetime.tm_year;
 
         currentMonth -= month;
         while (currentMonth < 0)
@@ -266,13 +265,13 @@ int CompareTimeRangeByMonth(tm &dateTimeToCompare, int month)
             currentYear -= 1;
         }
 
-        curDatetime->tm_hour = 0;
-        curDatetime->tm_min = 0;
-        curDatetime->tm_sec = 0;
-        curDatetime->tm_isdst = -1;
-        curDatetime->tm_mday = 1;
+        curDatetime.tm_hour = 0;
+        curDatetime.tm_min = 0;
+        curDatetime.tm_sec = 0;
+        curDatetime.tm_isdst = -1;
+        curDatetime.tm_mday = 1;
 
-        auto diffs = _difftime64(mktime(&dateTimeToCompare), mktime(curDatetime));
+        auto diffs = _difftime64(mktime(&dateTimeToCompare), mktime(&curDatetime));
 
         if (diffs > 0)
             return 1;
@@ -285,11 +284,6 @@ int CompareTimeRangeByMonth(tm &dateTimeToCompare, int month)
     {
         cout << e.what() << '\n';
     }
-    delete curTimestamp;
-    delete curDatetime;
-    curTimestamp = nullptr;
-    curDatetime = nullptr;
-
     return 0;
 }
 

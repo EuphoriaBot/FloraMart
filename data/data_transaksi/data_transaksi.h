@@ -241,14 +241,13 @@ void TambahTransaksi(Transaksi *dataTransaksi, int &sizeData, Transaksi transaks
     
     Pembeli *dataPembeli = new Pembeli[MAX_SIZE];
     int *sizeDataPembeli = new int{0};
-
-    time_t *curTimestamp = new time_t{time(NULL)};
-    tm *curDatetime = (*localtime)(&(*curTimestamp));
-    char *curTimeOutput = new char[50];
-
+    
     try
     {
-        strftime(curTimeOutput, 50, "%d-%m-%y %H:%M", &(*curDatetime));
+        time_t curTimestamp = time_t{time(NULL)};
+        tm curDatetime = *localtime(&curTimestamp);
+        char curTimeOutput[50];
+        strftime(curTimeOutput, 50, "%d-%m-%y %H:%M", &curDatetime);
 
         GetAllTanaman(dataTanaman, *sizeDataTanaman);
         GetAllPembeli(dataPembeli, *sizeDataPembeli);
@@ -272,7 +271,7 @@ void TambahTransaksi(Transaksi *dataTransaksi, int &sizeData, Transaksi transaks
 
         for (int i = 0; i < *sizeDataTanaman; i++)
         {
-            if (dataTanaman[i].id == transaksiBaru.id)
+            if (dataTanaman[i].id == transaksiBaru.tanaman.id)
             {
                 dataTanaman[i].stok -= transaksiBaru.jumlahTanaman;
                 break;
@@ -316,16 +315,9 @@ void TambahTransaksi(Transaksi *dataTransaksi, int &sizeData, Transaksi transaks
     }
 
     delete[] dataTanaman;
-    delete[] curTimestamp;
     delete sizeDataTanaman;
-    delete curDatetime;
-    delete curTimeOutput;
     dataTanaman = nullptr;
-    curTimestamp = nullptr;
     sizeDataTanaman = nullptr;
-    curDatetime = nullptr;
-    curTimeOutput = nullptr;
-
 }
 
 // Menghapus dan menyimpan langsung data tanaman yang telah dihapus ke database

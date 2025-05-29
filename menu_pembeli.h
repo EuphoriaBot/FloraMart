@@ -149,7 +149,7 @@ void SearchingTanaman(DataUtama &data, InfoLogin &infoLogin)
     for (int j = 0; j < cari; j++)
         cout << j + 1 << ". "
              << data.dataTanaman[index[j]].namaTanaman
-             << " (" << data.dataSupplier[index[j]].username << ")\n";
+             << " (" << data.dataTanaman[index[j]].supplier.username << ")\n";
 
     cout << "Pilih nomor: ";
     int pilihan = stoi((getline(cin, key), key));
@@ -196,7 +196,7 @@ void MenuUtamaPembeli(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
     {
         RefreshDataUtama(data);
 
-        while (true)
+        while (CekLogin(data, infoLogin))
         {
             ClearScreen();
             cout << "\n=== Menu Utama Pembeli ===" << endl;

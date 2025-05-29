@@ -214,13 +214,14 @@ string GetFreeSuplaiId()
 // Menambah dan menyimpan langsung data suplai baru ke database
 void TambahSuplai(Suplai *dataSuplai, int &sizeData, Suplai suplaiBaru)
 {
-    time_t *curTimestamp = new time_t{time(NULL)};
-    tm *curDatetime = (*localtime)(&(*curTimestamp));
-    char *curTimeOutput = new char[50];
-
+    
     try
     {
-        strftime(curTimeOutput, 50, "%d-%m-%y %H:%M", &(*curDatetime));
+        time_t curTimestamp = time_t{time(NULL)};
+        tm curDatetime = *localtime(&curTimestamp);
+        char curTimeOutput[50];
+
+        strftime(curTimeOutput, 50, "%d-%m-%y %H:%M", &curDatetime);
 
         if (suplaiBaru.id == "")
             throw invalid_argument("ID Suplai tidak bisa kosong!");
@@ -257,13 +258,6 @@ void TambahSuplai(Suplai *dataSuplai, int &sizeData, Suplai suplaiBaru)
         cout << endl
              << e.what() << endl;
     }
-
-    delete curTimestamp;
-    delete curDatetime;
-    delete curTimeOutput;
-    curTimestamp = nullptr;
-    curDatetime = nullptr;
-    curTimeOutput = nullptr;
 }
 
 // Menghapus dan menyimpan langsung data suplai yang telah dihapus ke database

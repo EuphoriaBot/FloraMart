@@ -159,7 +159,7 @@ void FormRegistrasiPembeli(DataUtama &data)
         cout << "Username dan password tidak boleh kosong" << endl;
         return;
     }
-    else if (IsValidString(input_username))
+    else if (!IsValidString(input_username))
     {
         cout << "Username tidak valid" << endl;
         return;
@@ -203,7 +203,7 @@ void FormRegistrasiSupplier(DataUtama &data)
         cout << "Username dan password tidak boleh kosong" << endl;
         return;
     }
-    else if (IsValidString(input_username))
+    else if (!IsValidString(input_username))
     {
         cout << "Username tidak valid" << endl;
         return;

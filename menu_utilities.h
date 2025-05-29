@@ -75,7 +75,7 @@ void ClearScreen()
     system("powershell.exe -Command Clear-Host");
 }
 
-void Border(string lineType = "─", int length = 80)
+void Border(string lineType = "-", int length = 80)
 {
     for (int i = 0; i < length; i++)
     {
@@ -84,7 +84,7 @@ void Border(string lineType = "─", int length = 80)
     cout << endl;
 }
 
-void Title(string titleText, string lineType = "═", int length = 80)
+void Title(string titleText, string lineType = "=", int length = 80)
 {
     Border(lineType, length);
     int spaceLength = (length / 2) - (titleText.length() / 2);

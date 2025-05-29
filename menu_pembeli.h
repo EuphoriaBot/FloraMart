@@ -84,6 +84,56 @@ void HalamanTransaksi(DataUtama &data, int indexTanaman, InfoLogin &infoLogin)
     }
 }
 
+void MenuTopUp(DataUtama &data, InfoLogin &infoLogin)
+{
+    string temp;
+    ClearScreen();
+    Title("Menu Top Up");
+    cout << "1. Rp50.000" << endl;
+    cout << "2. Rp100.000" << endl;
+    cout << "3. Rp200.000" << endl;
+    Border();
+    cout << "Pilih menu: ";
+
+    string pilihan;
+    getline(cin, pilihan);
+    int indexPembeli = -1;
+
+    for (int i = 0; i < data.sizeDataPembeli; i++)
+    {
+        if (data.dataPembeli[i].id == infoLogin.id)
+        {
+            if (pilihan == "1")
+            {
+                data.dataPembeli[i].saldo += 50000;
+                cout << "Berhasil Menambahkan Saldo Sebesar Rp50.000" << endl;
+                cout << "Saldo Anda Sekarang Adalah Rp" << data.dataPembeli[i].saldo << endl;
+            }
+            else if (pilihan == "2")
+            {
+                data.dataPembeli[i].saldo += 100000;
+                cout << "Berhasil Menambahkan Saldo Sebesar Rp100.000" << endl;
+                cout << "Saldo Anda Sekarang Adalah Rp" << data.dataPembeli[i].saldo << endl;
+            }
+            else if (pilihan == "3")
+            {
+                data.dataPembeli[i].saldo += 150000;
+                cout << "Berhasil Menambahkan Saldo Sebesar Rp200.000" << endl;
+                cout << "Saldo Anda Sekarang Adalah Rp" << data.dataPembeli[i].saldo << endl;
+            }
+            else
+            {
+                cout << "Pilihan tidak valid" << endl;
+                getline(cin, temp);
+            }
+            UpdateDataUtama(data);
+            cout << "Tekan [Enter] untuk kembali...";
+            getline(cin, (temp));
+            break;
+        }
+    }
+}
+
 void DaftarTanaman(DataUtama &data, InfoLogin &infoLogin)
 {
     string temp;
@@ -235,7 +285,8 @@ void MenuUtamaPembeli(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
             Title("Menu Utama Pembeli");
             cout << "1. Daftar Tanaman" << endl;
             cout << "2. Searching Tanaman" << endl;
-            cout << "3. Logout" << endl;
+            cout << "3. Top Up" << endl;
+            cout << "4. Logout" << endl;
             Border();
             cout << "Pilih menu: ";
 
@@ -252,6 +303,10 @@ void MenuUtamaPembeli(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
                 SearchingTanaman(data, infoLogin);
             }
             else if (pilihan == "3")
+            {
+                MenuTopUp(data, infoLogin);
+            }
+            else if (pilihan == "4")
             {
                 Logout(infoLogin);
                 break;

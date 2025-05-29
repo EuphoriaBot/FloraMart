@@ -17,7 +17,7 @@ void loadDataTanaman(DataUtama &data)
     }
 }
 
-void HalamanTransaksi(DataUtama &data, int indexTanaman)
+void HalamanTransaksi(DataUtama &data, int indexTanaman, InfoLogin &infoLogin)
 {
     int stokTersedia = data.dataTanaman[indexTanaman].stok;
 
@@ -50,7 +50,13 @@ void HalamanTransaksi(DataUtama &data, int indexTanaman)
     getline(cin, konfirmasi);
     if (konfirmasi == "y")
     {
-        data.dataTanaman[indexTanaman].stok -= jumlah;
+        Transaksi transaksiBaru;
+        transaksiBaru.id = GetFreeTransaksiId();
+        transaksiBaru.tanaman = data.dataTanaman[indexTanaman];
+        transaksiBaru.pembeli.id = infoLogin.id;
+        transaksiBaru.jumlahTanaman = jumlah;
+
+        TambahTransaksi(data.dataTransaksi, data.sizeDataTransaksi, transaksiBaru);
 
         cout << "Pembelian berhasil" << endl;
         cout << "Sisa stok: " << data.dataTanaman[indexTanaman].stok << endl;
@@ -61,7 +67,7 @@ void HalamanTransaksi(DataUtama &data, int indexTanaman)
     }
 }
 
-void DaftarTanaman(DataUtama &data)
+void DaftarTanaman(DataUtama &data, InfoLogin &infoLogin)
 {
     ClearScreen();
     cout << "=== Daftar Tanaman ===" << endl;
@@ -117,11 +123,11 @@ void DaftarTanaman(DataUtama &data)
     getline(cin, jawab);
     if (jawab == "y" || jawab == "Y")
     {
-        HalamanTransaksi(data, index);
+        HalamanTransaksi(data, index, infoLogin);
     }
 }
 
-void SearchingTanaman(DataUtama &data)
+void SearchingTanaman(DataUtama &data, InfoLogin &infoLogin)
 {
     RefreshDataUtama(data);
     cout << "Masukkan nama tanaman: ";
@@ -166,7 +172,7 @@ void SearchingTanaman(DataUtama &data)
         getline(cin, jawab);
         if (jawab == "y" || jawab == "Y")
         {
-            HalamanTransaksi(data, i);
+            HalamanTransaksi(data, i, infoLogin);
         }
     }
 }
@@ -205,11 +211,11 @@ void MenuUtamaPembeli(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
             if (pilihan == "1")
             {
                 RefreshDataUtama(data);
-                DaftarTanaman(data);
+                DaftarTanaman(data, infoLogin);
             }
             else if (pilihan == "2")
             {
-                SearchingTanaman(data);
+                SearchingTanaman(data, infoLogin);
             }
             else if (pilihan == "3")
             {

@@ -76,6 +76,8 @@ void FormTambahKategori(DataUtama &data)
             TambahKategori(data.dataKategori, data.sizeDataKategori, kategoriBaru);
             cout << endl;
             cout << "Kategori berhasil ditambahkan!" << endl;
+            cout << "Tekan [enter] untuk kembali ..." << endl;
+            getline(cin, data.dataKategori[0].id);
         }
         else
         {
@@ -128,6 +130,8 @@ void FormHapusKategori(DataUtama &data)
             HapusKategori(data.dataKategori, data.sizeDataKategori, kategoriDihapus);
             cout << endl;
             cout << "Kategori berhasil dihapus!" << endl;
+            cout << "Tekan [enter] untuk kembali ..." << endl;
+            getline(cin, data.dataKategori[0].id);
             return;
         }
         else
@@ -239,6 +243,8 @@ void FormEditKategori(DataUtama &data)
             UpdateDataUtama(data);
             cout << endl;
             cout << "Kategori berhasil diedit!" << endl;
+            cout << "Tekan [enter] untuk kembali ..." << endl;
+            getline(cin, data.dataKategori[0].id);
         }
         else
         {
@@ -374,12 +380,23 @@ void FormKesiapanTanaman(DataUtama &data)
     Tanaman tanamandipilih;
     Title("Validasi Suplai Tanaman");
     cout << endl;
+    cout << "Tanaman yang menunggu validasi: " << endl;
+    cout << endl;
+    
+    cout << StringPos("ID Suplai", 15, "Left");
+    cout << StringPos("Nama Tanaman", 30, "Left");
+    cout << StringPos("Jumlah", 10, "Left") << endl;
+
+
     for (int i = 0; i < data.sizeDataSuplai; i++)
     {
         if (data.dataSuplai[i].statusValidasi == false)
         {
-            cout << data.dataSuplai[i].id << " | " << data.dataSuplai[i].namaTanaman << " | " << data.dataSuplai[i].jumlah << endl;
-            ;
+            
+            cout << StringPos(data.dataSuplai[i].id, 15, "Left");
+            cout << StringPos(data.dataSuplai[i].namaTanaman, 30, "Left");
+            cout << StringPos(to_string(data.dataSuplai[i].jumlah), 10, "Left");
+            cout << endl;
         }
     }
     cout << endl;
@@ -401,8 +418,8 @@ void FormKesiapanTanaman(DataUtama &data)
         cout << "ID Tanaman tidak ditemukan atau sudah divalidasi." << endl;
         return;
     }
+    
     string temp;
-
     cout << "Apakah Tanaman sudah pernah disuplai? (y/n): ";
     getline(cin, temp);
     if (temp == "n" || temp == "N")
@@ -433,11 +450,10 @@ void FormKesiapanTanaman(DataUtama &data)
         {
             cout << i + 1 << ". " << data.dataKategori[i].namaKategori << endl;
         }
-        cout << "Pilih Kategori: ";
         int pilihan_kategori;
+        cout << "Pilih Kategori: ";
         getline(cin, temp);
         pilihan_kategori = stoi(temp); // Convert string to int
-        pilihan_kategori -= 1;
 
         int stok_diterima;
         cout << "Masukkan jumlah stok yang diterima: ";
@@ -468,8 +484,11 @@ void FormKesiapanTanaman(DataUtama &data)
         {
             TambahTanaman(data.dataTanaman, data.sizeDataTanaman, tanamanBaru);
             TambahValidasi(data.dataValidasiTanaman, data.sizeDataValidasi, validasiBaru);
-            cout << endl;
             cout << "Suplai berhasil divalidasi!" << endl;
+            cout << endl;
+            cout << "Tekan [enter] untuk kembali ..." << endl;
+            getline(cin, data.dataTanaman[0].id);
+            
         }
         else
         {
@@ -482,10 +501,10 @@ void FormKesiapanTanaman(DataUtama &data)
         {
             if (suplaidipilih.supplier.id == data.dataTanaman[i].supplier.id)
             {
-                cout << data.dataSuplai[i].id << "|" << data.dataTanaman[i].namaTanaman << endl;
-                ;
+                cout << data.dataSuplai[i].id << " | " << data.dataTanaman[i].namaTanaman << endl;
             }
         }
+        
         cout << "Pilih Tanaman: ";
         string id_tanaman;
         getline(cin, id_tanaman);
@@ -528,6 +547,10 @@ void FormKesiapanTanaman(DataUtama &data)
         if (konfirmasi == "y" || konfirmasi == "Y")
         {
             TambahValidasi(data.dataValidasiTanaman, data.sizeDataValidasi, validasiBaru);
+            cout << "Suplai berhasil divalidasi!" << endl;
+            cout << endl;
+            cout << "Tekan [enter] untuk kembali ..." << endl;
+            getline(cin, data.dataTanaman[0].id);
             return;
         }
         else
@@ -543,13 +566,24 @@ void MenuNotifikasi(DataUtama &data, InfoLogin &infoLogin)
     {
         string temp;
         RefreshDataUtama(data);
+        ClearScreen();
+        cout << endl;
+        cout << "Transaksi yang menunggu konfirmasi: " << endl;
+        cout << endl;
+        cout << StringPos("ID Transaksi", 15, "Left");
+        cout << StringPos("Nama Tanaman", 30, "Left");
+        cout << StringPos("Jumlah", 10, "Left") << endl;
+
         for (int i = 0; i < data.sizeDataTransaksi; i++)
         {
             if (data.dataTransaksi[i].status == "Menunggu Konfirmasi")
             {
-                cout << data.dataTransaksi[i].id << " | " << data.dataTransaksi[i].tanaman.namaTanaman << " | " << data.dataTransaksi[i].jumlahTanaman << endl;
+                cout << StringPos(data.dataTransaksi[i].id, 15, "Left");
+                cout << StringPos(data.dataTransaksi[i].tanaman.namaTanaman, 30, "Left");
+                cout << StringPos(to_string(data.dataTransaksi[i].jumlahTanaman), 10, "Left") << endl;
             }
         }
+        cout << endl;
         Transaksi *pilihanTransaksi;
         cout << "Masukkan ID Transaksi yang ingin dikonfirmasi: ";
         getline(cin, temp);
@@ -564,7 +598,7 @@ void MenuNotifikasi(DataUtama &data, InfoLogin &infoLogin)
         }
         if (!pilihanTransaksi->id.empty())
         {
-            cout << "=== Detail Transaksi ===" << endl;
+            Title ("Detail Transaksi");
             cout << pilihanTransaksi->id << endl;
             cout << pilihanTransaksi->tanaman.namaTanaman << endl;
             cout << pilihanTransaksi->pembeli.username << endl;
@@ -577,8 +611,12 @@ void MenuNotifikasi(DataUtama &data, InfoLogin &infoLogin)
         if (temp == "y" || temp == "Y")
         {
             pilihanTransaksi->status = "Selesai";
-            cout << "Transaksi berhasil dikonfirmasi!" << endl;
             UpdateDataUtama(data);
+            cout << "Transaksi berhasil dikonfirmasi!" << endl;
+            cout << endl;
+            cout << "Tekan [enter] untuk kembali ..." << endl;
+            getline(cin, data.dataTransaksi[0].id); // To pause the screen
+            return;
         }
         else if (temp == "n" || temp == "N")
         {
@@ -607,6 +645,10 @@ void FormLihatSupplier(DataUtama &data)
         cout << StringPos(data.dataSupplier[i].username, 15, "Left");  
         cout << StringPos(data.dataSupplier[i].status, 10, "Left") << endl;
     }
+    cout << endl;
+    cout << "Tekan [enter] untuk kembali ..." << endl;
+    getline(cin, data.dataSupplier[0].id); // To pause the screen
+    return;
 }
 
 void FormHapusSupplier(DataUtama &data)
@@ -656,6 +698,10 @@ void FormHapusSupplier(DataUtama &data)
         {
             HapusSupplier(data.dataSupplier, data.sizeDataSupplier, supplierDipilih);
             cout << "Supplier berhasil dihapus!" << endl;
+            cout << endl;
+            cout << "Tekan [enter] untuk kembali ..." << endl;
+            getline(cin, data.dataSupplier[0].id); 
+            return;
         }
     }
     else
@@ -683,14 +729,9 @@ void FormBlokirSupplier(DataUtama &data)
         cout << StringPos(data.dataSupplier[i].status, 10, "Left") << endl;
     }
     cout << endl;
-
-    Title("Blokir Supplier");
-
-    for (int i = 0; i < data.sizeDataSupplier; i++)
-    {
-        cout << data.dataSupplier[i].id << " | " << data.dataSupplier[i].username << " | " << data.dataSupplier[i].status << endl;
-    }
-    cout << "Masukkan ID Supplier yang ingin diblokir atau unblokir: ";
+    Title("Blokir atau Unblokir Supplier");
+    cout << "Masukkan ID Supplier yang ingin diblokir atau unblokir:";
+    cout << endl;
     string id;
     getline(cin, id);
     Supplier *supplierDipilih;
@@ -712,6 +753,11 @@ void FormBlokirSupplier(DataUtama &data)
         {
             supplierDipilih->status = "blokir";
             cout << "Supplier berhasil diblokir!" << endl;
+            cout << endl;
+            cout << "Tekan [enter] untuk kembali ..." << endl;
+            getline(cin, data.dataSupplier[0].id); 
+            return;
+
         }
         else
         {
@@ -728,6 +774,10 @@ void FormBlokirSupplier(DataUtama &data)
         {
             supplierDipilih->status = "aktif";
             cout << "Supplier berhasil diaktifkan!" << endl;
+            cout << endl;
+            cout << "Tekan [enter] untuk kembali ..." << endl;
+            getline(cin, data.dataSupplier[0].id); 
+            return;
         }
         else
         {

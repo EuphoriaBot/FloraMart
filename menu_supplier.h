@@ -7,6 +7,7 @@ using namespace std;
 
 void SuplaiTanaman(DataUtama &data, InfoLogin &infoLogin)
 {
+    Title("Suplai Tanaman");
     if (data.sizeDataTanaman >= MAX_SIZE)
     {
         cout << "Kapasitas data tanaman sudah penuh\n";
@@ -65,7 +66,7 @@ void LihatLaporanTransaksi(DataUtama &data, InfoLogin &infoLogin)
     bool ditemukan = false;
 
     ClearScreen();
-    cout << "LAPORAN TRANSAKSI";
+    Title("Laporan Transaksi");
 
     for (int i = 0; i < data.sizeDataTransaksi; i++)
     {
@@ -144,11 +145,13 @@ void MenuUtamaSupplier(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu
         while (CekLogin(data, infoLogin))
         {
             ClearScreen();
-            cout << "=== MENU UTAMA SUPPLIER ===\n";
-            cout << "1. Dashboard\n";
-            cout << "2. Suplai Tanaman\n";
-            cout << "3. Lihat Laporan Transaksi\n";
-            cout << "4. Logout\n";
+            Title("Menu Utama Supplier");
+            cout << "Selamat Datang, " << infoLogin.username  << endl;
+            cout << "1. Dashboard" << endl;
+            cout << "2. Suplai Tanaman" << endl;
+            cout << "3. Lihat Laporan Transaksi" << endl;
+            cout << "4. Logout"<< endl;
+            cout << endl;
             cout << "Pilih menu: ";
 
             string pilihan;

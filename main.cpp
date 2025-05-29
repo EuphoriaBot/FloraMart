@@ -20,6 +20,8 @@ int main()
 
     RefreshDataUtama(data);
 
+    // cout << StringPos("Hello World", 5, "Right");
+
     while (!dataMenu.keluar)
     {
         if (!CekLogin(infoLogin))

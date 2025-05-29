@@ -163,7 +163,7 @@ void MenuUtamaSupplier(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu
             {
                 LihatLaporanTransaksi(data, infoLogin);
             }
-            else if (pilihan == "3")
+            else if (pilihan == "4")
             {
                 Logout(infoLogin);
                 break;

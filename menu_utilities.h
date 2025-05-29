@@ -75,6 +75,47 @@ void ClearScreen()
     system("powershell.exe -Command Clear-Host");
 }
 
+string StringPos(string text, int length, string pos = "L")
+{
+    stringstream streamText;
+
+    if (text.length() < length)
+    {
+        if (pos == "C" || pos == "Center")
+        {
+            int spaceLength = (length / 2) - (text.length() / 2);
+
+            for (int i = 0; i < spaceLength; i++)
+                streamText << " ";
+            
+            streamText << text;
+        }
+        else if (pos == "R" || pos == "Right")
+        {
+            streamText << right << setw(length) << text;
+        }
+        else
+        {
+            streamText << left << setw(length) << text;
+        }
+    }
+    else if (length > 0)
+    {
+        for (int i = 0; i < length - 1; i++)
+        {
+            if (i < length - 4)
+                streamText << text[i];
+            else
+                streamText << ".";
+        }
+    }
+    else
+    {
+         return text;
+    }
+    return streamText.str();
+}
+
 void Border(string lineType = "-", int length = 80)
 {
     for (int i = 0; i < length; i++)

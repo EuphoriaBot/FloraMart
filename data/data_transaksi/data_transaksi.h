@@ -238,6 +238,9 @@ void TambahTransaksi(Transaksi *dataTransaksi, int &sizeData, Transaksi transaks
 {
     Tanaman *dataTanaman = new Tanaman[MAX_SIZE];
     int *sizeDataTanaman = new int{0};
+    
+    Pembeli *dataPembeli = new Pembeli[MAX_SIZE];
+    int *sizeDataPembeli = new int{0};
 
     time_t *curTimestamp = new time_t{time(NULL)};
     tm *curDatetime = (*localtime)(&(*curTimestamp));
@@ -248,6 +251,7 @@ void TambahTransaksi(Transaksi *dataTransaksi, int &sizeData, Transaksi transaks
         strftime(curTimeOutput, 50, "%d-%m-%y %H:%M", &(*curDatetime));
 
         GetAllTanaman(dataTanaman, *sizeDataTanaman);
+        GetAllPembeli(dataPembeli, *sizeDataPembeli);
         
         if (transaksiBaru.id == "")
             throw invalid_argument("ID tanaman tidak boleh kosong!");
@@ -268,6 +272,26 @@ void TambahTransaksi(Transaksi *dataTransaksi, int &sizeData, Transaksi transaks
                 throw invalid_argument("ID sudah digunakan");
         }
 
+        for (int i = 0; i < *sizeDataTanaman; i++)
+        {
+            if (dataTanaman[i].id == transaksiBaru.id)
+            {
+                dataTanaman[i].stok -= transaksiBaru.jumlahTanaman;
+                break;
+            }
+        }
+
+        for (int i = 0; i < *sizeDataPembeli; i++)
+        {
+            if (dataPembeli[i].id == transaksiBaru.pembeli.id)
+            {
+                if (dataPembeli[i].saldo <= (transaksiBaru.tanaman.harga * transaksiBaru.jumlahTanaman))
+                    dataPembeli[i].saldo -= (transaksiBaru.tanaman.harga * transaksiBaru.jumlahTanaman);
+                else
+                    throw invalid_argument("Saldo tidak mencukupi");
+            }
+        }
+
         dataTransaksi[sizeData].id = transaksiBaru.id;
         dataTransaksi[sizeData].tanaman = transaksiBaru.tanaman;
         dataTransaksi[sizeData].pembeli = transaksiBaru.pembeli;
@@ -278,16 +302,9 @@ void TambahTransaksi(Transaksi *dataTransaksi, int &sizeData, Transaksi transaks
         dataTransaksi[sizeData].status = "Menunggu Konfirmasi";
         sizeData++;
 
-        for (int i = 0; i < *sizeDataTanaman; i++)
-        {
-            if (dataTanaman[i].id == transaksiBaru.id)
-            {
-                dataTanaman[i].stok -= transaksiBaru.jumlahTanaman;
-                break;
-            }
-        }
-
         SimpanTransaksi(dataTransaksi, sizeData);
+        SimpanTanaman(dataTanaman, *sizeDataTanaman);
+        SimpanPembeli(dataPembeli, *sizeDataPembeli);
     }
     catch (const invalid_argument &e)
     {

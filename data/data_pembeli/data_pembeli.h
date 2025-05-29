@@ -49,7 +49,7 @@ void to_json(json &j, Pembeli &p)
         j = json{
             {"id", p.id},
             {"username", p.username},
-            {"username", p.password},
+            {"password", p.password},
             {"saldo", p.saldo}};
     }
     catch (const invalid_argument &e)

@@ -272,7 +272,7 @@ void TambahTransaksi(Transaksi *dataTransaksi, int &sizeData, Transaksi transaks
 
         for (int i = 0; i < *sizeDataTanaman; i++)
         {
-            if (dataTanaman[i].id == transaksiBaru.id)
+            if (dataTanaman[i].id == transaksiBaru.tanaman.id)
             {
                 dataTanaman[i].stok -= transaksiBaru.jumlahTanaman;
                 break;

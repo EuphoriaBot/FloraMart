@@ -156,6 +156,14 @@ string ftos(float value)
     return stringStream.str();
 }
 
+string dtos(float value)
+{
+    stringstream stringStream;
+
+    stringStream << value;
+    return stringStream.str();
+}
+
 string StringPos(string text, int length, string pos = "L")
 {
     stringstream streamText;

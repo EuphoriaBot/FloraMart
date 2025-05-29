@@ -19,12 +19,14 @@ void loadDataTanaman(DataUtama &data)
 
 void HalamanTransaksi(DataUtama &data, int indexTanaman, InfoLogin &infoLogin)
 {
+    string temp;
     int stokTersedia = data.dataTanaman[indexTanaman].stok;
 
-    ClearScreen();
-    cout << "=== Halaman Transaksi ===";
-    cout << "Stok tersedia: " << stokTersedia << endl;
-    cout << "Masukkan jumlah yang ingin dibeli: ";
+    Border();
+    cout << "Transaksi" << endl
+         << endl;
+    cout << "Stok tersedia\t: " << stokTersedia << " Buah" << endl;
+    cout << "Jumlah Pembelian: ";
 
     string inputJumlah;
     getline(cin, inputJumlah);
@@ -32,19 +34,32 @@ void HalamanTransaksi(DataUtama &data, int indexTanaman, InfoLogin &infoLogin)
 
     if (jumlah <= 0)
     {
-        cout << "Jumlah tidak valid" << endl;
+        cout << "Jumlah tidak valid!";
+        getline(cin, temp);
         return;
     }
 
     if (jumlah > stokTersedia)
     {
-        cout << "Jumlah melebihi stok yang tersedia" << endl;
+        cout << "Jumlah melebihi stok yang tersedia!";
+        getline(cin, temp);
         return;
     }
 
     int totalHarga = data.dataTanaman[indexTanaman].harga * jumlah;
-    cout << "Total harga: " << totalHarga << endl;
+    cout << endl;
+    cout << "Total harga\t: Rp" << totalHarga << endl;
 
+    for (int i = 0; i < data.sizeDataPembeli; i++)
+    {
+        if (data.dataPembeli[i].id == infoLogin.id)
+        {
+            cout << "Saldo Anda\t: Rp" << data.dataPembeli[i].saldo << endl;
+            cout << endl;
+        }
+    }
+
+    Border();
     cout << "Lanjutkan pembelian? (y/n): ";
     string konfirmasi;
     getline(cin, konfirmasi);
@@ -58,34 +73,46 @@ void HalamanTransaksi(DataUtama &data, int indexTanaman, InfoLogin &infoLogin)
 
         TambahTransaksi(data.dataTransaksi, data.sizeDataTransaksi, transaksiBaru);
 
-        cout << "Pembelian berhasil" << endl;
-        cout << "Sisa stok: " << data.dataTanaman[indexTanaman].stok << endl;
+        cout << "Pembelian berhasil!" << endl;
+        cout << "Sisa stok: " << data.dataTanaman[indexTanaman].stok << " Buah";
+        getline(cin, temp);
     }
     else
     {
-        cout << "Pembelian dibatalkan" << endl;
+        cout << "Pembelian dibatalkan!";
+        getline(cin, temp);
     }
 }
 
 void DaftarTanaman(DataUtama &data, InfoLogin &infoLogin)
 {
-    ClearScreen();
-    cout << "=== Daftar Tanaman ===" << endl;
+    string temp;
 
+    ClearScreen();
+    Title("Daftar Tanaman");
     if (data.sizeDataTanaman == 0)
     {
-        cout << "Belum Ada Tanaman Yang Mulia!!!" << endl;
+        cout << "Belum Ada Tanaman Yang Mulia!!!";
+        getline(cin, temp);
         return;
     }
 
-    cout << "ID\tNama\t\tHarga\t\tSupplier" << endl;
+    Border("-", 80);
+    cout << "| "
+         << StringPos("ID", 5) << " | "
+         << StringPos("Nama", 28) << " | "
+         << StringPos("Harga", 14) << " | "
+         << StringPos("Supplier", 20) << " |" << endl;
+    Border("-", 80);
     for (int i = 0; i < data.sizeDataTanaman; i++)
     {
-        cout << data.dataTanaman[i].id << "\t"
-             << data.dataTanaman[i].namaTanaman << "\t\t"
-             << data.dataTanaman[i].harga << "\t\t"
-             << data.dataTanaman[i].supplier.username << endl;
+        cout << "| "
+             << StringPos(data.dataTanaman[i].id, 5) << " | "
+             << StringPos(data.dataTanaman[i].namaTanaman, 28) << " | "
+             << StringPos("Rp" + dtos(data.dataTanaman[i].harga), 14) << " | "
+             << StringPos(data.dataTanaman[i].supplier.username, 20) << " |" << endl;
     }
+    Border("-", 80);
 
     cout << "\nMasukkan ID tanaman untuk melihat detail: ";
     string idInput;
@@ -104,11 +131,13 @@ void DaftarTanaman(DataUtama &data, InfoLogin &infoLogin)
     if (index == -1)
     {
         cout << "Tanaman dengan ID '" << idInput << "' tidak ditemukan" << endl;
+        getline(cin, temp);
         return;
     }
 
-    cout << "\n=== Detail Informasi ===\n"
-         << "ID            : " << data.dataTanaman[index].id << endl
+    ClearScreen();
+    Title("Detail Informasi");
+    cout << "ID            : " << data.dataTanaman[index].id << endl
          << "Nama          : " << data.dataTanaman[index].namaTanaman << endl
          << "Harga         : " << data.dataTanaman[index].harga << endl
          << "Stok          : " << data.dataTanaman[index].stok << endl
@@ -117,7 +146,7 @@ void DaftarTanaman(DataUtama &data, InfoLogin &infoLogin)
          << "Min Suhu      : " << data.dataKategori[index].minSuhu << endl
          << "Max Suhu      : " << data.dataKategori[index].maxSuhu << endl
          << "Media Tanam   : " << data.dataKategori[index].mediaTanam << endl;
-
+    Border();
     cout << "Apakah Anda ingin melakukan transaksi? (y/n): ";
     string jawab;
     getline(cin, jawab);
@@ -129,6 +158,7 @@ void DaftarTanaman(DataUtama &data, InfoLogin &infoLogin)
 
 void SearchingTanaman(DataUtama &data, InfoLogin &infoLogin)
 {
+    string temp;
     RefreshDataUtama(data);
     cout << "Masukkan nama tanaman: ";
     string key;
@@ -142,6 +172,7 @@ void SearchingTanaman(DataUtama &data, InfoLogin &infoLogin)
     if (!cari)
     {
         cout << "Tanaman '" << key << "' tidak ditemukan.\n";
+        getline(cin, temp);
         return;
     }
 
@@ -156,8 +187,9 @@ void SearchingTanaman(DataUtama &data, InfoLogin &infoLogin)
     if (pilihan > 0 && pilihan <= cari)
     {
         int i = index[pilihan - 1];
-        cout << "\n=== Detail Informasi ===\n"
-             << "ID            : " << data.dataTanaman[i].id << endl
+        ClearScreen();
+        Title("Detail Informasi");
+        cout << "ID            : " << data.dataTanaman[i].id << endl
              << "Nama          : " << data.dataTanaman[i].namaTanaman << endl
              << "Harga         : " << data.dataTanaman[i].harga << endl
              << "Stok          : " << data.dataTanaman[i].stok << endl
@@ -166,7 +198,7 @@ void SearchingTanaman(DataUtama &data, InfoLogin &infoLogin)
              << "Min Suhu      : " << data.dataKategori[i].minSuhu << endl
              << "Max Suhu      : " << data.dataKategori[i].maxSuhu << endl
              << "HIDUP JOKOWI  : " << data.dataKategori[i].mediaTanam << endl;
-
+        Border();
         cout << "Apakah Anda ingin melakukan transaksi? (y/n): ";
         string jawab;
         getline(cin, jawab);
@@ -195,14 +227,16 @@ void MenuUtamaPembeli(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
     try
     {
         RefreshDataUtama(data);
+        string temp;
 
         while (CekLogin(data, infoLogin))
         {
             ClearScreen();
-            cout << "\n=== Menu Utama Pembeli ===" << endl;
+            Title("Menu Utama Pembeli");
             cout << "1. Daftar Tanaman" << endl;
             cout << "2. Searching Tanaman" << endl;
             cout << "3. Logout" << endl;
+            Border();
             cout << "Pilih menu: ";
 
             string pilihan;
@@ -225,6 +259,7 @@ void MenuUtamaPembeli(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
             else
             {
                 cout << "Pilihan tidak valid" << endl;
+                getline(cin, temp);
             }
         }
     }

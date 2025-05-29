@@ -100,9 +100,9 @@ void DashboardSupplier(DataUtama &data, InfoLogin &infoLogin)
     {
         ClearScreen();
         Title("Dashboard");
-        cout << "Jumlah Jenis Tanaman Saya\t: " << JumlahJenisTanamanSupplier(data, infoLogin.id) << " Jenis Tanaman" << endl;
-        cout << "Pemasukan Bulan Ini\t\t: Rp" << GetPemasukanBulanIniSupplier(data, infoLogin.id) << endl;
-        cout << "Stok Tanaman Terjual\t\t: " << StokTerjualSupplier(data, infoLogin.id) << " Stok Tanaman" << endl;
+        cout << StringPos("Jenis Tanaman Saya", 23) << ": " << JumlahJenisTanamanSupplier(data, infoLogin.id) << " Jenis Tanaman" << endl;
+        cout << StringPos("Pemasukan Bulan Ini", 23) << ": Rp" << GetPemasukanBulanIniSupplier(data, infoLogin.id) << endl;
+        cout << StringPos("Stok Tanaman Terjual", 23) << ": " << StokTerjualSupplier(data, infoLogin.id) << " Stok Tanaman" << endl;
         Border();
 
         DataTanamanTerlarisSupplier(data, infoLogin.id, dataTanamanTerlaris, (*sizeDataTanamanTerlaris));
@@ -112,7 +112,7 @@ void DashboardSupplier(DataUtama &data, InfoLogin &infoLogin)
         {
             for (int i = 0; i < (*sizeDataTanamanTerlaris); i++)
             {
-                cout << (i + 1) << ". " << dataTanamanTerlaris[i].namaTanaman << "\t: " << dataTanamanTerlaris[i].stok << " Buah" << endl;
+                cout << (i + 1) << ". " << StringPos(dataTanamanTerlaris[i].namaTanaman, 20) << ": " << dataTanamanTerlaris[i].stok << " Buah" << endl;
             }
         }
         else
@@ -163,7 +163,6 @@ void MenuUtamaSupplier(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu
             }
             else if (pilihan == "2")
             {
-                RefreshDataUtama(data);
                 SuplaiTanaman(data, infoLogin);
             }
             else if (pilihan == "3")

@@ -18,8 +18,6 @@ int main()
     InfoLogin infoLogin = {};
     DataMenu dataMenu = {};
 
-    RefreshDataUtama(data);
-
     while (!dataMenu.keluar)
     {
         if (!CekLogin(data, infoLogin))
@@ -49,8 +47,8 @@ int main()
 
 void MenuAwal(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
 {
-    RefreshDataUtama(data);
     string temp;
+    RefreshDataUtama(data);
 
     ClearScreen();
     Title("Menu Awal");
@@ -81,14 +79,13 @@ void MenuAwal(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
     }
     else
     {
-        cout << "Pilihan tidak valid!" << endl;
+        cout << "Pilihan tidak valid!";
         getline(cin, temp);
     }
 }
 
 void FormLogin(DataUtama &data, InfoLogin &infoLogin)
 {
-    RefreshDataUtama(data);
     string temp;
 
     ClearScreen();
@@ -147,13 +144,12 @@ void FormLogin(DataUtama &data, InfoLogin &infoLogin)
         }
     }
 
-    cout << "Username atau password salah!" << endl;
+    cout << "Username atau password salah!";
     getline(cin, temp);
 }
 
 void FormRegistrasiPembeli(DataUtama &data)
 {
-    RefreshDataUtama(data);
     string temp;
 
     ClearScreen();
@@ -170,13 +166,13 @@ void FormRegistrasiPembeli(DataUtama &data)
 
     if (input_username.empty() || input_password.empty())
     {
-        cout << "Username dan password tidak boleh kosong" << endl;
+        cout << "Username dan password tidak boleh kosong";
         getline(cin, temp);
         return;
     }
     else if (!IsValidString(input_username))
     {
-        cout << "Username tidak valid" << endl;
+        cout << "Username tidak valid";
         getline(cin, temp);
         return;
     }
@@ -185,7 +181,7 @@ void FormRegistrasiPembeli(DataUtama &data)
     {
         if (data.dataPembeli[i].username == input_username)
         {
-            cout << "Username sudah digunakan, coba yang lain." << endl;
+            cout << "Username sudah digunakan, coba yang lain.";
             getline(cin, temp);
             return;
         }
@@ -198,13 +194,12 @@ void FormRegistrasiPembeli(DataUtama &data)
 
     TambahPembeli(data.dataPembeli, data.sizeDataPembeli, pembeli_baru);
 
-    cout << "Berhasil membuat akun pembeli." << endl;
+    cout << "Berhasil membuat akun pembeli.";
     getline(cin, temp);
 }
 
 void FormRegistrasiSupplier(DataUtama &data)
 {
-    RefreshDataUtama(data);
     string temp;
 
     ClearScreen();
@@ -221,13 +216,13 @@ void FormRegistrasiSupplier(DataUtama &data)
 
     if (input_username.empty() || input_password.empty())
     {
-        cout << "Username dan password tidak boleh kosong" << endl;
+        cout << "Username dan password tidak boleh kosong";
         getline(cin, temp);
         return;
     }
     else if (!IsValidString(input_username))
     {
-        cout << "Username tidak valid" << endl;
+        cout << "Username tidak valid";
         getline(cin, temp);
         return;
     }
@@ -236,7 +231,7 @@ void FormRegistrasiSupplier(DataUtama &data)
     {
         if (data.dataSupplier[i].username == input_username)
         {
-            cout << "Username sudah digunakan, coba yang lain." << endl;
+            cout << "Username sudah digunakan, coba yang lain.";
             getline(cin, temp);
             return;
         }
@@ -249,6 +244,6 @@ void FormRegistrasiSupplier(DataUtama &data)
 
     TambahSupplier(data.dataSupplier, data.sizeDataSupplier, supplier_baru);
 
-    cout << "Berhasil membuat akun supplier." << endl;
+    cout << "Berhasil membuat akun supplier.";
     getline(cin, temp);
 }

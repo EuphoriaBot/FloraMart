@@ -29,6 +29,20 @@ void FormTambahKategori(DataUtama &data)
     cout << "Nama Kategori: ";
     string nama_kategori;
     getline(cin, nama_kategori);
+    FixString(nama_kategori);
+
+    if (IsValidString(nama_kategori) == false)
+    {
+        cout << "Nama Kategori harus berupa string alfabet!";
+        getline(cin, temp);
+        return;
+    }
+    if (nama_kategori.length() > 28)
+    {
+        cout << "Nama Kategori terlalu panjang (28 Maks)!";
+        getline(cin, temp);
+        return;
+    }
 
     for (int i = 0; i < data.sizeDataKategori; i++)
     {
@@ -38,17 +52,13 @@ void FormTambahKategori(DataUtama &data)
             getline(cin, temp);
             return;
         }
-        else if (IsValidString(nama_kategori) == false)
-        {
-            cout << "Nama Kategori harus berupa string alfabet!";
-            getline(cin, temp);
-            return;
-        }
     }
 
     float min_suhu;
     cout << "Min Suhu: ";
     getline(cin, temp);
+    FixString(temp);
+
     if (!IsValidNumeric(temp))
     {
         cout << "Input harus angka atau angka tidak valid!";
@@ -56,6 +66,12 @@ void FormTambahKategori(DataUtama &data)
         return;
     }
     min_suhu = stof(temp);
+    if (min_suhu < -999 || min_suhu > 999)
+    {
+        cout << "Maksimal input angka 3 digit!";
+        getline(cin, temp);
+        return;
+    }
 
     float max_suhu;
     cout << "Max Suhu: ";
@@ -67,6 +83,12 @@ void FormTambahKategori(DataUtama &data)
         return;
     }
     max_suhu = stof(temp);
+    if (max_suhu < -999 || max_suhu > 999)
+    {
+        cout << "Maksimal input angka 3 digit!";
+        getline(cin, temp);
+        return;
+    }
 
     if (min_suhu > max_suhu)
     {
@@ -79,12 +101,20 @@ void FormTambahKategori(DataUtama &data)
         cout << "Media Tanam: ";
         string media_tanam;
         getline(cin, media_tanam);
+        FixString(media_tanam);
         if (IsValidString(media_tanam) == false)
         {
             cout << "Media Tanam harus berupa string alfabet!";
             getline(cin, temp);
             return;
         }
+        if (media_tanam.length() > 28)
+        {
+            cout << "Media tanam terlalu panjang (28 Maks)!";
+            getline(cin, temp);
+            return;
+        }
+
         cout << "Apakah anda yakin ingin menambahkan kategori " << nama_kategori << "? [y/n]: ";
         string konfirmasi;
         getline(cin, konfirmasi);
@@ -215,6 +245,7 @@ void FormEditKategori(DataUtama &data)
 
     cout << "Nama Kategori: ";
     getline(cin, temp);
+    FixString(temp);
     if (!temp.empty())
     {
         if (IsValidString(temp) == false)
@@ -223,6 +254,13 @@ void FormEditKategori(DataUtama &data)
             getline(cin, temp);
             return;
         }
+        if (temp.length() > 28)
+        {
+            cout << "Nama kategori terlalu panjang (28 Maks)!";
+            getline(cin, temp);
+            return;
+        }
+
         for (int i = 0; i < data.sizeDataKategori; i++)
         {
             if (LowerCase(data.dataKategori[i].namaKategori) == LowerCase(temp))
@@ -246,6 +284,12 @@ void FormEditKategori(DataUtama &data)
             getline(cin, temp);
             return;
         }
+        if (stof(temp) < -999 || stof(temp) > 999)
+        {
+            cout << "Maksimal input angka 3 digit!";
+            getline(cin, temp);
+            return;
+        }
         kategoriDiedit->minSuhu = stof(temp);
     }
 
@@ -256,6 +300,12 @@ void FormEditKategori(DataUtama &data)
         if (!IsValidNumeric(temp))
         {
             cout << "Input harus angka atau angka tidak valid!";
+            getline(cin, temp);
+            return;
+        }
+        if (stof(temp) < -999 || stof(temp) > 999)
+        {
+            cout << "Maksimal input angka 3 digit!";
             getline(cin, temp);
             return;
         }
@@ -272,11 +322,18 @@ void FormEditKategori(DataUtama &data)
     {
         cout << "Media Tanam: ";
         getline(cin, temp);
+        FixString(temp);
         if (!temp.empty())
         {
             if (IsValidString(temp) == false)
             {
                 cout << "Media Tanam harus berupa string alfabet!";
+                getline(cin, temp);
+                return;
+            }
+            if (temp.length() > 28)
+            {
+                cout << "Media tanam terlalu panjang (28 Maks)!";
                 getline(cin, temp);
                 return;
             }
@@ -507,18 +564,26 @@ void FormKesiapanTanaman(DataUtama &data)
         string nama_tanaman;
         cout << StringPos("Masukkan nama tanaman baru", 31) << ": ";
         getline(cin, nama_tanaman);
+        FixString(nama_tanaman);
         if (nama_tanaman.empty())
         {
             cout << "Nama tanaman tidak boleh kosong";
             getline(cin, temp);
             return;
         }
-        else if (IsValidString(nama_tanaman) == false)
+        if (IsValidString(nama_tanaman) == false)
         {
             cout << "Nama tanaman harus berupa string alfabet!";
             getline(cin, temp);
             return;
         }
+        if (nama_tanaman.length() > 28)
+        {
+            cout << "Nama tanaman terlalu panjang (28 Maks)!";
+            getline(cin, temp);
+            return;
+        }
+
         double harga;
         cout << StringPos("Masukkan harga tanaman (Rp)", 31) << ": ";
         getline(cin, temp);
@@ -528,6 +593,7 @@ void FormKesiapanTanaman(DataUtama &data)
             getline(cin, temp);
             return;
         }
+        
         harga = stod(temp);
         if (harga < 1000)
         {
@@ -578,6 +644,13 @@ void FormKesiapanTanaman(DataUtama &data)
             getline(cin, temp);
             return;
         }
+        else if (stok_diterima > suplaidipilih.jumlah)
+        {
+            cout << "Jumlah stok tidak boleh melebihi jumlah suplai!";
+            getline(cin, temp);
+            return;
+        }
+
         Tanaman tanamanBaru;
         tanamanBaru.id = GetFreeTanamanId();
         tanamanBaru.supplier = suplaidipilih.supplier;
@@ -666,6 +739,12 @@ void FormKesiapanTanaman(DataUtama &data)
         if (stok_diterima < 0)
         {
             cout << "Jumlah stok tidak boleh kurang dari 0!";
+            getline(cin, temp);
+            return;
+        }
+        else if (stok_diterima > suplaidipilih.jumlah)
+        {
+            cout << "Jumlah stok tidak boleh melebihi jumlah suplai!";
             getline(cin, temp);
             return;
         }

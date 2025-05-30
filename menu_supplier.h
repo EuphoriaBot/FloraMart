@@ -26,6 +26,20 @@ void SuplaiTanaman(DataUtama &data, InfoLogin &infoLogin)
 
     cout << StringPos("Nama Tanaman", 16) << ": ";
     getline(cin, nama);
+    FixString(nama);
+    if (!IsValidString(nama))
+    {
+        cout << "Nama tanaman harus berupa string alfabet!";
+        getline(cin, _temp);
+        return;
+    }
+    if (nama.length() > 28)
+    {
+        cout << "Nama tanaman terlalu panjang (28 Maks)!";
+        getline(cin, _temp);
+        return;
+    }
+    
     cout << StringPos("Stok", 16) << ": ";
     getline(cin, stokStr);
 

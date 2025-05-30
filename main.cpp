@@ -160,20 +160,39 @@ void FormRegistrasiPembeli(DataUtama &data)
     getline(cin, input_username);
     FixString(input_username);
 
+    if (input_username.empty())
+    {
+        cout << "Username tidak boleh kosong";
+        getline(cin, temp);
+        return;
+    }
+    if (!IsValidString(input_username))
+    {
+        cout << "Username tidak valid";
+        getline(cin, temp);
+        return;
+    }
+    if (input_username.length() > 24)
+    {
+        cout << "Username terlalu panjang (24 Maks)";
+        getline(cin, temp);
+        return;
+    }
+    
     cout << "Password: ";
     string input_password;
     getline(cin, input_password);
     FixString(input_password);
-
-    if (input_username.empty() || input_password.empty())
+    
+    if (input_password.empty())
     {
-        cout << "Username dan password tidak boleh kosong";
+        cout << "Password tidak boleh kosong";
         getline(cin, temp);
         return;
     }
-    else if (!IsValidString(input_username))
+    if (input_password.length() > 24)
     {
-        cout << "Username tidak valid";
+        cout << "Username terlalu panjang (24 Maks)";
         getline(cin, temp);
         return;
     }
@@ -211,20 +230,39 @@ void FormRegistrasiSupplier(DataUtama &data)
     getline(cin, input_username);
     FixString(input_username);
 
+    if (input_username.empty())
+    {
+        cout << "Username tidak boleh kosong";
+        getline(cin, temp);
+        return;
+    }
+    if (!IsValidString(input_username))
+    {
+        cout << "Username tidak valid";
+        getline(cin, temp);
+        return;
+    }
+    if (input_username.length() > 24)
+    {
+        cout << "Username terlalu panjang (24 Maks)";
+        getline(cin, temp);
+        return;
+    }
+    
     cout << "Password: ";
     string input_password;
     getline(cin, input_password);
     FixString(input_password);
-
-    if (input_username.empty() || input_password.empty())
+    
+    if (input_password.empty())
     {
-        cout << "Username dan password tidak boleh kosong";
+        cout << "Password tidak boleh kosong";
         getline(cin, temp);
         return;
     }
-    else if (!IsValidString(input_username))
+    if (input_password.length() > 16)
     {
-        cout << "Username tidak valid";
+        cout << "Username terlalu panjang (16 Maks)";
         getline(cin, temp);
         return;
     }

@@ -5,20 +5,12 @@
 #include "menu_utilities.h"
 using namespace std;
 
-void loadDataTanaman(DataUtama &data)
-{
-    json tanamanJson;
-
-    for (int i = 0; i < data.sizeDataTanaman; i++)
-    {
-        data.dataTanaman[i].id = tanamanJson[i]["id"];
-        data.dataTanaman[i].namaTanaman = tanamanJson[i]["namaTanaman"];
-        data.dataTanaman[i].harga = tanamanJson[i]["harga"];
-    }
-}
-
 void HalamanTransaksi(DataUtama &data, int indexTanaman, InfoLogin &infoLogin)
 {
+    data.flagRefreshTanaman = true;
+    data.flagRefreshTransaksi = true;
+    RefreshDataUtama(data);
+
     string temp;
     int stokTersedia = data.dataTanaman[indexTanaman].stok;
 
@@ -72,6 +64,9 @@ void HalamanTransaksi(DataUtama &data, int indexTanaman, InfoLogin &infoLogin)
         transaksiBaru.jumlahTanaman = jumlah;
 
         TambahTransaksi(data.dataTransaksi, data.sizeDataTransaksi, transaksiBaru);
+
+        data.flagRefreshTanaman = true;
+        data.flagRefreshTransaksi = true;
         RefreshDataUtama(data);
 
         cout << "Pembelian berhasil!" << endl;
@@ -128,6 +123,10 @@ void MenuTopUp(DataUtama &data, InfoLogin &infoLogin)
                 getline(cin, temp);
             }
             UpdateDataUtama(data);
+            data.flagRefreshPembeli = true;
+            RefreshDataUtama(data);
+
+            cout << endl;
             cout << "Tekan [Enter] untuk kembali...";
             getline(cin, (temp));
             break;
@@ -137,6 +136,8 @@ void MenuTopUp(DataUtama &data, InfoLogin &infoLogin)
 
 void DaftarTanaman(DataUtama &data, InfoLogin &infoLogin)
 {
+    data.flagRefreshTanaman = true;
+    RefreshDataUtama(data);
     string temp;
 
     ClearScreen();
@@ -208,6 +209,9 @@ void DaftarTanaman(DataUtama &data, InfoLogin &infoLogin)
 
 void SearchingTanaman(DataUtama &data, InfoLogin &infoLogin)
 {
+    data.flagRefreshTanaman = true;
+    RefreshDataUtama(data);
+
     ClearScreen();
     Title("Searching Tanaman");
     string temp;
@@ -223,12 +227,12 @@ void SearchingTanaman(DataUtama &data, InfoLogin &infoLogin)
     if (!cari)
     {
         cout << "Tanaman '" << key << "' tidak ditemukan.\n";
-        getline(cin, temp);
         cout << "Tekan [Enter] untuk kembali ke menu utama...";
+        getline(cin, temp);
         return;
     }
 
-    cout << "Hasil:";
+    cout << "Hasil:" << endl;
     for (int j = 0; j < cari; j++)
         cout << j + 1 << ". "
              << data.dataTanaman[index[j]].namaTanaman
@@ -278,7 +282,7 @@ void MenuUtamaPembeli(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
     try
     {
         string temp;
-        
+
         while (CekLogin(data, infoLogin))
         {
             RefreshDataUtama(data);
@@ -297,7 +301,6 @@ void MenuUtamaPembeli(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
 
             if (pilihan == "1")
             {
-                RefreshDataUtama(data);
                 DaftarTanaman(data, infoLogin);
             }
             else if (pilihan == "2")
@@ -317,6 +320,7 @@ void MenuUtamaPembeli(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
             {
                 cout << "Pilihan tidak valid" << endl;
                 getline(cin, temp);
+                return;
             }
         }
     }

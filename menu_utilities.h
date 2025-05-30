@@ -34,15 +34,46 @@ struct DataMenu
 
 void RefreshDataUtama(DataUtama &data)
 {
-    GetAllPembeli(data.dataPembeli, data.sizeDataPembeli);
-    GetAllSupplier(data.dataSupplier, data.sizeDataSupplier);
-    GetAllAdmin(data.dataAdmin, data.sizeDataAdmin);
-    GetAllTanaman(data.dataTanaman, data.sizeDataTanaman);
-    GetAllKategori(data.dataKategori, data.sizeDataKategori);
-    GetAllMetodeTransaksi(data.dataMetodeTransaksi, data.sizeDataMetodeTransaksi);
-    GetAllSuplai(data.dataSuplai, data.sizeDataSuplai);
-    GetAllTransaksi(data.dataTransaksi, data.sizeDataTransaksi);
-    GetAllValidasiTanaman(data.dataValidasiTanaman, data.sizeDataValidasi);
+    if (data.flagRefreshPembeli)
+    {
+        GetAllPembeli(data.dataPembeli, data.sizeDataPembeli);
+        data.flagRefreshPembeli = false;
+    }
+    if (data.flagRefreshSupplier)
+    {
+        GetAllSupplier(data.dataSupplier, data.sizeDataSupplier);
+        data.flagRefreshSupplier = false;
+    }
+    if (data.flagRefreshAdmin)
+    {
+        GetAllAdmin(data.dataAdmin, data.sizeDataAdmin);
+        data.flagRefreshAdmin = false;
+    }
+    if (data.flagRefreshTanaman)
+    {
+        GetAllTanaman(data.dataTanaman, data.sizeDataTanaman);
+        data.flagRefreshTanaman = false;
+    }
+    if (data.flagRefreshKategori)
+    {
+        GetAllKategori(data.dataKategori, data.sizeDataKategori);
+        data.flagRefreshKategori = false;
+    }
+    if (data.flagRefreshSuplai)
+    {
+        GetAllSuplai(data.dataSuplai, data.sizeDataSuplai);
+        data.flagRefreshSuplai = false;
+    }
+    if (data.flagRefreshTransaksi)
+    {
+        GetAllTransaksi(data.dataTransaksi, data.sizeDataTransaksi);
+        data.flagRefreshTransaksi = false;
+    }
+    if (data.flagRefreshValidasiTanaman)
+    {
+        GetAllValidasiTanaman(data.dataValidasiTanaman, data.sizeDataValidasi);
+        data.flagRefreshValidasiTanaman = false;
+    }
 }
 
 void UpdateDataUtama(DataUtama &data)

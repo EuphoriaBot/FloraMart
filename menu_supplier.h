@@ -7,6 +7,9 @@ using namespace std;
 
 void SuplaiTanaman(DataUtama &data, InfoLogin &infoLogin)
 {
+    data.flagRefreshSuplai = true;
+    data.flagRefreshSupplier = true;
+    RefreshDataUtama(data);
     string _temp;
 
     ClearScreen();
@@ -14,6 +17,7 @@ void SuplaiTanaman(DataUtama &data, InfoLogin &infoLogin)
     if (data.sizeDataTanaman >= MAX_SIZE)
     {
         cout << "Kapasitas data tanaman sudah penuh\n";
+        getline(cin, _temp);
         return;
     }
 
@@ -39,6 +43,7 @@ void SuplaiTanaman(DataUtama &data, InfoLogin &infoLogin)
     catch (...)
     {
         cout << "Input stok tidak valid";
+        getline(cin, _temp);
         return;
     }
 
@@ -50,6 +55,9 @@ void SuplaiTanaman(DataUtama &data, InfoLogin &infoLogin)
     suplaiBaru.supplier.username = infoLogin.username;
 
     TambahSuplai(data.dataSuplai, data.sizeDataSuplai, suplaiBaru);
+    data.flagRefreshSuplai = true;
+    data.flagRefreshSupplier = true;
+    RefreshDataUtama(data);
 
     cout << "Tanaman berhasil disuplai";
     cout << endl;
@@ -74,6 +82,10 @@ void NambahSuplai(Suplai dataSuplai[], int &size, Suplai suplaiBaru)
 
 void LihatLaporanTransaksi(DataUtama &data, InfoLogin &infoLogin)
 {
+    data.flagRefreshTanaman = true;
+    data.flagRefreshTransaksi = true;
+    RefreshDataUtama(data);
+
     bool ditemukan = false;
 
     ClearScreen();
@@ -92,19 +104,20 @@ void LihatLaporanTransaksi(DataUtama &data, InfoLogin &infoLogin)
             cout << "Jumlah       : " << transaksi.jumlahTanaman << endl;
             cout << "Tanggal      : " << transaksi.tanggalTransaksi << endl;
             cout << "Pembeli      : " << transaksi.pembeli.username << endl;
-            cout<< endl;
+            cout << endl;
         }
     }
-    cout << endl;
-    string temp;
-    getline(cin, temp); // To pause the screen
-    cout << "Tekan [Enter] untuk melanjutkan...";
-    return;
-
     if (!ditemukan)
     {
         cout << "Belum ada transaksi";
     }
+
+    cout << endl;
+    string temp;
+    cout << "Tekan [Enter] untuk melanjutkan...";
+    getline(cin, temp); // To pause the screen
+    return;
+
 }
 
 void DashboardSupplier(DataUtama &data, InfoLogin &infoLogin)
@@ -115,6 +128,12 @@ void DashboardSupplier(DataUtama &data, InfoLogin &infoLogin)
 
     try
     {
+        data.flagRefreshTanaman = true;
+        data.flagRefreshSupplier = true;
+        data.flagRefreshTransaksi = true;
+
+        RefreshDataUtama(data);
+
         ClearScreen();
         Title("Dashboard");
         cout << StringPos("Jenis Tanaman Disuplai", 26) << ": " << JumlahJenisTanamanSupplier(data, infoLogin.id) << " Jenis Tanaman" << endl;
@@ -162,15 +181,16 @@ void MenuUtamaSupplier(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu
             RefreshDataUtama(data);
             ClearScreen();
             Title("Menu Utama Supplier");
-            cout << "Selamat Datang, " << infoLogin.username  << endl;
+            cout << "Selamat Datang, " << infoLogin.username << endl;
             cout << "1. Dashboard" << endl;
             cout << "2. Suplai Tanaman" << endl;
             cout << "3. Lihat Laporan Transaksi" << endl;
-            cout << "4. Logout"<< endl;
+            cout << "4. Logout" << endl;
             cout << endl;
             cout << "Pilih menu: ";
 
             string pilihan;
+            string temp;
             getline(cin, pilihan);
 
             if (pilihan == "1")
@@ -193,6 +213,7 @@ void MenuUtamaSupplier(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu
             else
             {
                 cout << "Pilihan tidak valid \n";
+                getline(cin, temp);
             }
         }
     }

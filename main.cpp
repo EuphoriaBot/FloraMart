@@ -150,6 +150,7 @@ void FormLogin(DataUtama &data, InfoLogin &infoLogin)
 
 void FormRegistrasiPembeli(DataUtama &data)
 {
+    data.flagRefreshPembeli = true;
     string temp;
 
     ClearScreen();
@@ -200,6 +201,7 @@ void FormRegistrasiPembeli(DataUtama &data)
 
 void FormRegistrasiSupplier(DataUtama &data)
 {
+    data.flagRefreshSupplier = true;
     string temp;
 
     ClearScreen();

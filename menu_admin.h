@@ -5,6 +5,8 @@
 
 void FormTambahKategori(DataUtama &data)
 {
+    data.flagRefreshKategori = true;
+
     ClearScreen();
     Title("Lihat Kategori");
     cout << StringPos("ID", 5, "Left");
@@ -17,7 +19,7 @@ void FormTambahKategori(DataUtama &data)
     {
         cout << StringPos(data.dataKategori[i].id, 5, "Left");
         cout << StringPos(data.dataKategori[i].namaKategori, 24, "Left");
-        cout << StringPos(ftos(data.dataKategori[i].minSuhu) + " - " + ftos(data.dataKategori[i].maxSuhu) + "\u00B0C", 14, "Left");
+        cout << StringPos(ftos(data.dataKategori[i].minSuhu) + " - " + ftos(data.dataKategori[i].maxSuhu) + "\u00B0C", 15, "Left");
         cout << StringPos(data.dataKategori[i].mediaTanam, 20, "Left") << endl;
     }
     cout << endl;
@@ -32,12 +34,14 @@ void FormTambahKategori(DataUtama &data)
     {
         if (data.dataKategori[i].namaKategori == nama_kategori)
         {
-            cout << "Nama Kategori sudah ada!" << endl;
+            cout << "Nama Kategori sudah ada!";
+            getline(cin, temp);
             return;
         }
         else if (IsValidString(nama_kategori) == false)
         {
-            cout << "Nama Kategori harus berupa string alfabet!" << endl;
+            cout << "Nama Kategori harus berupa string alfabet!";
+            getline(cin, temp);
             return;
         }
     }
@@ -53,7 +57,8 @@ void FormTambahKategori(DataUtama &data)
 
     if (min_suhu > max_suhu)
     {
-        cout << "Maksimum Suhu tidak boleh kurang dari Minimum Suhu!" << endl;
+        cout << "Maksimum Suhu tidak boleh kurang dari Minimum Suhu!";
+        getline(cin, temp);
         return;
     }
     else
@@ -63,10 +68,11 @@ void FormTambahKategori(DataUtama &data)
         getline(cin, media_tanam);
         if (IsValidString(media_tanam) == false)
         {
-            cout << "Media Tanam harus berupa string alfabet!" << endl;
+            cout << "Media Tanam harus berupa string alfabet!";
+            getline(cin, temp);
             return;
         }
-        cout << "Apakah anda yakin ingin menambahkan kategori " << nama_kategori << "? [y/n]" << endl;
+        cout << "Apakah anda yakin ingin menambahkan kategori " << nama_kategori << "? [y/n]: ";
         string konfirmasi;
         getline(cin, konfirmasi);
         if (konfirmasi == "y" || konfirmasi == "Y")
@@ -75,8 +81,8 @@ void FormTambahKategori(DataUtama &data)
             TambahKategori(data.dataKategori, data.sizeDataKategori, kategoriBaru);
             cout << endl;
             cout << "Kategori berhasil ditambahkan!" << endl;
-            cout << "Tekan [enter] untuk kembali ..." << endl;
-            getline(cin, data.dataKategori[0].id);
+            cout << "Tekan [enter] untuk kembali ...";
+            getline(cin, temp);
         }
         else
         {
@@ -87,18 +93,21 @@ void FormTambahKategori(DataUtama &data)
 
 void FormHapusKategori(DataUtama &data)
 {
+    data.flagRefreshKategori = true;
+
     ClearScreen();
     Title("Lihat Kategori");
     cout << StringPos("ID", 5, "Left");
     cout << StringPos("Nama Kategori", 24, "Left");
     cout << StringPos("Suhu", 14, "Left");
     cout << StringPos("Media Tanam", 20, "Left") << endl;
+    cout << endl;
 
     for (int i = 0; i < data.sizeDataKategori; i++)
     {
         cout << StringPos(data.dataKategori[i].id, 5, "Left");
         cout << StringPos(data.dataKategori[i].namaKategori, 24, "Left");
-        cout << StringPos(ftos(data.dataKategori[i].minSuhu) + " - " + ftos(data.dataKategori[i].maxSuhu) + "\u00B0C", 14, "Left");
+        cout << StringPos(ftos(data.dataKategori[i].minSuhu) + " - " + ftos(data.dataKategori[i].maxSuhu) + "\u00B0C", 15, "Left");
         cout << StringPos(data.dataKategori[i].mediaTanam, 20, "Left") << endl;
     }
     cout << endl;
@@ -120,7 +129,7 @@ void FormHapusKategori(DataUtama &data)
     }
     if (!kategoriDihapus.id.empty())
     {
-        cout << "Anda yakin ingin menghapus kategori " << kategoriDihapus.namaKategori << "? [y/n]" << endl;
+        cout << "Anda yakin ingin menghapus kategori " << kategoriDihapus.namaKategori << "? [y/n]: ";
         string konfirmasi;
         getline(cin, konfirmasi);
         if (konfirmasi == "y" || konfirmasi == "Y")
@@ -128,8 +137,8 @@ void FormHapusKategori(DataUtama &data)
             HapusKategori(data.dataKategori, data.sizeDataKategori, kategoriDihapus);
             cout << endl;
             cout << "Kategori berhasil dihapus!" << endl;
-            cout << "Tekan [enter] untuk kembali ..." << endl;
-            getline(cin, data.dataKategori[0].id);
+            cout << "Tekan [enter] untuk kembali ...";
+            getline(cin, temp);
             return;
         }
         else
@@ -139,13 +148,18 @@ void FormHapusKategori(DataUtama &data)
     }
     else
     {
-        cout << "ID Kategori tidak ditemukan!" << endl;
+        cout << "ID Kategori tidak ditemukan!";
+        getline(cin, temp);
         return;
     }
 }
 
 void FormEditKategori(DataUtama &data)
 {
+    data.flagRefreshKategori = true;
+    data.flagRefreshTanaman = true;
+    data.flagRefreshTransaksi = true;
+
     ClearScreen();
 
     Title("Lihat Kategori");
@@ -159,7 +173,7 @@ void FormEditKategori(DataUtama &data)
     {
         cout << StringPos(data.dataKategori[i].id, 5, "Left");
         cout << StringPos(data.dataKategori[i].namaKategori, 24, "Left");
-        cout << StringPos(ftos(data.dataKategori[i].minSuhu) + " - " + ftos(data.dataKategori[i].maxSuhu) + "\u00B0C", 14, "Left");
+        cout << StringPos(ftos(data.dataKategori[i].minSuhu) + " - " + ftos(data.dataKategori[i].maxSuhu) + "\u00B0C", 15, "Left");
         cout << StringPos(data.dataKategori[i].mediaTanam, 20, "Left") << endl;
     }
     cout << endl;
@@ -181,7 +195,8 @@ void FormEditKategori(DataUtama &data)
 
     if (kategoriDiedit->id.empty())
     {
-        cout << "ID Kategori tidak ditemukan!" << endl;
+        cout << "ID Kategori tidak ditemukan!";
+        getline(cin, temp);
         return;
     }
 
@@ -196,7 +211,8 @@ void FormEditKategori(DataUtama &data)
     {
         if (IsValidString(kategoriDiedit->namaKategori) == false)
         {
-            cout << "Nama Kategori harus berupa string alfabet!" << endl;
+            cout << "Nama Kategori harus berupa string alfabet!";
+            getline(cin, temp);
             return;
         }
     }
@@ -212,12 +228,12 @@ void FormEditKategori(DataUtama &data)
     if (!temp.empty())
     {
         kategoriDiedit->maxSuhu = stof(temp);
-        ;
     }
 
     if (kategoriDiedit->maxSuhu < kategoriDiedit->minSuhu)
     {
-        cout << "Maksimum Suhu tidak boleh kurang dari Minimum Suhu!" << endl;
+        cout << "Maksimum Suhu tidak boleh kurang dari Minimum Suhu!";
+        getline(cin, temp);
         return;
     }
     else
@@ -230,10 +246,11 @@ void FormEditKategori(DataUtama &data)
         }
         else if (IsValidString(kategoriDiedit->mediaTanam) == false)
         {
-            cout << "Media Tanam harus berupa string alfabet!" << endl;
+            cout << "Media Tanam harus berupa string alfabet!";
+            getline(cin, temp);
             return;
         }
-        cout << "Apakah anda yakin ingin mengedit kategori " << kategoriDiedit->namaKategori << "? [y/n]" << endl;
+        cout << "Apakah anda yakin ingin mengedit kategori " << kategoriDiedit->namaKategori << "? [y/n]: ";
         string konfirmasi;
         getline(cin, konfirmasi);
         if (konfirmasi == "y" || konfirmasi == "Y")
@@ -242,7 +259,7 @@ void FormEditKategori(DataUtama &data)
             cout << endl;
             cout << "Kategori berhasil diedit!" << endl;
             cout << "Tekan [enter] untuk kembali ..." << endl;
-            getline(cin, data.dataKategori[0].id);
+            getline(cin, temp);
         }
         else
         {
@@ -253,6 +270,7 @@ void FormEditKategori(DataUtama &data)
 
 void FormLihatKategori(DataUtama &data)
 {
+    data.flagRefreshKategori = true;
     RefreshDataUtama(data);
 
     ClearScreen();
@@ -267,7 +285,7 @@ void FormLihatKategori(DataUtama &data)
     {
         cout << StringPos(data.dataKategori[i].id, 5, "Left");
         cout << StringPos(data.dataKategori[i].namaKategori, 24, "Left");
-        cout << StringPos(ftos(data.dataKategori[i].minSuhu) + " - " + ftos(data.dataKategori[i].maxSuhu) + "\u00B0C", 14, "Left");
+        cout << StringPos(ftos(data.dataKategori[i].minSuhu) + " - " + ftos(data.dataKategori[i].maxSuhu) + "\u00B0C", 15, "Left");
         cout << StringPos(data.dataKategori[i].mediaTanam, 20, "Left") << endl;
     }
     cout << endl;
@@ -277,6 +295,11 @@ void FormLihatKategori(DataUtama &data)
 
 void FormSortingKategori(DataUtama &data)
 {
+    data.flagRefreshKategori = true;
+    RefreshDataUtama(data);
+
+    string temp;
+
     ClearScreen();
     Title("Sorting Kategori Berdasarkan Nama Secara Ascending");
     for (int i = 0; i < data.sizeDataKategori; i++)
@@ -284,10 +307,11 @@ void FormSortingKategori(DataUtama &data)
         cout << data.dataKategori[i].namaKategori << endl;
     }
     cout << endl;
-    cout << "Apakah Anda yakin ingin mengurutkan kategori berdasarkan nama secara ascending? [y/n]" << endl;
+    cout << "Apakah Anda yakin ingin mengurutkan kategori berdasarkan nama secara ascending? [y/n]: ";
     string konfirmasi;
     getline(cin, konfirmasi);
     cout << endl;
+    Border();
     if (konfirmasi == "y" || konfirmasi == "Y")
     {
         for (int i = 0; i < data.sizeDataKategori - 1; i++)
@@ -306,10 +330,10 @@ void FormSortingKategori(DataUtama &data)
         {
             cout << data.dataKategori[i].namaKategori << endl;
         }
-        cout << "Kategori berhasil diurutkan!" << endl;
         cout << endl;
+        cout << "Kategori berhasil diurutkan!" << endl;
         cout << "Tekan [enter] untuk kembali ..." << endl;
-        getline(cin, data.dataKategori[0].id); // To pause the screen
+        getline(cin, temp); // To pause the screen
     }
     else
     {
@@ -321,6 +345,7 @@ void MenuManajemenKategori(DataUtama &data, InfoLogin &infoLogin)
 {
     while (CekLogin(data, infoLogin))
     {
+        data.flagRefreshKategori = true;
         RefreshDataUtama(data);
         ClearScreen();
         Title("Manajemen Kategori");
@@ -337,6 +362,7 @@ void MenuManajemenKategori(DataUtama &data, InfoLogin &infoLogin)
         cout << "Pilih menu: ";
 
         string pilihan;
+        string temp;
         getline(cin, pilihan);
         if (pilihan == "1")
         {
@@ -365,16 +391,18 @@ void MenuManajemenKategori(DataUtama &data, InfoLogin &infoLogin)
         else
         {
             cout << "Pilihan tidak valid!" << endl;
+            getline(cin, temp);
         }
     }
 }
 
 void FormKesiapanTanaman(DataUtama &data)
 {
+    data.flagRefreshValidasiTanaman = true;
     string temp;
     Suplai suplaidipilih;
     Tanaman tanamandipilih;
-    
+
     ClearScreen();
     Title("Validasi Suplai Tanaman");
     cout << endl;
@@ -413,7 +441,8 @@ void FormKesiapanTanaman(DataUtama &data)
     }
     if (!suplaiditemukan)
     {
-        cout << "ID Suplai tidak ditemukan atau sudah divalidasi." << endl;
+        cout << "ID Suplai tidak ditemukan atau sudah divalidasi.";
+        getline(cin, temp);
         return;
     }
 
@@ -516,7 +545,7 @@ void FormKesiapanTanaman(DataUtama &data)
         validasiBaru.suplai = suplaidipilih;
 
         cout << endl;
-        cout << StringPos("Apakah data sudah benar? (y/n)", 31);
+        cout << StringPos("Apakah data sudah benar? (y/n): ", 31);
         string konfirmasi;
         getline(cin, konfirmasi);
         if (konfirmasi == "y" || konfirmasi == "Y")
@@ -527,18 +556,18 @@ void FormKesiapanTanaman(DataUtama &data)
             cout << "Suplai berhasil divalidasi!" << endl;
             cout << endl;
             cout << "Tekan [enter] untuk kembali ..." << endl;
-            getline(cin, data.dataTanaman[0].id);
+            getline(cin, temp);
         }
         else if (konfirmasi == "n" || konfirmasi == "N")
         {
             cout << "Membatalkan validasi ...";
-            getline(cin, data.dataTanaman[0].id);
+            getline(cin, temp);
             return;
         }
         else
         {
             cout << "Pilihan tidak valid ...";
-            getline(cin, data.dataTanaman[0].id);
+            getline(cin, temp);
             return;
         }
     }
@@ -595,7 +624,7 @@ void FormKesiapanTanaman(DataUtama &data)
         validasiBaru.suplai = suplaidipilih;
 
         cout << endl;
-        cout << StringPos("Apakah data sudah benar? (y/n)", 31);
+        cout << StringPos("Apakah data sudah benar? (y/n): ", 31);
         string konfirmasi;
         getline(cin, konfirmasi);
         if (konfirmasi == "y" || konfirmasi == "Y")
@@ -605,19 +634,19 @@ void FormKesiapanTanaman(DataUtama &data)
             cout << "Suplai berhasil divalidasi!" << endl;
             cout << endl;
             cout << "Tekan [enter] untuk kembali ...";
-            getline(cin, data.dataTanaman[0].id);
+            getline(cin, temp);
             return;
         }
         else if (konfirmasi == "n" || konfirmasi == "N")
         {
             cout << "Membatalkan validasi ...";
-            getline(cin, data.dataTanaman[0].id);
+            getline(cin, temp);
             return;
         }
         else
         {
             cout << "Pilihan tidak valid ...";
-            getline(cin, data.dataTanaman[0].id);
+            getline(cin, temp);
             return;
         }
     }
@@ -633,9 +662,10 @@ void MenuNotifikasi(DataUtama &data, InfoLogin &infoLogin)
 {
     while (CekLogin(data, infoLogin))
     {
+        data.flagRefreshTransaksi = true;
         RefreshDataUtama(data);
         string temp;
-        
+
         ClearScreen();
         Title("Notifikasi");
         cout << StringPos("ID", 15, "Left");
@@ -686,12 +716,13 @@ void MenuNotifikasi(DataUtama &data, InfoLogin &infoLogin)
         getline(cin, temp);
         if (temp == "y" || temp == "Y")
         {
+            data.flagRefreshTransaksi = true;
             pilihanTransaksi->status = "Selesai";
             UpdateDataUtama(data);
             cout << "Transaksi berhasil dikonfirmasi!" << endl;
             cout << endl;
-            cout << "Tekan [enter] untuk kembali ..." << endl;
-            getline(cin, data.dataTransaksi[0].id); // To pause the screen
+            cout << "Tekan [enter] untuk kembali ...";
+            getline(cin, temp);
             return;
         }
         else if (temp == "n" || temp == "N")
@@ -700,13 +731,19 @@ void MenuNotifikasi(DataUtama &data, InfoLogin &infoLogin)
         }
         else
         {
-            cout << "Pilihan tidak valid!" << endl;
+            cout << "Pilihan tidak valid!";
+            getline(cin, temp);
             return;
         }
     }
 }
 void FormLihatSupplier(DataUtama &data)
 {
+    data.flagRefreshSupplier = true;
+    RefreshDataUtama(data);
+
+    string temp;
+
     ClearScreen();
     Title("Lihat Supplier");
     cout << StringPos("ID", 5, "Left");
@@ -722,12 +759,13 @@ void FormLihatSupplier(DataUtama &data)
     }
     cout << endl;
     cout << "Tekan [enter] untuk kembali ..." << endl;
-    getline(cin, data.dataSupplier[0].id); // To pause the screen
+    getline(cin, temp);
     return;
 }
 
 void FormHapusSupplier(DataUtama &data)
 {
+    string temp;
     ClearScreen();
     Title("Lihat Supplier");
     cout << StringPos("ID", 5, "Left");
@@ -759,12 +797,13 @@ void FormHapusSupplier(DataUtama &data)
     }
     if (!supplierDipilih.id.empty())
     {
-        cout << "Anda yakin ingin menghapus supplier " << supplierDipilih.username << "? [y/n]" << endl;
+        cout << "Anda yakin ingin menghapus supplier " << supplierDipilih.username << "? [y/n]: ";
         string konfirmasi;
         getline(cin, konfirmasi);
         if (konfirmasi != "y" && konfirmasi != "Y")
         {
-            cout << "Pembatalan penghapusan supplier." << endl;
+            cout << "Pembatalan penghapusan supplier.";
+            getline(cin, temp);
             return;
         }
         else
@@ -772,20 +811,24 @@ void FormHapusSupplier(DataUtama &data)
             HapusSupplier(data.dataSupplier, data.sizeDataSupplier, supplierDipilih);
             cout << "Supplier berhasil dihapus!" << endl;
             cout << endl;
-            cout << "Tekan [enter] untuk kembali ..." << endl;
-            getline(cin, data.dataSupplier[0].id);
+            cout << "Tekan [enter] untuk kembali ...";
+            getline(cin, temp);
             return;
         }
     }
     else
     {
-        cout << "ID Supplier tidak ditemukan!" << endl;
+        cout << "ID Supplier tidak ditemukan!";
+        getline(cin, temp);
         return;
     }
 }
 
 void FormBlokirSupplier(DataUtama &data)
 {
+    data.flagRefreshSupplier = true;
+    RefreshDataUtama(data);
+
     string temp;
     ClearScreen();
     Title("Lihat Supplier");
@@ -826,7 +869,7 @@ void FormBlokirSupplier(DataUtama &data)
 
     if (supplierDipilih->status == "aktif")
     {
-        cout << "Apakah Anda yakin ingin memblokir akun supplier " << supplierDipilih->username << "?  [y/n]" << endl;
+        cout << "Apakah Anda yakin ingin memblokir akun supplier " << supplierDipilih->username << "?  [y/n]: ";
         string konfirmasi;
         getline(cin, konfirmasi);
         if (konfirmasi == "y" || konfirmasi == "Y")
@@ -836,7 +879,7 @@ void FormBlokirSupplier(DataUtama &data)
             cout << endl;
             UpdateDataUtama(data);
             cout << "Tekan [enter] untuk kembali ..." << endl;
-            getline(cin, data.dataSupplier[0].id);
+            getline(cin, temp);
             return;
         }
         else
@@ -848,7 +891,7 @@ void FormBlokirSupplier(DataUtama &data)
     }
     else if (supplierDipilih->status == "blokir")
     {
-        cout << "Apakah Anda yakin ingin mengaktifkan akun supplier " << supplierDipilih->username << "?  [y/n]" << endl;
+        cout << "Apakah Anda yakin ingin mengaktifkan akun supplier " << supplierDipilih->username << "?  [y/n]: ";
         string konfirmasi;
         getline(cin, konfirmasi);
         if (konfirmasi == "y" || konfirmasi == "Y")
@@ -880,7 +923,11 @@ void MenuManajemenTanaman(DataUtama &data, InfoLogin &infoLogin)
 {
     while (CekLogin(data, infoLogin))
     {
+        data.flagRefreshTanaman = true;
         RefreshDataUtama(data);
+
+        string temp;
+
         ClearScreen();
         Title("Manajemen Tanaman");
         cout << endl;
@@ -910,6 +957,7 @@ void MenuManajemenTanaman(DataUtama &data, InfoLogin &infoLogin)
         else
         {
             cout << "Pilihan tidak valid!" << endl;
+            getline(cin, temp);
         }
     }
 }
@@ -918,8 +966,12 @@ void MenuManajemenSupplier(DataUtama &data, InfoLogin &infoLogin)
 {
     while (CekLogin(data, infoLogin))
     {
+        data.flagRefreshSupplier = true;
         RefreshDataUtama(data);
         ClearScreen();
+
+        string temp;
+
         Title("Manajemen Supplier");
         cout << endl;
         cout << "Pilihan Menu yang Tersedia: " << endl;
@@ -953,6 +1005,7 @@ void MenuManajemenSupplier(DataUtama &data, InfoLogin &infoLogin)
         else
         {
             cout << "Pilihan tidak valid!" << endl;
+            getline(cin, temp);
         }
     }
 }
@@ -966,6 +1019,12 @@ void DashboardAdmin(DataUtama data)
 
     try
     {
+        data.flagRefreshTransaksi = true;
+        data.flagRefreshTanaman = true;
+        data.flagRefreshSupplier = true;
+
+        RefreshDataUtama(data);
+
         ClearScreen();
         Title("Dashboard");
         cout << StringPos("Supplier Terdaftar", 26) << ": " << GetJumlahSupplierAktif(data) << " Supplier" << endl;

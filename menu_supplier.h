@@ -31,6 +31,12 @@ void SuplaiTanaman(DataUtama &data, InfoLogin &infoLogin)
 
     try
     {
+        if (!IsValidNumeric(stokStr))
+        {
+            cout << "Input harus angka atau angka tidak valid!";
+            getline(cin, _temp);
+            return;
+        }
         stok = stoi(stokStr);
 
         if (stok <= 0)
@@ -117,7 +123,6 @@ void LihatLaporanTransaksi(DataUtama &data, InfoLogin &infoLogin)
     cout << "Tekan [Enter] untuk melanjutkan...";
     getline(cin, temp); // To pause the screen
     return;
-
 }
 
 void DashboardSupplier(DataUtama &data, InfoLogin &infoLogin)

@@ -46,13 +46,26 @@ void FormTambahKategori(DataUtama &data)
         }
     }
 
-    cout << "Min Suhu: ";
     float min_suhu;
+    cout << "Min Suhu: ";
     getline(cin, temp);
-    min_suhu = stof(temp); // Convert string to float
+    if (!IsValidNumeric(temp))
+    {
+        cout << "Input harus angka atau angka tidak valid!";
+        getline(cin, temp);
+        return;
+    }
+    min_suhu = stof(temp);
+
+    float max_suhu;
     cout << "Max Suhu: ";
     getline(cin, temp);
-    float max_suhu;
+    if (!IsValidNumeric(temp))
+    {
+        cout << "Input harus angka atau angka tidak valid!";
+        getline(cin, temp);
+        return;
+    }
     max_suhu = stof(temp);
 
     if (min_suhu > max_suhu)
@@ -219,7 +232,7 @@ void FormEditKategori(DataUtama &data)
                 return;
             }
         }
-        
+
         kategoriDiedit->namaKategori = temp;
     }
 
@@ -227,6 +240,12 @@ void FormEditKategori(DataUtama &data)
     getline(cin, temp);
     if (!temp.empty())
     {
+        if (!IsValidNumeric(temp))
+        {
+            cout << "Input harus angka atau angka tidak valid!";
+            getline(cin, temp);
+            return;
+        }
         kategoriDiedit->minSuhu = stof(temp);
     }
 
@@ -234,6 +253,12 @@ void FormEditKategori(DataUtama &data)
     getline(cin, temp);
     if (!temp.empty())
     {
+        if (!IsValidNumeric(temp))
+        {
+            cout << "Input harus angka atau angka tidak valid!";
+            getline(cin, temp);
+            return;
+        }
         kategoriDiedit->maxSuhu = stof(temp);
     }
 
@@ -517,6 +542,12 @@ void FormKesiapanTanaman(DataUtama &data)
         cout << endl;
         cout << StringPos("Pilih ID Kategori", 31) << ": ";
         getline(cin, temp);
+        if (!IsValidNumeric(temp))
+        {
+            cout << "Input harus angka atau angka tidak valid!";
+            getline(cin, temp);
+            return;
+        }
         pilihan_kategori = stoi(temp) - 1;
         if (pilihan_kategori < 0 || pilihan_kategori >= data.sizeDataKategori)
         {
@@ -528,6 +559,12 @@ void FormKesiapanTanaman(DataUtama &data)
         int stok_diterima;
         cout << StringPos("Jumlah stok yang diterima", 31) << ": ";
         getline(cin, temp);
+        if (!IsValidNumeric(temp))
+        {
+            cout << "Input harus angka atau angka tidak valid!";
+            getline(cin, temp);
+            return;
+        }
         stok_diterima = stoi(temp);
         if (stok_diterima < 0)
         {
@@ -613,6 +650,12 @@ void FormKesiapanTanaman(DataUtama &data)
         int stok_diterima;
         cout << StringPos("Jumlah stok yang diterima", 31) << ": ";
         getline(cin, temp);
+        if (!IsValidNumeric(temp))
+        {
+            cout << "Input harus angka atau angka tidak valid!";
+            getline(cin, temp);
+            return;
+        }
         stok_diterima = stoi(temp);
         if (stok_diterima < 0)
         {

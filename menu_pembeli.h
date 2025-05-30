@@ -22,6 +22,12 @@ void HalamanTransaksi(DataUtama &data, int indexTanaman, InfoLogin &infoLogin)
 
     string inputJumlah;
     getline(cin, inputJumlah);
+    if (!IsValidNumeric(inputJumlah))
+    {
+        cout << "Input harus angka atau angka tidak valid!";
+        getline(cin, temp);
+        return;
+    }
     int jumlah = stoi(inputJumlah);
 
     if (jumlah <= 0)

@@ -174,6 +174,42 @@ bool IsValidString(string &str)
     return false;
 }
 
+bool IsValidNumeric(string &str)
+{
+    string *fixedStr = new string();
+    try
+    {
+        *fixedStr = str;
+        FixString((*fixedStr));
+
+        bool hasDecimal = false;
+
+        for (int i = 0; i < (*fixedStr).length(); i++)
+        {
+            if (!isdigit((*fixedStr)[i]))
+            {
+                if ((*fixedStr)[i] == '-' && i == 0)
+                    continue;
+                else if ((*fixedStr)[i] == '.' && hasDecimal == false)   
+                {
+                    hasDecimal = true;
+                    continue;
+                }
+                return false;
+            }
+        }
+        return true;
+    }
+    catch (exception &e)
+    {
+        cout << e.what() << endl;
+    }
+    delete fixedStr;
+    fixedStr = nullptr;
+
+    return false;
+}
+
 string LowerCase(string &txt)
 {
     stringstream lowerString;

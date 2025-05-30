@@ -1,1 +1,23 @@
-[{"id":"0001","max_suhu":0.0,"media_tanam":"","min_suhu":0.0,"nama_kategori":"Bunga"},{"id":"0002","max_suhu":0.0,"media_tanam":"","min_suhu":0.0,"nama_kategori":"Merambat"},{"id":"0003","max_suhu":0.0,"media_tanam":"","min_suhu":0.0,"nama_kategori":"Tumbuhan Paku"}]
+[
+  {
+    "id": "0001",
+    "max_suhu": 10.0,
+    "media_tanam": "Tanah subur",
+    "min_suhu": 38.0,
+    "nama_kategori": "Bunga"
+  },
+  {
+    "id": "0002",
+    "max_suhu": 18.0,
+    "media_tanam": "Kompos",
+    "min_suhu": 29.0,
+    "nama_kategori": "Merambat"
+  },
+  {
+    "id": "0003",
+    "max_suhu": 21.0,
+    "media_tanam": "Kompos",
+    "min_suhu": 27.0,
+    "nama_kategori": "Tumbuhan Paku"
+  }
+]

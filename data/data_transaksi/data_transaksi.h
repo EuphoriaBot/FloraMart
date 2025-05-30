@@ -8,7 +8,7 @@
 #include "../data_utilities.h"
 #include "../data_tanaman/data_tanaman.h"
 #include "../data_pembeli/data_pembeli.h"
-#include "../data_metode_transaksi/data_metode_transaksi.h"
+// #include "../data_metode_transaksi/data_metode_transaksi.h"
 
 using json = nlohmann::json;
 using namespace std;
@@ -27,13 +27,13 @@ void from_json(json &j, Transaksi &transaksi)
     Pembeli *dataPembeli = new Pembeli[MAX_SIZE];
     int *sizeDataPembeli = new int{0};
 
-    MetodeTransaksi *dataMetodeTransaksi = new MetodeTransaksi[MAX_SIZE];
-    int *sizeDataMetodeTransaksi = new int{0};
+    // MetodeTransaksi *dataMetodeTransaksi = new MetodeTransaksi[MAX_SIZE];
+    // int *sizeDataMetodeTransaksi = new int{0};
     try
     {
         GetAllTanaman(dataTanaman, *sizeDataTanaman);
         GetAllPembeli(dataPembeli, *sizeDataPembeli);
-        GetAllMetodeTransaksi(dataMetodeTransaksi, *sizeDataMetodeTransaksi);
+        // GetAllMetodeTransaksi(dataMetodeTransaksi, *sizeDataMetodeTransaksi);
 
         j.at("id").get_to(transaksi.id);
         j.at("jumlah").get_to(transaksi.jumlahTanaman);
@@ -43,7 +43,7 @@ void from_json(json &j, Transaksi &transaksi)
 
         GetTanaman(transaksi.tanaman, j.at("id_tanaman"));
         GetPembeli(transaksi.pembeli, j.at("id_pembeli"));
-        GetMetodeTransaksi(transaksi.metodeBayar, j.at("id_metode_bayar"));
+        // GetMetodeTransaksi(transaksi.metodeBayar, j.at("id_metode_bayar"));
     }
     catch (const invalid_argument &e)
     {
@@ -58,16 +58,16 @@ void from_json(json &j, Transaksi &transaksi)
 
     delete[] dataTanaman;
     delete[] dataPembeli;
-    delete[] dataMetodeTransaksi;
+    // delete[] dataMetodeTransaksi;
     delete sizeDataTanaman;
     delete sizeDataPembeli;
-    delete sizeDataMetodeTransaksi;
+    // delete sizeDataMetodeTransaksi;
     dataTanaman = nullptr;
     dataPembeli = nullptr;
-    dataMetodeTransaksi = nullptr;
+    // dataMetodeTransaksi = nullptr;
     sizeDataTanaman = nullptr;
     sizeDataPembeli = nullptr;
-    sizeDataMetodeTransaksi = nullptr;
+    // sizeDataMetodeTransaksi = nullptr;
 }
 
 // Mengubah nilai dari tanaman ke json per data
@@ -80,7 +80,7 @@ void to_json(json &j, Transaksi &transaksi)
             {"id_tanaman", transaksi.tanaman.id},
             {"id_pembeli", transaksi.pembeli.id},
             {"jumlah", transaksi.jumlahTanaman},
-            {"id_metode_bayar", transaksi.metodeBayar.id},
+            // {"id_metode_bayar", transaksi.metodeBayar.id},
             {"tanggal_transaksi", transaksi.tanggalTransaksi},
             {"jumlah", transaksi.jumlahTanaman},
             {"total_harga", transaksi.totalHarga},
@@ -293,7 +293,6 @@ void TambahTransaksi(Transaksi *dataTransaksi, int &sizeData, Transaksi transaks
         dataTransaksi[sizeData].tanaman = transaksiBaru.tanaman;
         dataTransaksi[sizeData].pembeli = transaksiBaru.pembeli;
         dataTransaksi[sizeData].jumlahTanaman = transaksiBaru.jumlahTanaman;
-        dataTransaksi[sizeData].metodeBayar = transaksiBaru.metodeBayar;
         dataTransaksi[sizeData].tanggalTransaksi = curTimeOutput;
         dataTransaksi[sizeData].totalHarga = (transaksiBaru.tanaman.harga * transaksiBaru.jumlahTanaman);
         dataTransaksi[sizeData].status = "Menunggu Konfirmasi";

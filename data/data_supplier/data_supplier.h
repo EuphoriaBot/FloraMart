@@ -6,7 +6,7 @@
 #include <fstream>
 #include "../nlohmann/json.hpp"
 #include "../data_utilities.h"
-#include "../data_metode_transaksi/data_metode_transaksi.h"
+// #include "../data_metode_transaksi/data_metode_transaksi.h"
 
 using json = nlohmann::json;
 using namespace std;
@@ -16,39 +16,39 @@ using namespace std;
 #endif
 #define DATA_NAME "supplier.json"
 
-void GetSupplierMetodeTersedia(Supplier &dataSupplier, string *arrIdMetode, int jumlahMetode)
-{
-    MetodeTransaksi *dataMetodeTransaksi = new MetodeTransaksi[MAX_SIZE];
-    int *sizeMetodeTransaksi = new int{0};
+// void GetSupplierMetodeTersedia(Supplier &dataSupplier, string *arrIdMetode, int jumlahMetode)
+// {
+//     MetodeTransaksi *dataMetodeTransaksi = new MetodeTransaksi[MAX_SIZE];
+//     int *sizeMetodeTransaksi = new int{0};
     
-    try
-    {
-        GetAllMetodeTransaksi(dataMetodeTransaksi, *sizeMetodeTransaksi);
+//     try
+//     {
+//         GetAllMetodeTransaksi(dataMetodeTransaksi, *sizeMetodeTransaksi);
 
-        dataSupplier.sizeMetodeTersedia = jumlahMetode;
+//         dataSupplier.sizeMetodeTersedia = jumlahMetode;
     
-        for (int i = 0; i < jumlahMetode; i++)
-        {
-            dataSupplier.metodeTersedia[i] = {};
-            GetMetodeTransaksi(dataSupplier.metodeTersedia[i], arrIdMetode[i]);
-        }
-    }
-    catch (const invalid_argument &e)
-    {
-        cout << endl
-             << e.what() << endl;
-    }
-    catch (const exception &e)
-    {
-        cout << endl
-             << e.what() << endl;
-    }
+//         for (int i = 0; i < jumlahMetode; i++)
+//         {
+//             dataSupplier.metodeTersedia[i] = {};
+//             GetMetodeTransaksi(dataSupplier.metodeTersedia[i], arrIdMetode[i]);
+//         }
+//     }
+//     catch (const invalid_argument &e)
+//     {
+//         cout << endl
+//              << e.what() << endl;
+//     }
+//     catch (const exception &e)
+//     {
+//         cout << endl
+//              << e.what() << endl;
+//     }
 
-    delete[] dataMetodeTransaksi;
-    delete sizeMetodeTransaksi;
-    dataMetodeTransaksi = nullptr;
-    sizeMetodeTransaksi = nullptr;
-}
+//     delete[] dataMetodeTransaksi;
+//     delete sizeMetodeTransaksi;
+//     dataMetodeTransaksi = nullptr;
+//     sizeMetodeTransaksi = nullptr;
+// }
 
 // Mengubah nilai dari json ke supplier per data
 void from_json(json &j, Supplier &s)
@@ -61,10 +61,10 @@ void from_json(json &j, Supplier &s)
         j.at("username").get_to(s.username);
         j.at("password").get_to(s.password);
         j.at("status").get_to(s.status);
-        for (int i = 0; i < j.at("metode_tersedia").size(); i++)
-            (j.at("metode_tersedia")[i]).get_to(_tempArr[i]);
+        // for (int i = 0; i < j.at("metode_tersedia").size(); i++)
+        //     (j.at("metode_tersedia")[i]).get_to(_tempArr[i]);
     
-        GetSupplierMetodeTersedia(s, _tempArr, (j.at("metode_tersedia")).size());
+        // GetSupplierMetodeTersedia(s, _tempArr, (j.at("metode_tersedia")).size());
     }
     catch (const invalid_argument &e)
     {
@@ -84,21 +84,21 @@ void from_json(json &j, Supplier &s)
 // Mengubah nilai dari supplier ke json per data
 void to_json(json &j, Supplier &s)
 {
-    json *dataMetode = new json();
+    // json *dataMetode = new json();
 
     try
     {
-        *dataMetode = json::array();
-        for (int i = 0; i < s.sizeMetodeTersedia; i++)
-        {
-            (*dataMetode).push_back(s.metodeTersedia[i].id);
-        }
+        // *dataMetode = json::array();
+        // for (int i = 0; i < s.sizeMetodeTersedia; i++)
+        // {
+        //     (*dataMetode).push_back(s.metodeTersedia[i].id);
+        // }
 
         j = json{
             {"id", s.id},
             {"username", s.username},
             {"password", s.password},
-            {"metode_tersedia", *dataMetode},
+            // {"metode_tersedia", *dataMetode},
             {"status", s.status}};
     }
     catch (const invalid_argument &e)
@@ -112,8 +112,8 @@ void to_json(json &j, Supplier &s)
              << e.what() << endl;
     }
 
-    delete dataMetode;
-    dataMetode = nullptr;
+    // delete dataMetode;
+    // dataMetode = nullptr;
 }
 
 // Mengambil semua data supplier (Supplier[])

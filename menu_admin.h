@@ -408,7 +408,7 @@ void FormKesiapanTanaman(DataUtama &data)
 
     cout << StringPos("ID Suplai", 13, "Left");
     cout << StringPos("Nama Tanaman", 28, "Left");
-    cout << StringPos("Jumlah", 8, "Left") << endl;
+    cout << StringPos("Jumlah", 8, "Left");
     cout << StringPos("Supplier", 24, "Left") << endl;
 
     for (int i = 0; i < data.sizeDataSuplai; i++)

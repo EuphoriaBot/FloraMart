@@ -641,7 +641,7 @@ void FormLihatSupplier(DataUtama &data)
 
     for (int i = 0; i < data.sizeDataSupplier; i++)
     {
-        cout << StringPos(data.dataSupplier[i].id, 20, "Left");
+        cout << StringPos(data.dataSupplier[i].id, 5, "Left");
         cout << StringPos(data.dataSupplier[i].username, 20, "Left");
         cout << StringPos(data.dataSupplier[i].status, 10, "Left") << endl;
     }

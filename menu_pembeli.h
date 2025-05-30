@@ -72,6 +72,7 @@ void HalamanTransaksi(DataUtama &data, int indexTanaman, InfoLogin &infoLogin)
         transaksiBaru.jumlahTanaman = jumlah;
 
         TambahTransaksi(data.dataTransaksi, data.sizeDataTransaksi, transaksiBaru);
+        RefreshDataUtama(data);
 
         cout << "Pembelian berhasil!" << endl;
         cout << "Sisa stok: " << data.dataTanaman[indexTanaman].stok << " Buah";

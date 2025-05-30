@@ -121,7 +121,7 @@ void DashboardSupplier(DataUtama &data, InfoLogin &infoLogin)
         {
             for (int i = 0; i < (*sizeDataTanamanTerlaris); i++)
             {
-                cout << (i + 1) << ". " << StringPos(dataTanamanTerlaris[i].namaTanaman, 26) << ": " << dataTanamanTerlaris[i].stok << " Buah" << endl;
+                cout << (i + 1) << ". " << StringPos(dataTanamanTerlaris[i].namaTanaman, 23) << ": " << dataTanamanTerlaris[i].stok << " Buah" << endl;
             }
         }
         else

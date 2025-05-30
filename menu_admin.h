@@ -905,7 +905,7 @@ void DashboardAdmin(DataUtama data)
         {
             for (int i = 0; i < (*sizeDataSupplierTerlaris); i++)
             {
-                cout << i + 1 << ". " << StringPos(dataSupplierTerlaris[i].username, 26) << ": " << dataStokTerjualSupplierAktif[i] << " Stok Tanaman Terjual" << endl;
+                cout <<  << ". " << StringPos((i + 1) + dataSupplierTerlaris[i].username, 26) << ": " << dataStokTerjualSupplierAktif[i] << " Stok Tanaman Terjual" << endl;
             }
         }
         else

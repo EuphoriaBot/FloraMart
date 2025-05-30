@@ -19,7 +19,7 @@ void FormTambahKategori(DataUtama &data)
     {
         cout << StringPos(data.dataKategori[i].id, 5, "Left");
         cout << StringPos(data.dataKategori[i].namaKategori, 24, "Left");
-        cout << StringPos(ftos(data.dataKategori[i].minSuhu) + " - " + ftos(data.dataKategori[i].maxSuhu) + "\u00B0C", 15, "Left");
+        cout << StringPos(ftos(data.dataKategori[i].minSuhu) + " - " + ftos(data.dataKategori[i].maxSuhu) + " C", 14, "Left");
         cout << StringPos(data.dataKategori[i].mediaTanam, 20, "Left") << endl;
     }
     cout << endl;
@@ -107,7 +107,7 @@ void FormHapusKategori(DataUtama &data)
     {
         cout << StringPos(data.dataKategori[i].id, 5, "Left");
         cout << StringPos(data.dataKategori[i].namaKategori, 24, "Left");
-        cout << StringPos(ftos(data.dataKategori[i].minSuhu) + " - " + ftos(data.dataKategori[i].maxSuhu) + "\u00B0C", 15, "Left");
+        cout << StringPos(ftos(data.dataKategori[i].minSuhu) + " - " + ftos(data.dataKategori[i].maxSuhu) + " C", 14, "Left");
         cout << StringPos(data.dataKategori[i].mediaTanam, 20, "Left") << endl;
     }
     cout << endl;
@@ -173,7 +173,7 @@ void FormEditKategori(DataUtama &data)
     {
         cout << StringPos(data.dataKategori[i].id, 5, "Left");
         cout << StringPos(data.dataKategori[i].namaKategori, 24, "Left");
-        cout << StringPos(ftos(data.dataKategori[i].minSuhu) + " - " + ftos(data.dataKategori[i].maxSuhu) + "\u00B0C", 15, "Left");
+        cout << StringPos(ftos(data.dataKategori[i].minSuhu) + " - " + ftos(data.dataKategori[i].maxSuhu) + " C", 14, "Left");
         cout << StringPos(data.dataKategori[i].mediaTanam, 20, "Left") << endl;
     }
     cout << endl;
@@ -204,18 +204,15 @@ void FormEditKategori(DataUtama &data)
     getline(cin, temp);
     if (!temp.empty())
     {
-        kategoriDiedit->namaKategori = temp;
-    }
-
-    for (int i = 0; i < data.sizeDataKategori; i++)
-    {
-        if (IsValidString(kategoriDiedit->namaKategori) == false)
+        if (IsValidString(temp) == false)
         {
             cout << "Nama Kategori harus berupa string alfabet!";
             getline(cin, temp);
             return;
         }
+        kategoriDiedit->namaKategori = temp;
     }
+
     cout << "Min Suhu: ";
     getline(cin, temp);
     if (!temp.empty())
@@ -242,13 +239,13 @@ void FormEditKategori(DataUtama &data)
         getline(cin, temp);
         if (!temp.empty())
         {
+            if (IsValidString(temp) == false)
+            {
+                cout << "Media Tanam harus berupa string alfabet!";
+                getline(cin, temp);
+                return;
+            }
             kategoriDiedit->mediaTanam = temp;
-        }
-        else if (IsValidString(kategoriDiedit->mediaTanam) == false)
-        {
-            cout << "Media Tanam harus berupa string alfabet!";
-            getline(cin, temp);
-            return;
         }
         cout << "Apakah anda yakin ingin mengedit kategori " << kategoriDiedit->namaKategori << "? [y/n]: ";
         string konfirmasi;
@@ -285,7 +282,7 @@ void FormLihatKategori(DataUtama &data)
     {
         cout << StringPos(data.dataKategori[i].id, 5, "Left");
         cout << StringPos(data.dataKategori[i].namaKategori, 24, "Left");
-        cout << StringPos(ftos(data.dataKategori[i].minSuhu) + " - " + ftos(data.dataKategori[i].maxSuhu) + "\u00B0C", 15, "Left");
+        cout << StringPos(ftos(data.dataKategori[i].minSuhu) + " - " + ftos(data.dataKategori[i].maxSuhu) + " C", 14, "Left");
         cout << StringPos(data.dataKategori[i].mediaTanam, 20, "Left") << endl;
     }
     cout << endl;
@@ -504,10 +501,7 @@ void FormKesiapanTanaman(DataUtama &data)
              << StringPos("Kategori", 28) << endl;
         for (int i = 0; i < data.sizeDataKategori; i++)
         {
-            if (suplaidipilih.supplier.id == data.dataTanaman[i].supplier.id)
-            {
-                cout << StringPos(data.dataKategori[i].id, 5) << " > " << data.dataKategori[i].namaKategori << endl;
-            }
+            cout << StringPos(data.dataKategori[i].id, 5) << " > " << data.dataKategori[i].namaKategori << endl;
         }
         int pilihan_kategori;
         cout << endl;

@@ -61,7 +61,7 @@ void SuplaiTanaman(DataUtama &data, InfoLogin &infoLogin)
 
     cout << "Tanaman berhasil disuplai";
     cout << endl;
-    cout << StringPos("ID Suplai", 16) << " : " << suplaiBaru.id << endl;
+    cout << StringPos("ID Suplai", 16) << ": " << suplaiBaru.id << endl;
     cout << StringPos("Nama Tanaman", 16) << ": " << suplaiBaru.namaTanaman << endl;
     cout << StringPos("Jumlah", 16) << ": " << suplaiBaru.jumlah << endl;
     cout << StringPos("Supplier", 16) << ": " << suplaiBaru.supplier.username << endl;

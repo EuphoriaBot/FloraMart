@@ -7,6 +7,8 @@ using namespace std;
 
 void SuplaiTanaman(DataUtama &data, InfoLogin &infoLogin)
 {
+    string _temp;
+
     ClearScreen();
     Title("Suplai Tanaman");
     if (data.sizeDataTanaman >= MAX_SIZE)
@@ -18,14 +20,21 @@ void SuplaiTanaman(DataUtama &data, InfoLogin &infoLogin)
     string nama, stokStr;
     int stok;
 
-    cout << "Nama Tanaman : ";
+    cout << StringPos("Nama Tanaman", 16) << ": ";
     getline(cin, nama);
-    cout << "Stok         : ";
+    cout << StringPos("Stok", 16) << ": ";
     getline(cin, stokStr);
 
     try
     {
         stok = stoi(stokStr);
+
+        if (stok <= 0)
+        {
+            cout << "Input stok tidak bisa kurang atau sama dengan 0!";
+            getline(cin, _temp);
+            return;
+        }
     }
     catch (...)
     {
@@ -44,13 +53,12 @@ void SuplaiTanaman(DataUtama &data, InfoLogin &infoLogin)
 
     cout << "Tanaman berhasil disuplai";
     cout << endl;
-    cout << "ID Suplai     : " << suplaiBaru.id << endl;
-    cout << "Nama Tanaman  : " << suplaiBaru.namaTanaman << endl;
-    cout << "Jumlah        : " << suplaiBaru.jumlah << endl;
-    cout << "Supplier      : " << suplaiBaru.supplier.username << endl;
+    cout << StringPos("ID Suplai", 16) << " : " << suplaiBaru.id << endl;
+    cout << StringPos("Nama Tanaman", 16) << ": " << suplaiBaru.namaTanaman << endl;
+    cout << StringPos("Jumlah", 16) << ": " << suplaiBaru.jumlah << endl;
+    cout << StringPos("Supplier", 16) << ": " << suplaiBaru.supplier.username << endl;
 
     cout << endl;
-    string _temp;
     cout << "Tekan [Enter] untuk kembali ke menu...";
     getline(cin, _temp);
 }

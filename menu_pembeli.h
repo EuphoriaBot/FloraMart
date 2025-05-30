@@ -277,11 +277,11 @@ void MenuUtamaPembeli(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
 {
     try
     {
-        RefreshDataUtama(data);
         string temp;
-
+        
         while (CekLogin(data, infoLogin))
         {
+            RefreshDataUtama(data);
             ClearScreen();
             Title("Menu Utama Pembeli");
             cout << "Selamat Datang, " << infoLogin.username << endl;

@@ -371,9 +371,11 @@ void MenuManajemenKategori(DataUtama &data, InfoLogin &infoLogin)
 
 void FormKesiapanTanaman(DataUtama &data)
 {
-    ClearScreen();
+    string temp;
     Suplai suplaidipilih;
     Tanaman tanamandipilih;
+    
+    ClearScreen();
     Title("Validasi Suplai Tanaman");
     cout << endl;
     cout << "Tanaman yang menunggu validasi: " << endl;
@@ -411,7 +413,7 @@ void FormKesiapanTanaman(DataUtama &data)
     }
     if (!suplaiditemukan)
     {
-        cout << "ID Tanaman tidak ditemukan atau sudah divalidasi." << endl;
+        cout << "ID Suplai tidak ditemukan atau sudah divalidasi." << endl;
         return;
     }
 
@@ -425,7 +427,9 @@ void FormKesiapanTanaman(DataUtama &data)
         }
     }
 
-    string temp;
+    Border();
+    cout << "Validasi Tanaman" << endl;
+    cout << endl;
     if (punyaTanaman)
     {
         cout << "Apakah Tanaman sudah pernah disuplai? (y/n): ";
@@ -435,8 +439,6 @@ void FormKesiapanTanaman(DataUtama &data)
     {
         temp = "n";
     }
-    Border();
-    cout << "Validasi Tanaman" << endl;
     cout << endl;
 
     if (temp == "n" || temp == "N")
@@ -457,7 +459,7 @@ void FormKesiapanTanaman(DataUtama &data)
             return;
         }
         double harga;
-        cout << StringPos("Masukkan harga tanaman", 31) << ": ";
+        cout << StringPos("Masukkan harga tanaman (Rp)", 31) << ": ";
         getline(cin, temp);
         harga = stod(temp);
         if (harga < 1000)
@@ -466,7 +468,7 @@ void FormKesiapanTanaman(DataUtama &data)
             getline(cin, temp);
             return;
         }
-        
+
         cout << endl;
         cout << "Kategori:" << endl;
         cout << StringPos("ID", 8)
@@ -493,7 +495,7 @@ void FormKesiapanTanaman(DataUtama &data)
         int stok_diterima;
         cout << StringPos("Jumlah stok yang diterima", 31) << ": ";
         getline(cin, temp);
-        stok_diterima = stoi(temp); 
+        stok_diterima = stoi(temp);
         if (stok_diterima < 0)
         {
             cout << "Jumlah stok tidak boleh kurang dari 0!";
@@ -513,6 +515,7 @@ void FormKesiapanTanaman(DataUtama &data)
         validasiBaru.stokDiterima = stok_diterima;
         validasiBaru.suplai = suplaidipilih;
 
+        cout << endl;
         cout << StringPos("Apakah data sudah benar? (y/n)", 31);
         string konfirmasi;
         getline(cin, konfirmasi);
@@ -577,7 +580,7 @@ void FormKesiapanTanaman(DataUtama &data)
         int stok_diterima;
         cout << StringPos("Jumlah stok yang diterima", 31) << ": ";
         getline(cin, temp);
-        stok_diterima = stoi(temp); 
+        stok_diterima = stoi(temp);
         if (stok_diterima < 0)
         {
             cout << "Jumlah stok tidak boleh kurang dari 0!";
@@ -591,6 +594,7 @@ void FormKesiapanTanaman(DataUtama &data)
         validasiBaru.stokDiterima = stok_diterima;
         validasiBaru.suplai = suplaidipilih;
 
+        cout << endl;
         cout << StringPos("Apakah data sudah benar? (y/n)", 31);
         string konfirmasi;
         getline(cin, konfirmasi);
@@ -629,10 +633,10 @@ void MenuNotifikasi(DataUtama &data, InfoLogin &infoLogin)
 {
     while (CekLogin(data, infoLogin))
     {
-        ClearScreen();
-        string temp;
         RefreshDataUtama(data);
-
+        string temp;
+        
+        ClearScreen();
         Title("Notifikasi");
         cout << StringPos("ID", 15, "Left");
         cout << StringPos("Tanaman", 30, "Left");

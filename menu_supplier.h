@@ -157,10 +157,9 @@ void MenuUtamaSupplier(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu
 {
     try
     {
-        RefreshDataUtama(data);
-
         while (CekLogin(data, infoLogin))
         {
+            RefreshDataUtama(data);
             ClearScreen();
             Title("Menu Utama Supplier");
             cout << "Selamat Datang, " << infoLogin.username  << endl;

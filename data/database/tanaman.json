@@ -1,1 +1,42 @@
-[{"harga":2000.0,"id":"0001","id_kategori":"0001","id_supplier":"0001","nama_tanaman":"Mawar","stok":37},{"harga":1500.0,"id":"0002","id_kategori":"0001","id_supplier":"0001","nama_tanaman":"Melati","stok":15},{"harga":1200.0,"id":"0003","id_kategori":"0002","id_supplier":"0002","nama_tanaman":"Sirih Gading","stok":25},{"harga":1200.0,"id":"0004","id_kategori":"0003","id_supplier":"0002","nama_tanaman":"Suplir","stok":25},{"harga":4000.0,"id":"0005","id_kategori":"0003","id_supplier":"0002","nama_tanaman":"Lidah Buaya","stok":20},{"harga":20000.0,"id":"0006","id_kategori":"0002","id_supplier":"0002","nama_tanaman":"froste","stok":10},{"harga":2000.0,"id":"0007","id_kategori":"0001","id_supplier":"0001","nama_tanaman":"Hoooo","stok":5}]
+[
+  {
+    "harga": 2000.0,
+    "id": "0001",
+    "id_kategori": "0001",
+    "id_supplier": "0001",
+    "nama_tanaman": "Mawar",
+    "stok": 37
+  },
+  {
+    "harga": 1500.0,
+    "id": "0002",
+    "id_kategori": "0001",
+    "id_supplier": "0001",
+    "nama_tanaman": "Melati",
+    "stok": 15
+  },
+  {
+    "harga": 1200.0,
+    "id": "0003",
+    "id_kategori": "0002",
+    "id_supplier": "0002",
+    "nama_tanaman": "Sirih Gading",
+    "stok": 25
+  },
+  {
+    "harga": 1200.0,
+    "id": "0004",
+    "id_kategori": "0003",
+    "id_supplier": "0002",
+    "nama_tanaman": "Suplir",
+    "stok": 25
+  },
+  {
+    "harga": 4000.0,
+    "id": "0005",
+    "id_kategori": "0003",
+    "id_supplier": "0002",
+    "nama_tanaman": "Lidah Buaya",
+    "stok": 20
+  }
+]

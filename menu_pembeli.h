@@ -25,8 +25,8 @@ void HalamanTransaksi(DataUtama &data, int indexTanaman, InfoLogin &infoLogin)
     Border();
     cout << "Transaksi" << endl
          << endl;
-    cout << StringPos("Stok tersedia", 26) << ": " << stokTersedia << " Buah" << endl;
-    cout << StringPos("Jumlah pembelian", 26) << ": ";
+    cout << StringPos("Stok tersedia", 27) << ": " << stokTersedia << " Buah" << endl;
+    cout << StringPos("Jumlah pembelian", 27) << ": ";
 
     string inputJumlah;
     getline(cin, inputJumlah);
@@ -48,18 +48,18 @@ void HalamanTransaksi(DataUtama &data, int indexTanaman, InfoLogin &infoLogin)
 
     int totalHarga = data.dataTanaman[indexTanaman].harga * jumlah;
     cout << endl;
-    cout << StringPos("Total Harga", 26) << ": Rp" << totalHarga << endl;
+    cout << StringPos("Total Harga", 27) << ": Rp" << totalHarga << endl;
 
     for (int i = 0; i < data.sizeDataPembeli; i++)
     {
         if (data.dataPembeli[i].id == infoLogin.id)
         {
-            cout << StringPos("Sisa Stok", 26) << ": Rp" << data.dataPembeli[i].saldo << endl;
+            cout << StringPos("Sisa Stok", 27) << ": Rp" << data.dataPembeli[i].saldo << endl;
         }
     }
 
     Border();
-    cout << StringPos("Lanjutkan pembelian? (y/n)", 26) << ": ";
+    cout << StringPos("Lanjutkan pembelian? (y/n)", 27) << ": ";
     string konfirmasi;
     getline(cin, konfirmasi);
     cout << endl;
@@ -188,16 +188,16 @@ void DaftarTanaman(DataUtama &data, InfoLogin &infoLogin)
 
     ClearScreen();
     Title("Detail Informasi");
-    cout << StringPos("ID", 26) << ": " << data.dataTanaman[index].id << endl
-         << StringPos("Nama Tanaman", 26) << ": " << data.dataTanaman[index].namaTanaman << endl
-         << StringPos("Harga", 26) << ": " << data.dataTanaman[index].harga << endl
-         << StringPos("Stok", 26) << ": " << data.dataTanaman[index].stok << endl
-         << StringPos("Supplier", 26) << ": " << data.dataSupplier[index].username << endl
-         << StringPos("Kategori", 26) << ": " << data.dataKategori[index].namaKategori << endl
-         << StringPos("Suhu", 26) << ": " << data.dataKategori[index].minSuhu << " - " << data.dataKategori[index].minSuhu << "\u00B0C" << endl
-         << StringPos("Media Tanam", 26) << ": " << data.dataKategori[index].mediaTanam << endl;
+    cout << StringPos("ID", 27) << ": " << data.dataTanaman[index].id << endl
+         << StringPos("Nama Tanaman", 27) << ": " << data.dataTanaman[index].namaTanaman << endl
+         << StringPos("Harga", 27) << ": " << data.dataTanaman[index].harga << endl
+         << StringPos("Stok", 27) << ": " << data.dataTanaman[index].stok << endl
+         << StringPos("Supplier", 27) << ": " << data.dataSupplier[index].username << endl
+         << StringPos("Kategori", 27) << ": " << data.dataKategori[index].namaKategori << endl
+         << StringPos("Suhu", 27) << ": " << data.dataKategori[index].minSuhu << " - " << data.dataKategori[index].minSuhu << "\u00B0C" << endl
+         << StringPos("Media Tanam", 27) << ": " << data.dataKategori[index].mediaTanam << endl;
     Border();
-    cout << StringPos("Beli Tanaman? (y/n)", 26) << ": ";
+    cout << StringPos("Beli Tanaman? (y/n)", 27) << ": ";
     string jawab;
     getline(cin, jawab);
     if (jawab == "y" || jawab == "Y")
@@ -241,16 +241,16 @@ void SearchingTanaman(DataUtama &data, InfoLogin &infoLogin)
         int i = index[pilihan - 1];
         ClearScreen();
         Title("Detail Informasi");
-        cout << StringPos("ID", 26) << ": " << data.dataTanaman[i].id << endl
-             << StringPos("Nama Tanaman", 26) << ": " << data.dataTanaman[i].namaTanaman << endl
-             << StringPos("Harga", 26) << ": " << data.dataTanaman[i].harga << endl
-             << StringPos("Stok", 26) << ": " << data.dataTanaman[i].stok << endl
-             << StringPos("Supplier", 26) << ": " << data.dataSupplier[i].username << endl
-             << StringPos("Kategori", 26) << ": " << data.dataKategori[i].namaKategori << endl
-             << StringPos("Suhu", 26) << ": " << data.dataKategori[i].minSuhu << " - " << data.dataKategori[i].minSuhu << "\u00B0C" << endl
-             << StringPos("Media Tanam", 26) << ": " << data.dataKategori[i].mediaTanam << endl;
+        cout << StringPos("ID", 27) << ": " << data.dataTanaman[i].id << endl
+             << StringPos("Nama Tanaman", 27) << ": " << data.dataTanaman[i].namaTanaman << endl
+             << StringPos("Harga", 27) << ": " << data.dataTanaman[i].harga << endl
+             << StringPos("Stok", 27) << ": " << data.dataTanaman[i].stok << endl
+             << StringPos("Supplier", 27) << ": " << data.dataSupplier[i].username << endl
+             << StringPos("Kategori", 27) << ": " << data.dataKategori[i].namaKategori << endl
+             << StringPos("Suhu", 27) << ": " << data.dataKategori[i].minSuhu << " - " << data.dataKategori[i].minSuhu << "\u00B0C" << endl
+             << StringPos("Media Tanam", 27) << ": " << data.dataKategori[i].mediaTanam << endl;
         Border();
-        cout << StringPos("Beli Tanaman? (y/n)", 26) << ": ";
+        cout << StringPos("Beli Tanaman? (y/n)", 27) << ": ";
         string jawab;
         getline(cin, jawab);
         if (jawab == "y" || jawab == "Y")

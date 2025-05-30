@@ -522,6 +522,12 @@ void FormKesiapanTanaman(DataUtama &data)
         double harga;
         cout << StringPos("Masukkan harga tanaman (Rp)", 31) << ": ";
         getline(cin, temp);
+        if (!IsValidNumeric(temp))
+        {
+            cout << "Input harus angka atau angka tidak valid!";
+            getline(cin, temp);
+            return;
+        }
         harga = stod(temp);
         if (harga < 1000)
         {

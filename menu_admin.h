@@ -560,31 +560,20 @@ void MenuNotifikasi(DataUtama &data, InfoLogin &infoLogin)
 {
     while (CekLogin(data, infoLogin))
     {
+        ClearScreen();
         string temp;
         RefreshDataUtama(data);
-<<<<<<< HEAD
-        ClearScreen();
-        cout << endl;
-        cout << "Transaksi yang menunggu konfirmasi: " << endl;
-        cout << endl;
-        cout << StringPos("ID Transaksi", 15, "Left");
-        cout << StringPos("Nama Tanaman", 30, "Left");
-        cout << StringPos("Jumlah", 10, "Left") << endl;
-=======
 
         Title("Notifikasi");
-        cout << StringPos("ID", 5, "Left");
-        cout << StringPos("Tanaman", 24, "Left");
-        cout << StringPos("Jumlah", 8, "Left");
-        cout << StringPos("Pembeli", 20, "Left") << endl;
+        cout << StringPos("ID", 15, "Left");
+        cout << StringPos("Tanaman", 30, "Left");
+        cout << StringPos("Jumlah", 10, "Left");
         cout << endl;
->>>>>>> 61c10a65d7c7c8e1fe420ba5080e60ffb35fb90c
 
         for (int i = 0; i < data.sizeDataTransaksi; i++)
         {
             if (data.dataTransaksi[i].status == "Menunggu Konfirmasi")
             {
-<<<<<<< HEAD
                 cout << StringPos(data.dataTransaksi[i].id, 15, "Left");
                 cout << StringPos(data.dataTransaksi[i].tanaman.namaTanaman, 30, "Left");
                 cout << StringPos(to_string(data.dataTransaksi[i].jumlahTanaman), 10, "Left") << endl;
@@ -592,17 +581,6 @@ void MenuNotifikasi(DataUtama &data, InfoLogin &infoLogin)
         }
         cout << endl;
         Transaksi *pilihanTransaksi;
-=======
-                cout << StringPos(data.dataTransaksi[i].id, 5, "Left");
-                cout << StringPos(data.dataTransaksi[i].tanaman.namaTanaman, 24, "Left");
-                cout << StringPos(to_string(data.dataTransaksi[i].jumlahTanaman), 8, "Left");
-                cout << StringPos(data.dataTransaksi[i].pembeli.username, 20, "Left") << endl;
-            }
-        }
-        cout << endl;
-
-        Transaksi *pilihanTransaksi = new Transaksi();
->>>>>>> 61c10a65d7c7c8e1fe420ba5080e60ffb35fb90c
         cout << "Masukkan ID Transaksi yang ingin dikonfirmasi: ";
         getline(cin, temp);
 
@@ -617,7 +595,6 @@ void MenuNotifikasi(DataUtama &data, InfoLogin &infoLogin)
 
         if (pilihanTransaksi->id.empty())
         {
-<<<<<<< HEAD
             Title ("Detail Transaksi");
             cout << pilihanTransaksi->id << endl;
             cout << pilihanTransaksi->tanaman.namaTanaman << endl;
@@ -625,11 +602,6 @@ void MenuNotifikasi(DataUtama &data, InfoLogin &infoLogin)
             cout << pilihanTransaksi->jumlahTanaman << endl;
             cout << pilihanTransaksi->tanggalTransaksi << endl;
             cout << pilihanTransaksi->totalHarga << endl;
-=======
-            cout << "Pilihan tidak valid!";
-            getline(cin, temp);
-            return;
->>>>>>> 61c10a65d7c7c8e1fe420ba5080e60ffb35fb90c
         }
 
         ClearScreen();
@@ -792,15 +764,11 @@ void FormBlokirSupplier(DataUtama &data)
         {
             supplierDipilih->status = "blokir";
             cout << "Supplier berhasil diblokir!" << endl;
-<<<<<<< HEAD
             cout << endl;
             cout << "Tekan [enter] untuk kembali ..." << endl;
             getline(cin, data.dataSupplier[0].id); 
             return;
 
-=======
-            getline(cin, temp);
->>>>>>> 61c10a65d7c7c8e1fe420ba5080e60ffb35fb90c
         }
         else
         {
@@ -818,14 +786,10 @@ void FormBlokirSupplier(DataUtama &data)
         {
             supplierDipilih->status = "aktif";
             cout << "Supplier berhasil diaktifkan!" << endl;
-<<<<<<< HEAD
             cout << endl;
             cout << "Tekan [enter] untuk kembali ..." << endl;
             getline(cin, data.dataSupplier[0].id); 
             return;
-=======
-            getline(cin, temp);
->>>>>>> 61c10a65d7c7c8e1fe420ba5080e60ffb35fb90c
         }
         else
         {
@@ -893,7 +857,7 @@ void MenuManajemenSupplier(DataUtama &data, InfoLogin &infoLogin)
         cout << endl;
         cout << "1. Lihat Supplier" << endl;
         cout << "2. Hapus Supplier" << endl;
-        cout << "3. Blokir Supplier" << endl;
+        cout << "3. Blokir atau unblokir Supplier" << endl;
         cout << "4. Kembali ke Menu Utama" << endl;
         cout << endl;
         cout << "Pilih menu: ";
@@ -990,7 +954,7 @@ void MenuUtamaAdmin(DataUtama &data, InfoLogin &infoLogin, DataMenu &dataMenu)
             cout << "1. Dashboard" << endl;
             cout << "2. Manajemen Tanaman" << endl;
             cout << "3. Manajemen Supplier" << endl;
-            cout << "4. Notifikasi" << endl;
+            cout << "4. Notifikasi Transaksi" << endl;
             cout << "5. Logout" << endl;
             cout << endl;
             cout << "Pilih menu: ";

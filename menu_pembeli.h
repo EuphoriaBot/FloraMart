@@ -193,7 +193,7 @@ void DaftarTanaman(DataUtama &data, InfoLogin &infoLogin)
          << StringPos("Nama Tanaman", 27) << ": " << data.dataTanaman[index].namaTanaman << endl
          << StringPos("Harga", 27) << ": " << data.dataTanaman[index].harga << endl
          << StringPos("Stok", 27) << ": " << data.dataTanaman[index].stok << endl
-         << StringPos("Supplier", 27) << ": " << data.dataSupplier[index].username << endl
+         << StringPos("Supplier", 27) << ": " << data.dataTanaman[index].supplier.username << endl
          << StringPos("Kategori", 27) << ": " << data.dataKategori[index].namaKategori << endl
          << StringPos("Suhu", 27) << ": " << data.dataKategori[index].minSuhu << " - " << data.dataKategori[index].minSuhu << "\u00B0C" << endl
          << StringPos("Media Tanam", 27) << ": " << data.dataKategori[index].mediaTanam << endl;
@@ -249,7 +249,7 @@ void SearchingTanaman(DataUtama &data, InfoLogin &infoLogin)
              << StringPos("Nama Tanaman", 27) << ": " << data.dataTanaman[i].namaTanaman << endl
              << StringPos("Harga", 27) << ": " << data.dataTanaman[i].harga << endl
              << StringPos("Stok", 27) << ": " << data.dataTanaman[i].stok << endl
-             << StringPos("Supplier", 27) << ": " << data.dataSupplier[i].username << endl
+             << StringPos("Supplier", 27) << ": " << data.dataTanaman[i].supplier.username << endl
              << StringPos("Kategori", 27) << ": " << data.dataKategori[i].namaKategori << endl
              << StringPos("Suhu", 27) << ": " << data.dataKategori[i].minSuhu << " - " << data.dataKategori[i].minSuhu << "\u00B0C" << endl
              << StringPos("Media Tanam", 27) << ": " << data.dataKategori[i].mediaTanam << endl;

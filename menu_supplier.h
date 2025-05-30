@@ -7,6 +7,7 @@ using namespace std;
 
 void SuplaiTanaman(DataUtama &data, InfoLogin &infoLogin)
 {
+    ClearScreen();
     Title("Suplai Tanaman");
     if (data.sizeDataTanaman >= MAX_SIZE)
     {
@@ -42,11 +43,13 @@ void SuplaiTanaman(DataUtama &data, InfoLogin &infoLogin)
     TambahSuplai(data.dataSuplai, data.sizeDataSuplai, suplaiBaru);
 
     cout << "Tanaman berhasil disuplai";
+    cout << endl;
     cout << "ID Suplai     : " << suplaiBaru.id << endl;
     cout << "Nama Tanaman  : " << suplaiBaru.namaTanaman << endl;
     cout << "Jumlah        : " << suplaiBaru.jumlah << endl;
     cout << "Supplier      : " << suplaiBaru.supplier.username << endl;
 
+    cout << endl;
     string _temp;
     cout << "Tekan [Enter] untuk kembali ke menu...";
     getline(cin, _temp);
@@ -81,8 +84,14 @@ void LihatLaporanTransaksi(DataUtama &data, InfoLogin &infoLogin)
             cout << "Jumlah       : " << transaksi.jumlahTanaman << endl;
             cout << "Tanggal      : " << transaksi.tanggalTransaksi << endl;
             cout << "Pembeli      : " << transaksi.pembeli.username << endl;
+            cout<< endl;
         }
     }
+    cout << endl;
+    string temp;
+    getline(cin, temp); // To pause the screen
+    cout << "Tekan [Enter] untuk melanjutkan...";
+    return;
 
     if (!ditemukan)
     {

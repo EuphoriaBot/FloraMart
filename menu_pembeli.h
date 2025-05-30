@@ -208,6 +208,8 @@ void DaftarTanaman(DataUtama &data, InfoLogin &infoLogin)
 
 void SearchingTanaman(DataUtama &data, InfoLogin &infoLogin)
 {
+    ClearScreen();
+    Title("Searching Tanaman");
     string temp;
     cout << "Masukkan nama tanaman: ";
     string key;
@@ -222,6 +224,7 @@ void SearchingTanaman(DataUtama &data, InfoLogin &infoLogin)
     {
         cout << "Tanaman '" << key << "' tidak ditemukan.\n";
         getline(cin, temp);
+        cout << "Tekan [Enter] untuk kembali ke menu utama...";
         return;
     }
 

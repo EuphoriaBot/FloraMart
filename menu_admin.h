@@ -167,7 +167,7 @@ void FormEditKategori(DataUtama &data)
     string temp;
     Title("Edit Kategori");
     cout << "Masukan Id yang ingin diedit: ";
-    getline(cin, temp); // Convert string to int
+    getline(cin, temp);
     Kategori *kategoriDiedit = new Kategori();
 
     for (int i = 0; i < data.sizeDataKategori; i++)
@@ -379,18 +379,19 @@ void FormKesiapanTanaman(DataUtama &data)
     cout << "Tanaman yang menunggu validasi: " << endl;
     cout << endl;
 
-    cout << StringPos("ID Suplai", 15, "Left");
-    cout << StringPos("Nama Tanaman", 30, "Left");
-    cout << StringPos("Jumlah", 10, "Left") << endl;
+    cout << StringPos("ID Suplai", 13, "Left");
+    cout << StringPos("Nama Tanaman", 28, "Left");
+    cout << StringPos("Jumlah", 8, "Left") << endl;
+    cout << StringPos("Supplier", 24, "Left") << endl;
 
     for (int i = 0; i < data.sizeDataSuplai; i++)
     {
         if (data.dataSuplai[i].statusValidasi == false)
         {
-
-            cout << StringPos(data.dataSuplai[i].id, 15, "Left");
-            cout << StringPos(data.dataSuplai[i].namaTanaman, 30, "Left");
-            cout << StringPos(to_string(data.dataSuplai[i].jumlah), 10, "Left");
+            cout << StringPos(data.dataSuplai[i].id, 13, "Left");
+            cout << StringPos(data.dataSuplai[i].namaTanaman, 28, "Left");
+            cout << StringPos(to_string(data.dataSuplai[i].jumlah), 8, "Left");
+            cout << StringPos(data.dataSuplai[i].supplier.username, 24, "Left");
             cout << endl;
         }
     }
@@ -414,49 +415,89 @@ void FormKesiapanTanaman(DataUtama &data)
         return;
     }
 
+    bool punyaTanaman = false;
+
+    for (int i = 0; i < data.sizeDataTanaman; i++)
+    {
+        if (data.dataTanaman[i].supplier.id == suplaidipilih.supplier.id)
+        {
+            punyaTanaman = true;
+        }
+    }
+
     string temp;
-    cout << "Apakah Tanaman sudah pernah disuplai? (y/n): ";
-    getline(cin, temp);
+    if (punyaTanaman)
+    {
+        cout << "Apakah Tanaman sudah pernah disuplai? (y/n): ";
+        getline(cin, temp);
+    }
+    else
+    {
+        temp = "n";
+    }
+    Border();
+    cout << "Validasi Tanaman" << endl;
+    cout << endl;
+
     if (temp == "n" || temp == "N")
     {
         string nama_tanaman;
-        cout << "Masukkan nama tanaman: ";
+        cout << StringPos("Masukkan nama tanaman baru", 31) << ": ";
         getline(cin, nama_tanaman);
         if (nama_tanaman.empty())
         {
-            cout << "Nama tanaman tidak boleh kosong" << endl;
+            cout << "Nama tanaman tidak boleh kosong";
+            getline(cin, temp);
             return;
         }
         else if (IsValidString(nama_tanaman) == false)
         {
-            cout << "Nama tanaman harus berupa string alfabet!" << endl;
+            cout << "Nama tanaman harus berupa string alfabet!";
+            getline(cin, temp);
             return;
         }
         double harga;
-        cout << "Masukkan harga tanaman:";
+        cout << StringPos("Masukkan harga tanaman", 31) << ": ";
         getline(cin, temp);
-        harga = stod(temp); // Convert string to double
+        harga = stod(temp);
         if (harga < 1000)
         {
-            cout << "Minimal harga harus 1000!" << endl;
+            cout << "Minimal harga harus 1000!";
+            getline(cin, temp);
             return;
         }
+        
+        cout << endl;
+        cout << "Kategori:" << endl;
+        cout << StringPos("ID", 8)
+             << StringPos("Kategori", 28) << endl;
         for (int i = 0; i < data.sizeDataKategori; i++)
         {
-            cout << i + 1 << ". " << data.dataKategori[i].namaKategori << endl;
+            if (suplaidipilih.supplier.id == data.dataTanaman[i].supplier.id)
+            {
+                cout << StringPos(data.dataKategori[i].id, 5) << " > " << data.dataKategori[i].namaKategori << endl;
+            }
         }
         int pilihan_kategori;
-        cout << "Pilih Kategori: ";
+        cout << endl;
+        cout << StringPos("Pilih ID Kategori", 31) << ": ";
         getline(cin, temp);
-        pilihan_kategori = stoi(temp); // Convert string to int
+        pilihan_kategori = stoi(temp) - 1;
+        if (pilihan_kategori < 0 || pilihan_kategori >= data.sizeDataKategori)
+        {
+            cout << "Pilihan kategori tidak valid";
+            getline(cin, temp);
+            return;
+        }
 
         int stok_diterima;
-        cout << "Masukkan jumlah stok yang diterima: ";
+        cout << StringPos("Jumlah stok yang diterima", 31) << ": ";
         getline(cin, temp);
-        stok_diterima = stoi(temp); // Convert string to int
+        stok_diterima = stoi(temp); 
         if (stok_diterima < 0)
         {
-            cout << "Jumlah stok tidak boleh kurang dari nol!" << endl;
+            cout << "Jumlah stok tidak boleh kurang dari 0!";
+            getline(cin, temp);
             return;
         }
         Tanaman tanamanBaru;
@@ -472,34 +513,47 @@ void FormKesiapanTanaman(DataUtama &data)
         validasiBaru.stokDiterima = stok_diterima;
         validasiBaru.suplai = suplaidipilih;
 
-        cout << "Apakah anda yakin ingin memvalidasi tanaman " << tanamanBaru.namaTanaman << "? [y/n]" << endl;
+        cout << StringPos("Apakah data sudah benar? (y/n)", 31);
         string konfirmasi;
         getline(cin, konfirmasi);
         if (konfirmasi == "y" || konfirmasi == "Y")
         {
             TambahTanaman(data.dataTanaman, data.sizeDataTanaman, tanamanBaru);
             TambahValidasi(data.dataValidasiTanaman, data.sizeDataValidasi, validasiBaru);
+            cout << endl;
             cout << "Suplai berhasil divalidasi!" << endl;
             cout << endl;
             cout << "Tekan [enter] untuk kembali ..." << endl;
             getline(cin, data.dataTanaman[0].id);
         }
+        else if (konfirmasi == "n" || konfirmasi == "N")
+        {
+            cout << "Membatalkan validasi ...";
+            getline(cin, data.dataTanaman[0].id);
+            return;
+        }
         else
         {
+            cout << "Pilihan tidak valid ...";
+            getline(cin, data.dataTanaman[0].id);
             return;
         }
     }
     else if (temp == "y" || temp == "Y")
     {
+        cout << "Tanaman Supplier \"" << suplaidipilih.supplier.username << "\":" << endl;
+        cout << StringPos("ID", 8)
+             << StringPos("Tanaman", 28) << endl;
         for (int i = 0; i < data.sizeDataTanaman; i++)
         {
             if (suplaidipilih.supplier.id == data.dataTanaman[i].supplier.id)
             {
-                cout << data.dataSuplai[i].id << " | " << data.dataTanaman[i].namaTanaman << endl;
+                cout << StringPos(data.dataSuplai[i].id, 5) << " > " << data.dataTanaman[i].namaTanaman << endl;
             }
         }
 
-        cout << "Pilih Tanaman: ";
+        cout << endl;
+        cout << StringPos("Pilih ID Tanaman", 31) << ": ";
         string id_tanaman;
         getline(cin, id_tanaman);
         bool tanamanditemukan = false;
@@ -515,17 +569,19 @@ void FormKesiapanTanaman(DataUtama &data)
 
         if (!tanamanditemukan)
         {
-            cout << "ID Tanaman tidak ditemukan." << endl;
+            cout << "ID Tanaman tidak ditemukan.";
+            getline(cin, temp);
             return;
         }
 
         int stok_diterima;
-        cout << "Masukkan jumlah stok yang diterima: ";
+        cout << StringPos("Jumlah stok yang diterima", 31) << ": ";
         getline(cin, temp);
-        stok_diterima = stoi(temp); // Convert string to int
+        stok_diterima = stoi(temp); 
         if (stok_diterima < 0)
         {
-            cout << "Jumlah stok tidak boleh kurang dari nol!" << endl;
+            cout << "Jumlah stok tidak boleh kurang dari 0!";
+            getline(cin, temp);
             return;
         }
 
@@ -535,22 +591,37 @@ void FormKesiapanTanaman(DataUtama &data)
         validasiBaru.stokDiterima = stok_diterima;
         validasiBaru.suplai = suplaidipilih;
 
-        cout << "Apakah anda yakin ingin memvalidasi tanaman " << tanamandipilih.namaTanaman << "? [y/n]" << endl;
+        cout << StringPos("Apakah data sudah benar? (y/n)", 31);
         string konfirmasi;
         getline(cin, konfirmasi);
         if (konfirmasi == "y" || konfirmasi == "Y")
         {
             TambahValidasi(data.dataValidasiTanaman, data.sizeDataValidasi, validasiBaru);
+            cout << endl;
             cout << "Suplai berhasil divalidasi!" << endl;
             cout << endl;
-            cout << "Tekan [enter] untuk kembali ..." << endl;
+            cout << "Tekan [enter] untuk kembali ...";
+            getline(cin, data.dataTanaman[0].id);
+            return;
+        }
+        else if (konfirmasi == "n" || konfirmasi == "N")
+        {
+            cout << "Membatalkan validasi ...";
             getline(cin, data.dataTanaman[0].id);
             return;
         }
         else
         {
+            cout << "Pilihan tidak valid ...";
+            getline(cin, data.dataTanaman[0].id);
             return;
         }
+    }
+    else
+    {
+        cout << "Pilihan tidak valid!";
+        getline(cin, temp);
+        return;
     }
 }
 
@@ -766,7 +837,7 @@ void FormBlokirSupplier(DataUtama &data)
         }
         else
         {
-            cout << "Pembatalan blokir akun supplier." << endl;
+            cout << "Pembatalan blokir akun supplier!";
             getline(cin, temp);
             return;
         }
@@ -782,20 +853,20 @@ void FormBlokirSupplier(DataUtama &data)
             cout << "Supplier berhasil diaktifkan!" << endl;
             cout << endl;
             UpdateDataUtama(data);
-            cout << "Tekan [enter] untuk kembali ..." << endl;
-            getline(cin, data.dataSupplier[0].id);
+            cout << "Tekan [enter] untuk kembali ...";
+            getline(cin, temp);
             return;
         }
         else
         {
-            cout << "Pembatalan aktifasi akun supplier." << endl;
+            cout << "Pembatalan aktifasi akun supplier!";
             getline(cin, temp);
             return;
         }
     }
     else
     {
-        cout << "Status supplier tidak valid!" << endl;
+        cout << "Status supplier tidak valid!";
         getline(cin, temp);
         return;
     }

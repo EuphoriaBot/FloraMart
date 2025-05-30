@@ -174,6 +174,24 @@ bool IsValidString(string &str)
     return false;
 }
 
+string LowerCase(string &txt)
+{
+    stringstream lowerString;
+    try
+    {
+        for (int i = 0; i < txt.length(); i++)
+        {
+            lowerString << tolower(txt[i]);
+        }
+        return lowerString.str();
+    }
+    catch(exception& e)
+    {
+        cout << e.what() << endl;
+    }
+    return txt;
+}
+
 void ClearScreen()
 {
     system("powershell.exe -Command Clear-Host");

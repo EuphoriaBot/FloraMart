@@ -32,7 +32,7 @@ void FormTambahKategori(DataUtama &data)
 
     for (int i = 0; i < data.sizeDataKategori; i++)
     {
-        if (data.dataKategori[i].namaKategori == nama_kategori)
+        if (LowerCase(data.dataKategori[i].namaKategori) == LowerCase(nama_kategori))
         {
             cout << "Nama Kategori sudah ada!";
             getline(cin, temp);
@@ -210,6 +210,16 @@ void FormEditKategori(DataUtama &data)
             getline(cin, temp);
             return;
         }
+        for (int i = 0; i < data.sizeDataKategori; i++)
+        {
+            if (LowerCase(data.dataKategori[i].namaKategori) == LowerCase(temp))
+            {
+                cout << "Nama Kategori sudah digunakan!";
+                getline(cin, temp);
+                return;
+            }
+        }
+        
         kategoriDiedit->namaKategori = temp;
     }
 

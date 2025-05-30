@@ -180,7 +180,7 @@ void FormRegistrasiPembeli(DataUtama &data)
 
     for (int i = 0; i < data.sizeDataPembeli; i++)
     {
-        if (data.dataPembeli[i].username == input_username || data.dataSupplier[i].username == input_username || data.dataAdmin[i].username == input_username)
+        if (LowerCase(data.dataPembeli[i].username) == LowerCase(input_username) || LowerCase(data.dataSupplier[i].username) == LowerCase(input_username) || LowerCase(data.dataAdmin[i].username) == LowerCase(input_username))
         {
             cout << "Username sudah digunakan, coba yang lain.";
             getline(cin, temp);
@@ -231,7 +231,7 @@ void FormRegistrasiSupplier(DataUtama &data)
 
     for (int i = 0; i < data.sizeDataSupplier; i++)
     {
-        if (data.dataPembeli[i].username == input_username || data.dataSupplier[i].username == input_username || data.dataAdmin[i].username == input_username)
+        if (LowerCase(data.dataPembeli[i].username) == LowerCase(input_username) || LowerCase(data.dataSupplier[i].username) == LowerCase(input_username) || LowerCase(data.dataAdmin[i].username) == LowerCase(input_username))
         {
             cout << "Username sudah digunakan, coba yang lain.";
             getline(cin, temp);

@@ -354,7 +354,7 @@ void MenuManajemenKategori(DataUtama &data, InfoLogin &infoLogin)
         cout << "3. Edit Kategori" << endl;
         cout << "4. Hapus Kategori" << endl;
         cout << "5. Sorting Kategori Berdasarkan Nama Secara Ascending" << endl;
-        cout << "6. Kembali ke Menu Utama" << endl;
+        cout << "6. Kembali ke Manajemen Tanaman" << endl;
         cout << endl;
         cout << "Pilih menu: ";
 

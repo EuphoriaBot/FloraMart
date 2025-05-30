@@ -759,6 +759,7 @@ void FormBlokirSupplier(DataUtama &data)
             supplierDipilih->status = "blokir";
             cout << "Supplier berhasil diblokir!" << endl;
             cout << endl;
+            UpdateDataUtama(data);
             cout << "Tekan [enter] untuk kembali ..." << endl;
             getline(cin, data.dataSupplier[0].id);
             return;
@@ -780,6 +781,7 @@ void FormBlokirSupplier(DataUtama &data)
             supplierDipilih->status = "aktif";
             cout << "Supplier berhasil diaktifkan!" << endl;
             cout << endl;
+            UpdateDataUtama(data);
             cout << "Tekan [enter] untuk kembali ..." << endl;
             getline(cin, data.dataSupplier[0].id);
             return;
@@ -797,7 +799,6 @@ void FormBlokirSupplier(DataUtama &data)
         getline(cin, temp);
         return;
     }
-    UpdateDataUtama(data);
 }
 
 void MenuManajemenTanaman(DataUtama &data, InfoLogin &infoLogin)
@@ -892,10 +893,10 @@ void DashboardAdmin(DataUtama data)
     {
         ClearScreen();
         Title("Dashboard");
-        cout << StringPos("Supplier Terdaftar", 23) << ": " << GetJumlahSupplierAktif(data) << " Supplier" << endl;
-        cout << StringPos("Penjualan Bulan Ini", 23) << ": Rp" << GetPenjualanBulanIniAdmin(data) << endl;
-        cout << StringPos("Jumlah Jenis Tanaman", 23) << ": " << data.sizeDataTanaman << " Tanaman" << endl;
-        cout << StringPos("Transaksi Bulan Ini", 23) << ": " << GetTransaksiBulanIniAdmin(data) << " Transaksi" << endl;
+        cout << StringPos("Supplier Terdaftar", 26) << ": " << GetJumlahSupplierAktif(data) << " Supplier" << endl;
+        cout << StringPos("Penjualan Bulan Ini", 26) << ": Rp" << GetPenjualanBulanIniAdmin(data) << endl;
+        cout << StringPos("Jumlah Jenis Tanaman", 26) << ": " << data.sizeDataTanaman << " Tanaman" << endl;
+        cout << StringPos("Transaksi Bulan Ini", 26) << ": " << GetTransaksiBulanIniAdmin(data) << " Transaksi" << endl;
         Border();
 
         GetDataSupplierTerlaris(data, dataSupplierTerlaris, (*sizeDataSupplierTerlaris), dataStokTerjualSupplierAktif);
@@ -904,7 +905,7 @@ void DashboardAdmin(DataUtama data)
         {
             for (int i = 0; i < (*sizeDataSupplierTerlaris); i++)
             {
-                cout << i + 1 << ". " << StringPos(dataSupplierTerlaris[i].username, 20) << ": " << dataStokTerjualSupplierAktif[i] << " Stok Tanaman Terjual" << endl;
+                cout << i + 1 << ". " << StringPos(dataSupplierTerlaris[i].username, 26) << ": " << dataStokTerjualSupplierAktif[i] << " Stok Tanaman Terjual" << endl;
             }
         }
         else

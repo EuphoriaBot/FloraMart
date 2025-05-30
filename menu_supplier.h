@@ -109,9 +109,9 @@ void DashboardSupplier(DataUtama &data, InfoLogin &infoLogin)
     {
         ClearScreen();
         Title("Dashboard");
-        cout << StringPos("Jenis Tanaman Saya", 23) << ": " << JumlahJenisTanamanSupplier(data, infoLogin.id) << " Jenis Tanaman" << endl;
-        cout << StringPos("Pemasukan Bulan Ini", 23) << ": Rp" << GetPemasukanBulanIniSupplier(data, infoLogin.id) << endl;
-        cout << StringPos("Stok Tanaman Terjual", 23) << ": " << StokTerjualSupplier(data, infoLogin.id) << " Stok Tanaman" << endl;
+        cout << StringPos("Jenis Tanaman Disuplai", 26) << ": " << JumlahJenisTanamanSupplier(data, infoLogin.id) << " Jenis Tanaman" << endl;
+        cout << StringPos("Pemasukan Bulan Ini", 26) << ": Rp" << GetPemasukanBulanIniSupplier(data, infoLogin.id) << endl;
+        cout << StringPos("Stok Tanaman Terjual", 26) << ": " << StokTerjualSupplier(data, infoLogin.id) << " Stok Tanaman" << endl;
         Border();
 
         DataTanamanTerlarisSupplier(data, infoLogin.id, dataTanamanTerlaris, (*sizeDataTanamanTerlaris));
@@ -121,7 +121,7 @@ void DashboardSupplier(DataUtama &data, InfoLogin &infoLogin)
         {
             for (int i = 0; i < (*sizeDataTanamanTerlaris); i++)
             {
-                cout << (i + 1) << ". " << StringPos(dataTanamanTerlaris[i].namaTanaman, 20) << ": " << dataTanamanTerlaris[i].stok << " Buah" << endl;
+                cout << (i + 1) << ". " << StringPos(dataTanamanTerlaris[i].namaTanaman, 26) << ": " << dataTanamanTerlaris[i].stok << " Buah" << endl;
             }
         }
         else

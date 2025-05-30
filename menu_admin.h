@@ -378,17 +378,16 @@ void FormKesiapanTanaman(DataUtama &data)
     cout << endl;
     cout << "Tanaman yang menunggu validasi: " << endl;
     cout << endl;
-    
+
     cout << StringPos("ID Suplai", 15, "Left");
     cout << StringPos("Nama Tanaman", 30, "Left");
     cout << StringPos("Jumlah", 10, "Left") << endl;
-
 
     for (int i = 0; i < data.sizeDataSuplai; i++)
     {
         if (data.dataSuplai[i].statusValidasi == false)
         {
-            
+
             cout << StringPos(data.dataSuplai[i].id, 15, "Left");
             cout << StringPos(data.dataSuplai[i].namaTanaman, 30, "Left");
             cout << StringPos(to_string(data.dataSuplai[i].jumlah), 10, "Left");
@@ -414,7 +413,7 @@ void FormKesiapanTanaman(DataUtama &data)
         cout << "ID Tanaman tidak ditemukan atau sudah divalidasi." << endl;
         return;
     }
-    
+
     string temp;
     cout << "Apakah Tanaman sudah pernah disuplai? (y/n): ";
     getline(cin, temp);
@@ -484,7 +483,6 @@ void FormKesiapanTanaman(DataUtama &data)
             cout << endl;
             cout << "Tekan [enter] untuk kembali ..." << endl;
             getline(cin, data.dataTanaman[0].id);
-            
         }
         else
         {
@@ -500,7 +498,7 @@ void FormKesiapanTanaman(DataUtama &data)
                 cout << data.dataSuplai[i].id << " | " << data.dataTanaman[i].namaTanaman << endl;
             }
         }
-        
+
         cout << "Pilih Tanaman: ";
         string id_tanaman;
         getline(cin, id_tanaman);
@@ -580,7 +578,7 @@ void MenuNotifikasi(DataUtama &data, InfoLogin &infoLogin)
             }
         }
         cout << endl;
-        Transaksi *pilihanTransaksi;
+        Transaksi *pilihanTransaksi = new Transaksi();
         cout << "Masukkan ID Transaksi yang ingin dikonfirmasi: ";
         getline(cin, temp);
 
@@ -595,13 +593,9 @@ void MenuNotifikasi(DataUtama &data, InfoLogin &infoLogin)
 
         if (pilihanTransaksi->id.empty())
         {
-            Title ("Detail Transaksi");
-            cout << pilihanTransaksi->id << endl;
-            cout << pilihanTransaksi->tanaman.namaTanaman << endl;
-            cout << pilihanTransaksi->pembeli.username << endl;
-            cout << pilihanTransaksi->jumlahTanaman << endl;
-            cout << pilihanTransaksi->tanggalTransaksi << endl;
-            cout << pilihanTransaksi->totalHarga << endl;
+            cout << "ID Transaksi tidak valid";
+            getline(cin, temp);
+            return;
         }
 
         ClearScreen();
@@ -704,7 +698,7 @@ void FormHapusSupplier(DataUtama &data)
             cout << "Supplier berhasil dihapus!" << endl;
             cout << endl;
             cout << "Tekan [enter] untuk kembali ..." << endl;
-            getline(cin, data.dataSupplier[0].id); 
+            getline(cin, data.dataSupplier[0].id);
             return;
         }
     }
@@ -766,9 +760,8 @@ void FormBlokirSupplier(DataUtama &data)
             cout << "Supplier berhasil diblokir!" << endl;
             cout << endl;
             cout << "Tekan [enter] untuk kembali ..." << endl;
-            getline(cin, data.dataSupplier[0].id); 
+            getline(cin, data.dataSupplier[0].id);
             return;
-
         }
         else
         {
@@ -788,7 +781,7 @@ void FormBlokirSupplier(DataUtama &data)
             cout << "Supplier berhasil diaktifkan!" << endl;
             cout << endl;
             cout << "Tekan [enter] untuk kembali ..." << endl;
-            getline(cin, data.dataSupplier[0].id); 
+            getline(cin, data.dataSupplier[0].id);
             return;
         }
         else
